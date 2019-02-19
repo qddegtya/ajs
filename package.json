@@ -1,0 +1,22 @@
+{
+  "name": "ajs",
+  "version": "1.0.0",
+  "description": "ajs",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint **/*.js --fix"
+  },
+  "keywords": [
+    "ajs",
+    "util"
+  ],
+  "author": "qddegtya",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.14.1"
+  }
+}
