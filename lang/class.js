@@ -1,5 +1,6 @@
 /**
  *
+ * // Class 定义
  * let A = ajs.lang.base.Class({
  *   $parent: Base
  *   $ctor: () => {
@@ -25,6 +26,8 @@
  *   }
  * })
  *
+ * // 支持直接传入 function
+ * // 可以利用闭包进行私有属性/方法的支持
  * let B = A.$extends(function () {
  *   // private here
  *
@@ -34,29 +37,15 @@
  *   }
  * })
  *
+ * // 创建实例
  * let b = B.$new()
  *
  */
+const { assign } = require('../__internal__')
+
 const ClassShape = option => {
   let INSTANCE_PROPERTY_REGEXP = /^\$_[^$_]+/
   let _options = typeof option === 'function' ? option() : option
-
-  let _assign = function(dst, src) {
-    for (let k in src) {
-      dst[k] = src[k]
-    }
-  }
-
-  let _assignWithBind = function(thisArg, dst, src) {
-    for (let k in src) {
-      let val = src[k]
-      if (typeof val === 'function') {
-        dst[k] = val.bind(thisArg)
-      } else {
-        dst[k] = val
-      }
-    }
-  }
 
   let _processOptions = function(option) {
     let $parent = option.$parent,
@@ -77,7 +66,7 @@ const ClassShape = option => {
         continue
       }
 
-      // 剩下的给原型
+      // 原型
       $prototype[k] = option[k]
     }
 
@@ -94,7 +83,6 @@ const ClassShape = option => {
     _options
   )
 
-  // 父级原型
   let parentPrototype =
     typeof $parent === 'function' ? $parent.prototype : $parent
 
@@ -117,48 +105,43 @@ const ClassShape = option => {
 
       // 检查 super 调用
       if ($parent && !__super_is_called__ && typeof $parent === 'function') {
-        throw new Error('You should call this.$super first before use `this`.')
+        throw new SyntaxError('You should call this.$super first before use `this`.')
       }
     }
 
     // 如果存在继承的情况
-    // 处理 this.$super.xx
+    // 处理 this.$super 引用
     if ($parent) {
-      _assignWithBind(this, this.$super, parentPrototype)
+      assign(this, this.$super, parentPrototype)
     }
 
     // 处理实例属性
-    _assignWithBind(this, this, $instance)
+    assign(this, this, $instance)
 
     return ins
   }
 
   // 处理继承
+  // TODO: 数组的支持 (?)
   if ($parent) {
     AClass.prototype = Object.create(parentPrototype)
     AClass.prototype['$class'] = AClass
   }
 
   // 处理原型挂载
-  _assign(AClass.prototype, $prototype)
+  assign(AClass.prototype, $prototype)
 
   // 静态属性和方法的继承
   AClass.__proto__ = $parent
   // 处理静态属性和方法
-  _assign(AClass, $static)
+  assign(AClass, $static)
 
   // 标记
   AClass.$parent = $parent
 
-  // chain
   AClass.$extends = function(option) {
     option.$parent = this
     return ClassShape(option)
-  }
-
-  // new
-  AClass.$new = function() {
-    return new AClass()
   }
 
   return AClass

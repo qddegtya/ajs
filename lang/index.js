@@ -1,8 +1,10 @@
 const Class = require('./class')
+const decorators = require('./decorators')
 
 const _exportModule = {
   base: {
-    Class
+    Class,
+    decorators
   }
 }
 

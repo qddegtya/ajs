@@ -70,16 +70,16 @@ const C = lang.base.Class({
   }
 });
 
-let b = B.$new("john");
+let b = new B("john");
 console.log(B.foo);
 console.log(B.bar);
 B.test();
 b.print();
 
-let date = MyDate.$new("2019-01-02");
+let date = new MyDate("2019-01-02");
 console.log(date.toFormat());
 
 console.log(Object.getPrototypeOf(b) === B.prototype);
 
-let c = C.$new();
+let c = new C();
 c.test();
