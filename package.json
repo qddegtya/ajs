@@ -1,14 +1,14 @@
 {
   "name": "xajs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "💗 A collection of utility libraries used by @qddegtya",
   "main": "dist/ajs.cjs.js",
   "directories": {
     "test": "test"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/qddegtya/ajs"
+    "type": "git",
+    "url": "https://github.com/qddegtya/ajs"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
