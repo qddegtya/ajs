@@ -14,7 +14,9 @@
   },
   "keywords": [
     "ajs",
-    "util"
+    "util",
+    "utility",
+    "xajs"
   ],
   "author": "xiaoa",
   "license": "MIT",

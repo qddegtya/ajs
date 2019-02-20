@@ -141,6 +141,9 @@ const ClassShape = option => {
       superThis = $parent.apply(this, arguments);
     };
 
+    // 处理实例属性
+    assign(this, this, $instance);
+
     // 继承的情况下可以省略 $ctor
     if (!$ctor && $parent) {
       ins = $parent.apply(superThis || this, arguments);
@@ -158,9 +161,6 @@ const ClassShape = option => {
     if ($parent) {
       assign(this, this.$super, parentPrototype);
     }
-
-    // 处理实例属性
-    assign(this, this, $instance);
 
     return ins
   };

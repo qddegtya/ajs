@@ -22,6 +22,8 @@ let A = AJS.core.base.Class(function() {
     $ctor: function(name) {
       this.a = 1;
       this.name = name;
+
+      this.$_print('调用');
     },
 
     $static: {
