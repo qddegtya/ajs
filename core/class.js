@@ -1,7 +1,7 @@
 /**
  *
  * // Class 定义
- * let A = ajs.lang.base.Class({
+ * let A = AJS.core.base.Class({
  *   $parent: Base
  *   $ctor: () => {
  *     // super
