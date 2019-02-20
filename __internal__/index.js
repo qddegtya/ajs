@@ -1,5 +1,5 @@
-const assign = require('./assign')
+import assign from './assign'
 
-module.exports = {
+export {
   assign
 }

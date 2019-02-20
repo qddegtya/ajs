@@ -38,4 +38,4 @@ const assign = function() {
   }
 }
 
-module.exports = assign
+export default assign

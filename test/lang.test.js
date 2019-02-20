@@ -1,6 +1,6 @@
-const lang = require("../lang");
+const AJS = require("../dist/ajs.cjs");
 
-let MyDate = lang.base.Class(function() {
+let MyDate = AJS.core.base.Class(function() {
   let formatDate = function(date) {
     return "格式化日期";
   };
@@ -14,7 +14,7 @@ let MyDate = lang.base.Class(function() {
   };
 });
 
-let A = lang.base.Class(function() {
+let A = AJS.core.base.Class(function() {
   // 私有变量
   let $privateA = "xiaoa";
 
@@ -54,7 +54,7 @@ const B = A.$extends({
   }
 });
 
-const C = lang.base.Class({
+const C = AJS.core.base.Class({
   $parent: {
     on: function() {
       console.log("on");

@@ -41,7 +41,7 @@
  * let b = B.$new()
  *
  */
-const { assign } = require('../__internal__')
+import { assign } from '../__internal__'
 
 const ClassShape = option => {
   let INSTANCE_PROPERTY_REGEXP = /^\$_[^$_]+/
@@ -147,4 +147,4 @@ const ClassShape = option => {
   return AClass
 }
 
-module.exports = ClassShape
+export default ClassShape

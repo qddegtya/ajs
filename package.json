@@ -1,22 +1,27 @@
 {
-  "name": "ajs",
+  "name": "xajs",
   "version": "1.0.0",
-  "description": "ajs",
-  "main": "index.js",
+  "description": "💗 A collection of utility libraries used by @qddegtya",
+  "main": "dist/ajs.cjs.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint **/*.js --fix"
+    "lint": "eslint **/*.js --fix",
+    "build": "./node_modules/.bin/rimraf ./dist && ./node_modules/.bin/rollup -c",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "ajs",
     "util"
   ],
-  "author": "qddegtya",
+  "author": "xiaoa",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^5.14.1"
+    "eslint": "^5.14.1",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.2.2",
+    "rollup-plugin-node-resolve": "^4.0.0"
   }
 }

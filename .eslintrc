@@ -1,4 +1,7 @@
 {
+    "parserOptions": {
+        "sourceType": "module"
+    },
     "rules": {
         "indent": [
             2,
