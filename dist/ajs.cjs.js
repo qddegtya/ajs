@@ -1,4 +1,4 @@
-/** AJS (1.0.1):  💗 A collection of utility libraries used by @qddegtya*/
+/** AJS (1.0.2):  💗 A collection of utility libraries used by @qddegtya*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -46,7 +46,7 @@ const assign = function() {
 /**
  *
  * // Class 定义
- * let A = ajs.lang.base.Class({
+ * let A = AJS.core.base.Class({
  *   $parent: Base
  *   $ctor: () => {
  *     // super
