@@ -10,7 +10,7 @@ const _log = AJS.functional.helper.intercepter(log)
   console.log(`<====== before: ${msg} ======>`)
 })
 .after((msg) => {
-  console.log(`<====== before: ${msg} ======>`)
+  console.log(`<====== after: ${msg} ======>`)
 })
 .getRunner()
 
