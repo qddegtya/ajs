@@ -24,12 +24,12 @@ const _log = AJS.functional.helper
   .after(msg => {
     console.log(`<====== after: ${msg} ======>`);
   })
-  .getRunner();
+  .$runner;
 
 const _asyncLog = AJS.functional.helper
   .intercepter(logWithTimeout)
   .before(sleep)
-  .getAsyncRunner();
+  .$asyncRunner;
 
 async function testAsyncLog(t) {
   await _asyncLog(t);

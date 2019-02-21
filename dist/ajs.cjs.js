@@ -109,7 +109,9 @@ var ClassShape = function ClassShape(option) {
         $prototype = Object.create(null);
 
     for (var k in option) {
-      // 实例上不该访问到这些属性，但可以允许访问到 $ctor
+      // 属性描述符在此时不能被访问
+      if (Object.getOwnPropertyDescriptor(option, k)) continue; // 实例上不该访问到这些属性，但可以允许访问到 $ctor
+
       if (k === '$parent' || k === '$static') {
         continue;
       } // 实例属性/方法
@@ -182,7 +184,16 @@ var ClassShape = function ClassShape(option) {
   } // 处理原型挂载
 
 
-  assign(AClass.prototype, $prototype); // 静态属性和方法的继承
+  assign(AClass.prototype, $prototype); // 处理属性描述符
+
+  for (var key in _options) {
+    var desc = Object.getOwnPropertyDescriptor(_options, key);
+
+    if (desc) {
+      Object.defineProperty(AClass.prototype, key, desc);
+    }
+  } // 静态属性和方法的继承
+
 
   AClass.__proto__ = $parent; // 处理静态属性和方法
 
@@ -286,7 +297,8 @@ var IntercepterRunnerContainer = base.Class({
 
     return this;
   },
-  getAsyncRunner: function getAsyncRunner() {
+
+  get $asyncRunner() {
     var _self = this;
 
     return function () {
@@ -325,7 +337,8 @@ var IntercepterRunnerContainer = base.Class({
       });
     };
   },
-  getRunner: function getRunner() {
+
+  get $runner() {
     var _self = this;
 
     return function () {
@@ -349,6 +362,7 @@ var IntercepterRunnerContainer = base.Class({
       return res;
     };
   }
+
 });
 /**
  * @example

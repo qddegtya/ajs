@@ -22,7 +22,7 @@ const IntercepterRunnerContainer = base.Class({
     return this
   },
 
-  getAsyncRunner() {
+  get $asyncRunner() {
     let _self = this
 
     return function() {
@@ -68,7 +68,7 @@ const IntercepterRunnerContainer = base.Class({
     }
   },
 
-  getRunner() {
+  get $runner() {
     let _self = this
 
     return function() {

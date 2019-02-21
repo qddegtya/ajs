@@ -55,6 +55,9 @@ const ClassShape = option => {
       $prototype = Object.create(null)
 
     for (let k in option) {
+      // 属性描述符在此时不能被访问
+      if (Object.getOwnPropertyDescriptor(option, k)) continue
+
       // 实例上不该访问到这些属性，但可以允许访问到 $ctor
       if (k === '$parent' || k === '$static') {
         continue
@@ -108,7 +111,9 @@ const ClassShape = option => {
 
       // 检查 super 调用
       if ($parent && !__super_is_called__ && typeof $parent === 'function') {
-        throw new SyntaxError('You should call this.$super first before use `this`.')
+        throw new SyntaxError(
+          'You should call this.$super first before use `this`.'
+        )
       }
     }
 
@@ -130,6 +135,14 @@ const ClassShape = option => {
 
   // 处理原型挂载
   assign(AClass.prototype, $prototype)
+
+  // 处理属性描述符
+  for (let key in _options) {
+    let desc = Object.getOwnPropertyDescriptor(_options, key)
+    if (desc) {
+      Object.defineProperty(AClass.prototype, key, desc)
+    }
+  }
 
   // 静态属性和方法的继承
   AClass.__proto__ = $parent
