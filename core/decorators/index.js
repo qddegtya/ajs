@@ -1,1 +1,2 @@
-export {}
+import mixin from './mixin'
+export { mixin }

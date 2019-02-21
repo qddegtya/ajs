@@ -43,6 +43,14 @@ const assign = function() {
   }
 };
 
+function isArray(obj) {
+  return Object.prototype.toString.apply(obj) == '[object Array]'
+}
+
+const is = {
+  isArray
+};
+
 /**
  *
  * // Class 定义
@@ -191,15 +199,151 @@ const ClassShape = option => {
   return AClass
 };
 
-// import decorators from './decorators'
+const mixin = function mixin() {
+  let mixins = arguments;
+
+  let _hasOwnProperty = function(target, key) {
+    return Object.prototype.hasOwnProperty.call(target, key)
+  };
+
+  return function _mixin_decorate(target) {
+    let _mixins;
+
+    if (mixins.length === 0) {
+      _mixins = [];
+    } else if (mixins.length === 1 && typeof mixins === 'function') {
+      _mixins = [];
+      target = mixins[0];
+    } else if (mixins.length === 1 && typeof mixins === 'object') {
+      _mixins = [ mixins[0] ];
+    } else if (mixins.length > 1) {
+      _mixins = mixins;
+    }
+
+    // handle
+    for (let i = 0; i < _mixins.length; i++) {
+      let _currentMixinSrc = _mixins[i];
+
+      for (let k in _currentMixinSrc) {
+        // when the mixin is X.prototype, we do not assign `X.prototype.constructor` property
+        if (_hasOwnProperty(_currentMixinSrc, k) && k !== 'constructor') {
+          if (!_hasOwnProperty(target.prototype, k)) {
+            let desc = Object.getOwnPropertyDescriptor(_currentMixinSrc, k);
+
+            if (desc) {
+              Object.defineProperty(target.prototype, k, desc);
+            } else {
+              target.prototype[k] = _currentMixinSrc[k];
+            }
+          }
+        }
+      }
+    }
+  }
+};
 
 const base = {
   Class: ClassShape
 };
 
+const decorators = {
+  mixin
+};
+
 var index = /*#__PURE__*/Object.freeze({
-  base: base
+  base: base,
+  decorators: decorators
+});
+
+// TODO
+// proxy: __call__
+
+const IntercepterRunnerContainer = base.Class({
+  $ctor: function(target) {
+    this.target = target;
+    this._before = [];
+    this._after = [];
+    this.target.intercepted = true;
+  },
+
+  before: function(_before) {
+    this._before.push(_before);
+    return this
+  },
+
+  after: function(_after) {
+    this._after.push(_after);
+    return this
+  },
+
+  // TODO: 支持异步
+  // get getAsyncRunner () {},
+
+  getRunner () {
+    let _self = this;
+
+    return function() {
+      let args = arguments,
+        ret;
+
+      for (let i = 0; i < _self._before.length; i++) {
+        ret = _self._before[i].apply(this, args);
+
+        // stop
+        if (ret === false) return
+        else if (is.isArray(ret)) args = ret;
+      }
+
+      let res = _self.target.apply(this, args);
+
+      for (var j = 0; j < _self._after.length; j++) {
+        ret = _self._after[j].apply(this, args);
+
+        // jump to res
+        if (ret === false) break
+        else if (is.isArray(ret)) args = ret;
+      }
+
+      return res
+    }
+  }
+});
+
+/**
+ * @example
+ *
+ * // quick start
+ * function log (msg) {
+ *   console.log(msg)
+ * }
+ *
+ * const _log = intercepter(log)
+ * .before((msg) => {
+ *   console.log('<====== before ======>')
+ * })
+ * .after((msg) => {
+ *   console.log('<====== after ======>')
+ * })
+ * .getRunner()
+ *
+ * _log('this is our msg')
+ *
+ *
+ * @param target 被拦截的 function
+ */
+const intercepter = target => {
+  if (target.intercepted) return
+  return new IntercepterRunnerContainer(target)
+};
+
+const helper = {
+  intercepter
+};
+
+var index$1 = /*#__PURE__*/Object.freeze({
+  helper: helper
 });
 
 exports.core = index;
+exports.functional = index$1;
 /** Follow me: @qddegtya (https://github.com/qddegtya) */

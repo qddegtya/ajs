@@ -1,4 +1,5 @@
 const AJS = require("../dist/ajs.cjs");
+const EventEmitter = require('events');
 
 let MyDate = AJS.core.base.Class(function() {
   let formatDate = function(date) {
@@ -71,6 +72,9 @@ const C = AJS.core.base.Class({
     this.on();
   }
 });
+
+// mixin
+AJS.core.decorators.mixin(EventEmitter.prototype)(A);
 
 let b = new B("john");
 console.log(B.foo);
