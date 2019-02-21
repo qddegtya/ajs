@@ -1,17 +1,40 @@
 const AJS = require("../dist/ajs.cjs");
 
+const sleep = t =>
+  new Promise((a, b) => {
+    console.log(`将等待 ${t} ms`);
+    setTimeout(a, t);
+  });
+
 // quick start
-function log (msg) {
-  console.log(msg)
+function log(msg) {
+  console.log(msg);
 }
 
-const _log = AJS.functional.helper.intercepter(log)
-.before((msg) => {
-  console.log(`<====== before: ${msg} ======>`)
-})
-.after((msg) => {
-  console.log(`<====== after: ${msg} ======>`)
-})
-.getRunner()
+async function logWithTimeout(t) {
+  await sleep(t);
+  console.log(`<====== ${t} ms 后输出 ======>`);
+}
 
-_log('this is our msg')
+const _log = AJS.functional.helper
+  .intercepter(log)
+  .before(msg => {
+    console.log(`<====== before: ${msg} ======>`);
+  })
+  .after(msg => {
+    console.log(`<====== after: ${msg} ======>`);
+  })
+  .getRunner();
+
+const _asyncLog = AJS.functional.helper
+  .intercepter(logWithTimeout)
+  .before(sleep)
+  .getAsyncRunner();
+
+async function testAsyncLog(t) {
+  await _asyncLog(t);
+}
+
+testAsyncLog(3000);
+
+// _log("this is our msg");

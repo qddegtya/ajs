@@ -22,10 +22,53 @@ const IntercepterRunnerContainer = base.Class({
     return this
   },
 
-  // TODO: 支持异步
-  // get getAsyncRunner () {},
+  getAsyncRunner() {
+    let _self = this
 
-  getRunner () {
+    return function() {
+      let args = arguments,
+        _continue = true
+
+      const _startChainInvoke = (cbs, index) => {
+        index = index || 0
+
+        if (index >= cbs.length) return Promise.resolve(void 0)
+
+        let _curCb = cbs[index],
+          ret
+
+        return new Promise((resolve, reject) => {
+          try {
+            // async function => Promise
+            ret = _curCb.apply(this, args)
+            resolve(ret)
+          } catch (error) {
+            reject(error)
+          }
+        }).then(ret => {
+          if (ret === false) return false
+          else if (is.isArray(ret)) args = ret
+
+          // continue
+          return _startChainInvoke(cbs, index + 1)
+        })
+      }
+
+      return _startChainInvoke(_self._before)
+        .then(res => {
+          if (res === false) _continue = false
+          else return _self.target.apply(this, args)
+        })
+        .then(res => {
+          if (!_continue) return res
+
+          // 执行 ret 返回后，_after 不需要返回，因此直接 () => res 即可
+          else _startChainInvoke(_self._after).then(() => res)
+        })
+    }
+  },
+
+  getRunner() {
     let _self = this
 
     return function() {

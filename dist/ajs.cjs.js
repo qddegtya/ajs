@@ -3,36 +3,37 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const assign = function() {
-  let args = arguments,
-    thisArg,
-    src = [],
-    dst;
+var assign = function assign() {
+  var args = arguments,
+      thisArg,
+      src = [],
+      dst; // dst only
 
-  // dst only
   if (args.length === 1) {
     thisArg = null;
     dst = args[0];
     src = [];
-  }
+  } // support dst src
 
-  // support dst src
+
   if (args.length === 2) {
-    (thisArg = null), (dst = args[0]), (src = [ args[1] ]);
-  }
+    thisArg = null, dst = args[0], src = [args[1]];
+  } // support thisArg dst [ src ]
 
-  // support thisArg dst [ src ]
+
   if (args.length >= 3) {
     thisArg = args[0];
     dst = args[1];
     src = Array.prototype.slice.call(args, 2);
   }
 
-  for (let i = 0; i < src.length; i++) {
-    let _o = src[i];
-    for (let k in _o) {
+  for (var i = 0; i < src.length; i++) {
+    var _o = src[i];
+
+    for (var k in _o) {
       if (Object.prototype.hasOwnProperty.call(_o, k)) {
-        let val = _o[k];
+        var val = _o[k];
+
         if (typeof val === 'function' && thisArg) {
           dst[k] = val.bind(thisArg);
         } else {
@@ -44,11 +45,11 @@ const assign = function() {
 };
 
 function isArray(obj) {
-  return Object.prototype.toString.apply(obj) == '[object Array]'
+  return Object.prototype.toString.apply(obj) == '[object Array]';
 }
 
-const is = {
-  isArray
+var is = {
+  isArray: isArray
 };
 
 /**
@@ -95,140 +96,152 @@ const is = {
  *
  */
 
-const ClassShape = option => {
-  let INSTANCE_PROPERTY_REGEXP = /^\$_[^$_]+/;
-  let _options = typeof option === 'function' ? option() : option;
+var ClassShape = function ClassShape(option) {
+  var INSTANCE_PROPERTY_REGEXP = /^\$_[^$_]+/;
 
-  let _processOptions = function(option) {
-    let $parent = option.$parent,
-      $ctor = option.$ctor,
-      $static = option.$static || Object.create(null),
-      $instance = Object.create(null),
-      $prototype = Object.create(null);
+  var _options = typeof option === 'function' ? option() : option;
 
-    for (let k in option) {
+  var _processOptions = function _processOptions(option) {
+    var $parent = option.$parent,
+        $ctor = option.$ctor,
+        $static = option.$static || Object.create(null),
+        $instance = Object.create(null),
+        $prototype = Object.create(null);
+
+    for (var k in option) {
       // 实例上不该访问到这些属性，但可以允许访问到 $ctor
       if (k === '$parent' || k === '$static') {
-        continue
-      }
+        continue;
+      } // 实例属性/方法
 
-      // 实例属性/方法
+
       if (INSTANCE_PROPERTY_REGEXP.test(k)) {
         $instance[k] = option[k];
-        continue
-      }
+        continue;
+      } // 原型
 
-      // 原型
+
       $prototype[k] = option[k];
     }
 
     return {
-      $parent,
-      $ctor,
-      $static,
-      $instance,
-      $prototype
-    }
+      $parent: $parent,
+      $ctor: $ctor,
+      $static: $static,
+      $instance: $instance,
+      $prototype: $prototype
+    };
   };
 
-  const { $parent, $ctor, $static, $instance, $prototype } = _processOptions(
-    _options
-  );
+  var _processOptions2 = _processOptions(_options),
+      $parent = _processOptions2.$parent,
+      $ctor = _processOptions2.$ctor,
+      $static = _processOptions2.$static,
+      $instance = _processOptions2.$instance,
+      $prototype = _processOptions2.$prototype;
 
-  let parentPrototype =
-    typeof $parent === 'function' ? $parent.prototype : $parent;
+  var parentPrototype = typeof $parent === 'function' ? $parent.prototype : $parent;
 
-  let AClass = function() {
-    let __super_is_called__ = false,
-      ins,
-      superThis;
+  var AClass = function AClass() {
+    var __super_is_called__ = false,
+        ins,
+        superThis; // this.$super()
 
-    // this.$super()
-    this.$super = function() {
+    this.$super = function () {
       __super_is_called__ = true;
       superThis = $parent.apply(this, arguments);
-    };
+    }; // 处理实例属性
 
-    // 处理实例属性
-    assign(this, this, $instance);
 
-    // 继承的情况下可以省略 $ctor
+    assign(this, this, $instance); // 继承的情况下可以省略 $ctor
+
     if (!$ctor && $parent) {
       ins = $parent.apply(superThis || this, arguments);
     } else {
-      ins = $ctor.apply(superThis || this, arguments);
+      ins = $ctor.apply(superThis || this, arguments); // 检查 super 调用
 
-      // 检查 super 调用
       if ($parent && !__super_is_called__ && typeof $parent === 'function') {
-        throw new SyntaxError('You should call this.$super first before use `this`.')
+        throw new SyntaxError('You should call this.$super first before use `this`.');
       }
-    }
-
-    // 如果存在继承的情况
+    } // 如果存在继承的情况
     // 处理 this.$super 引用
+
+
     if ($parent) {
       assign(this, this.$super, parentPrototype);
     }
 
-    return ins
-  };
-
-  // 处理继承
+    return ins;
+  }; // 处理继承
   // TODO: 数组的支持 (?)
+
+
   if ($parent) {
     AClass.prototype = Object.create(parentPrototype);
     AClass.prototype['$class'] = AClass;
-  }
+  } // 处理原型挂载
 
-  // 处理原型挂载
-  assign(AClass.prototype, $prototype);
 
-  // 静态属性和方法的继承
-  AClass.__proto__ = $parent;
-  // 处理静态属性和方法
-  assign(AClass, $static);
+  assign(AClass.prototype, $prototype); // 静态属性和方法的继承
 
-  // 标记
+  AClass.__proto__ = $parent; // 处理静态属性和方法
+
+  assign(AClass, $static); // 标记
+
   AClass.$parent = $parent;
 
-  AClass.$extends = function(option) {
+  AClass.$extends = function (option) {
     option.$parent = this;
-    return ClassShape(option)
+    return ClassShape(option);
   };
 
-  return AClass
+  return AClass;
 };
 
-const mixin = function mixin() {
-  let mixins = arguments;
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
 
-  let _hasOwnProperty = function(target, key) {
-    return Object.prototype.hasOwnProperty.call(target, key)
+  return _typeof(obj);
+}
+
+var mixin = function mixin() {
+  var mixins = arguments;
+
+  var _hasOwnProperty = function _hasOwnProperty(target, key) {
+    return Object.prototype.hasOwnProperty.call(target, key);
   };
 
   return function _mixin_decorate(target) {
-    let _mixins;
+    var _mixins;
 
     if (mixins.length === 0) {
       _mixins = [];
     } else if (mixins.length === 1 && typeof mixins === 'function') {
       _mixins = [];
       target = mixins[0];
-    } else if (mixins.length === 1 && typeof mixins === 'object') {
-      _mixins = [ mixins[0] ];
+    } else if (mixins.length === 1 && _typeof(mixins) === 'object') {
+      _mixins = [mixins[0]];
     } else if (mixins.length > 1) {
       _mixins = mixins;
-    }
+    } // handle
 
-    // handle
-    for (let i = 0; i < _mixins.length; i++) {
-      let _currentMixinSrc = _mixins[i];
 
-      for (let k in _currentMixinSrc) {
+    for (var i = 0; i < _mixins.length; i++) {
+      var _currentMixinSrc = _mixins[i];
+
+      for (var k in _currentMixinSrc) {
         // when the mixin is X.prototype, we do not assign `X.prototype.constructor` property
         if (_hasOwnProperty(_currentMixinSrc, k) && k !== 'constructor') {
           if (!_hasOwnProperty(target.prototype, k)) {
-            let desc = Object.getOwnPropertyDescriptor(_currentMixinSrc, k);
+            var desc = Object.getOwnPropertyDescriptor(_currentMixinSrc, k);
 
             if (desc) {
               Object.defineProperty(target.prototype, k, desc);
@@ -239,15 +252,14 @@ const mixin = function mixin() {
         }
       }
     }
-  }
+  };
 };
 
-const base = {
+var base = {
   Class: ClassShape
 };
-
-const decorators = {
-  mixin
+var decorators = {
+  mixin: mixin
 };
 
 var index = /*#__PURE__*/Object.freeze({
@@ -255,60 +267,89 @@ var index = /*#__PURE__*/Object.freeze({
   decorators: decorators
 });
 
-// TODO
 // proxy: __call__
 
-const IntercepterRunnerContainer = base.Class({
-  $ctor: function(target) {
+var IntercepterRunnerContainer = base.Class({
+  $ctor: function $ctor(target) {
     this.target = target;
     this._before = [];
     this._after = [];
     this.target.intercepted = true;
   },
-
-  before: function(_before) {
+  before: function before(_before) {
     this._before.push(_before);
-    return this
-  },
 
-  after: function(_after) {
+    return this;
+  },
+  after: function after(_after) {
     this._after.push(_after);
-    return this
+
+    return this;
   },
+  getAsyncRunner: function getAsyncRunner() {
+    var _self = this;
 
-  // TODO: 支持异步
-  // get getAsyncRunner () {},
+    return function () {
+      var _this = this;
 
-  getRunner () {
-    let _self = this;
+      var args = arguments,
+          _continue = true;
 
-    return function() {
-      let args = arguments,
-        ret;
+      var _startChainInvoke = function _startChainInvoke(cbs, index) {
+        index = index || 0;
+        if (index >= cbs.length) return Promise.resolve(void 0);
+        var _curCb = cbs[index],
+            ret;
+        return new Promise(function (resolve, reject) {
+          try {
+            // async function => Promise
+            ret = _curCb.apply(_this, args);
+            resolve(ret);
+          } catch (error) {
+            reject(error);
+          }
+        }).then(function (ret) {
+          if (ret === false) return false;else if (is.isArray(ret)) args = ret; // continue
 
-      for (let i = 0; i < _self._before.length; i++) {
-        ret = _self._before[i].apply(this, args);
+          return _startChainInvoke(cbs, index + 1);
+        });
+      };
 
-        // stop
-        if (ret === false) return
-        else if (is.isArray(ret)) args = ret;
+      return _startChainInvoke(_self._before).then(function (res) {
+        if (res === false) _continue = false;else return _self.target.apply(_this, args);
+      }).then(function (res) {
+        if (!_continue) return res; // 执行 ret 返回后，_after 不需要返回，因此直接 () => res 即可
+        else _startChainInvoke(_self._after).then(function () {
+            return res;
+          });
+      });
+    };
+  },
+  getRunner: function getRunner() {
+    var _self = this;
+
+    return function () {
+      var args = arguments,
+          ret;
+
+      for (var i = 0; i < _self._before.length; i++) {
+        ret = _self._before[i].apply(this, args); // stop
+
+        if (ret === false) return;else if (is.isArray(ret)) args = ret;
       }
 
-      let res = _self.target.apply(this, args);
+      var res = _self.target.apply(this, args);
 
       for (var j = 0; j < _self._after.length; j++) {
-        ret = _self._after[j].apply(this, args);
+        ret = _self._after[j].apply(this, args); // jump to res
 
-        // jump to res
-        if (ret === false) break
-        else if (is.isArray(ret)) args = ret;
+        if (ret === false) break;else if (is.isArray(ret)) args = ret;
       }
 
-      return res
-    }
+      return res;
+    };
   }
 });
-
 /**
  * @example
  *
@@ -331,13 +372,14 @@ const IntercepterRunnerContainer = base.Class({
  *
  * @param target 被拦截的 function
  */
-const intercepter = target => {
-  if (target.intercepted) return
-  return new IntercepterRunnerContainer(target)
+
+var intercepter = function intercepter(target) {
+  if (target.intercepted) return;
+  return new IntercepterRunnerContainer(target);
 };
 
-const helper = {
-  intercepter
+var helper = {
+  intercepter: intercepter
 };
 
 var index$1 = /*#__PURE__*/Object.freeze({

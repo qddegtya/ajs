@@ -1,5 +1,6 @@
 import { version as LIB_VERSION, description as LIB_DESCRIPTION } from './package.json'
 import resolve from 'rollup-plugin-node-resolve'
+import babel from 'rollup-plugin-babel'
 
 const LIB_NAME = `AJS`
 const AUTHOR_NAME = `qddegtya`
@@ -14,6 +15,7 @@ export default {
     footer: `/** Follow me: @${AUTHOR_NAME} (https://github.com/${AUTHOR_NAME}) */`
   },
   plugins: [
-    resolve()
+    resolve(),
+    babel()
   ]
 }
