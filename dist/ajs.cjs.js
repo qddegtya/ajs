@@ -1,4 +1,4 @@
-/** AJS (1.0.2):  💗 A collection of utility libraries used by @qddegtya*/
+/** AJS (1.0.3):  💗 A collection of utility libraries used by @qddegtya*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -379,7 +379,7 @@ var IntercepterRunnerContainer = base.Class({
  * .after((msg) => {
  *   console.log('<====== after ======>')
  * })
- * .getRunner()
+ * .$runner
  *
  * _log('this is our msg')
  *

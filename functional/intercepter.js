@@ -113,7 +113,7 @@ const IntercepterRunnerContainer = base.Class({
  * .after((msg) => {
  *   console.log('<====== after ======>')
  * })
- * .getRunner()
+ * .$runner
  *
  * _log('this is our msg')
  *
