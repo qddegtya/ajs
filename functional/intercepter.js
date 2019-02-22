@@ -9,7 +9,6 @@ const IntercepterRunnerContainer = base.Class({
     this.target = target
     this._before = []
     this._after = []
-    this.target.intercepted = true
   },
 
   before: function(_before) {
@@ -120,9 +119,7 @@ const IntercepterRunnerContainer = base.Class({
  * @param target 被拦截的 function
  */
 const intercepter = target => {
-  return target.intercepted
-    ? target.intercepted
-    : (target.intercepted = new IntercepterRunnerContainer(target))
+  return new IntercepterRunnerContainer(target)
 }
 
 export default intercepter
