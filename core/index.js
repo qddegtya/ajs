@@ -1,8 +1,10 @@
 import Class from './class'
+import Deferred from './Deferred'
 import { mixin } from './decorators'
 
 const base = {
-  Class
+  Class,
+  Deferred
 }
 
 const decorators = {

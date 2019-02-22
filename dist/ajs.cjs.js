@@ -209,6 +209,53 @@ var ClassShape = function ClassShape(option) {
   return AClass;
 };
 
+var Deferred = ClassShape(function () {
+  // private
+  var _done = false,
+      _promise,
+      _resolve,
+      _reject;
+
+  return {
+    $ctor: function $ctor() {
+      // promise 延迟执行容器
+      _promise = new Promise(function (resolve, reject) {
+        _resolve = resolve, _reject = reject;
+      });
+    },
+    resolve: function resolve(o) {
+      _done = true;
+
+      _resolve(o);
+    },
+    reject: function reject(o) {
+      _done = true, _reject(o);
+    },
+
+    get isDone() {
+      return _done;
+    },
+
+    then: function then() {
+      return Promise.prototype.then.apply(_promise, arguments);
+    },
+    catch: function _catch() {
+      return Promise.prototype.catch.apply(_promise, arguments);
+    },
+    done: function done() {
+      // 先将 onFulfill, onReject 扔入容器
+      var promise = arguments.length ? _promise.then.apply(_promise, arguments) : _promise; // 执行最后的 done 操作，模拟正常返回 undefined
+      // 异常直接抛出，可由后续的 catch 继续捕获，但 done 不处理
+
+      promise.then(void 0, function (err) {
+        setTimeout(function () {
+          throw err;
+        }, 0);
+      });
+    }
+  };
+});
+
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -267,7 +314,8 @@ var mixin = function mixin() {
 };
 
 var base = {
-  Class: ClassShape
+  Class: ClassShape,
+  Deferred: Deferred
 };
 var decorators = {
   mixin: mixin
@@ -392,8 +440,38 @@ var intercepter = function intercepter(target) {
   return new IntercepterRunnerContainer(target);
 };
 
+var PromisifyContainer = Deferred.$extends({
+  $ctor: function $ctor(fun, thisArg, args) {
+    this.$super();
+
+    var _self = this;
+
+    var _cb = function _cb(err, data) {
+      if (err) _self.reject(err);
+
+      _self.resolve(data);
+    };
+
+    var _newArgs = Array.prototype.slice.call(args).concat(_cb);
+
+    fun.apply(thisArg, _newArgs);
+  }
+});
+
+var promisify = function promisify(fun) {
+  if (!(typeof fun === 'function')) {
+    throw new SyntaxError('promisify must receive a node-callback-style function.');
+  }
+
+  return function () {
+    var thisArg = this;
+    return new PromisifyContainer(fun, thisArg, arguments);
+  };
+};
+
 var helper = {
-  intercepter: intercepter
+  intercepter: intercepter,
+  promisify: promisify
 };
 
 var index$1 = /*#__PURE__*/Object.freeze({
