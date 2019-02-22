@@ -1,4 +1,4 @@
-/** AJS (1.0.5):  💗 A collection of utility libraries used by @qddegtya*/
+/** AJS (1.0.6):  💗 A collection of utility libraries used by @qddegtya*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -333,7 +333,6 @@ var IntercepterRunnerContainer = base.Class({
     this.target = target;
     this._before = [];
     this._after = [];
-    this.target.intercepted = true;
   },
   before: function before(_before) {
     this._before.push(_before);
@@ -436,7 +435,7 @@ var IntercepterRunnerContainer = base.Class({
  */
 
 var intercepter = function intercepter(target) {
-  return target.intercepted ? target.intercepted : target.intercepted = new IntercepterRunnerContainer(target);
+  return new IntercepterRunnerContainer(target);
 };
 
 var PromisifyContainer = Deferred.$extends({
