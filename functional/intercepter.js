@@ -61,7 +61,6 @@ const IntercepterRunnerContainer = base.Class({
         })
         .then(res => {
           if (!_continue) return res
-
           // 执行 ret 返回后，_after 不需要返回，因此直接 () => res 即可
           else _startChainInvoke(_self._after).then(() => res)
         })
@@ -121,8 +120,9 @@ const IntercepterRunnerContainer = base.Class({
  * @param target 被拦截的 function
  */
 const intercepter = target => {
-  if (target.intercepted) return
-  return new IntercepterRunnerContainer(target)
+  return target.intercepted
+    ? target.intercepted
+    : (target.intercepted = new IntercepterRunnerContainer(target))
 }
 
 export default intercepter

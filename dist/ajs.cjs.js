@@ -436,8 +436,7 @@ var IntercepterRunnerContainer = base.Class({
  */
 
 var intercepter = function intercepter(target) {
-  if (target.intercepted) return;
-  return new IntercepterRunnerContainer(target);
+  return target.intercepted ? target.intercepted : target.intercepted = new IntercepterRunnerContainer(target);
 };
 
 var PromisifyContainer = Deferred.$extends({
