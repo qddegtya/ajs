@@ -44,8 +44,13 @@ var assign = function assign() {
   }
 };
 
+var string = Object.prototype.toString;
+var typeToString = (function (o) {
+  return string.call(o);
+});
+
 function isArray(obj) {
-  return Object.prototype.toString.apply(obj) == '[object Array]';
+  return typeToString(obj) == '[object Array]';
 }
 
 var is = {
@@ -478,4 +483,5 @@ var index$1 = /*#__PURE__*/Object.freeze({
 
 exports.core = index;
 exports.functional = index$1;
+exports.is = is;
 /** Follow me: @qddegtya (https://github.com/qddegtya) */

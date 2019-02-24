@@ -1,5 +1,7 @@
+import typeToString from './typeToString'
+
 function isArray(obj) {
-  return Object.prototype.toString.apply(obj) == '[object Array]'
+  return typeToString(obj) == '[object Array]'
 }
 
 export {
