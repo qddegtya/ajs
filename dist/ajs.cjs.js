@@ -44,6 +44,20 @@ var assign = function assign() {
   }
 };
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 var string = Object.prototype.toString;
 var typeToString = (function (o) {
   return string.call(o);
@@ -53,9 +67,23 @@ function isArray(obj) {
   return typeToString(obj) == '[object Array]';
 }
 
-var is = {
-  isArray: isArray
-};
+function isObject(obj) {
+  var type = _typeof(obj);
+
+  return obj != null && (type == 'object' || type == 'function');
+}
+
+function isFunction(obj) {
+  if (!isObject(obj)) return false;
+  var objType = typeToString(obj);
+  return objType === '[object Function]' || objType === '[object AsyncFunction]' || objType === '[object GeneratorFunction]' || objType === '[object Proxy]';
+}
+
+var is = /*#__PURE__*/Object.freeze({
+  isArray: isArray,
+  isFunction: isFunction,
+  isObject: isObject
+});
 
 /**
  *
@@ -261,20 +289,6 @@ var Deferred = ClassShape(function () {
   };
 });
 
-function _typeof(obj) {
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
 var mixin = function mixin() {
   var mixins = arguments;
 
@@ -373,7 +387,7 @@ var IntercepterRunnerContainer = base.Class({
             reject(error);
           }
         }).then(function (ret) {
-          if (ret === false) return false;else if (is.isArray(ret)) args = ret; // continue
+          if (ret === false) return false;else if (isArray(ret)) args = ret; // continue
 
           return _startChainInvoke(cbs, index + 1);
         });
@@ -400,7 +414,7 @@ var IntercepterRunnerContainer = base.Class({
       for (var i = 0; i < _self._before.length; i++) {
         ret = _self._before[i].apply(this, args); // stop
 
-        if (ret === false) return;else if (is.isArray(ret)) args = ret;
+        if (ret === false) return;else if (isArray(ret)) args = ret;
       }
 
       var res = _self.target.apply(this, args);
@@ -408,7 +422,7 @@ var IntercepterRunnerContainer = base.Class({
       for (var j = 0; j < _self._after.length; j++) {
         ret = _self._after[j].apply(this, args); // jump to res
 
-        if (ret === false) break;else if (is.isArray(ret)) args = ret;
+        if (ret === false) break;else if (isArray(ret)) args = ret;
       }
 
       return res;

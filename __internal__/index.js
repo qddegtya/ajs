@@ -1,9 +1,5 @@
 import assign from './assign'
-import { isArray } from './is'
-
-const is = {
-  isArray
-}
+import * as is from './is'
 
 export {
   assign,
