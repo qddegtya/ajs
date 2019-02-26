@@ -486,9 +486,17 @@ var promisify = function promisify(fun) {
   };
 };
 
+var sleep = (function (ms) {
+  // eslint-disable-next-line
+  return new Promise(function (a, _) {
+    setTimeout(a, ms);
+  });
+});
+
 var helper = {
   intercepter: intercepter,
-  promisify: promisify
+  promisify: promisify,
+  sleep: sleep
 };
 
 var index$1 = /*#__PURE__*/Object.freeze({

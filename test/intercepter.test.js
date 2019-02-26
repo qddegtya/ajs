@@ -1,10 +1,6 @@
 const AJS = require("../dist/ajs.cjs");
 
-const sleep = t =>
-  new Promise((a, b) => {
-    console.log(`将等待 ${t} ms`);
-    setTimeout(a, t);
-  });
+const sleep = AJS.functional.helper.sleep
 
 // quick start
 function log(msg) {
