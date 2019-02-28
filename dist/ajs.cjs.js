@@ -1,4 +1,4 @@
-/** AJS (1.0.6):  💗 A collection of utility libraries used by @qddegtya*/
+/** AJS (1.0.7):  💗 A collection of utility libraries used by @qddegtya*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -503,7 +503,35 @@ var index$1 = /*#__PURE__*/Object.freeze({
   helper: helper
 });
 
+// TODO
+var compose = (function () {
+  for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+    fns[_key] = arguments[_key];
+  }
+
+  return function () {
+    var args = arguments,
+        _self = this;
+
+    if (!fns.length) {
+      throw new Error('No function passed');
+    }
+
+    var initialVal = fns.splice(0, 1)[0].apply(_self, args);
+    return fns.reduce(function (ret, cfn) {
+      return cfn.apply(_self, new Array(ret));
+    }, initialVal);
+  };
+});
+
+
+
+var index$2 = /*#__PURE__*/Object.freeze({
+  compose: compose
+});
+
 exports.core = index;
 exports.functional = index$1;
 exports.is = is;
+exports.fp = index$2;
 /** Follow me: @qddegtya (https://github.com/qddegtya) */
