@@ -58,6 +58,44 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
 var string = Object.prototype.toString;
 var typeToString = (function (o) {
   return string.call(o);
@@ -530,8 +568,69 @@ var index$2 = /*#__PURE__*/Object.freeze({
   compose: compose
 });
 
+var once = function once(pre, current, handler, options) {
+  var _this = this;
+
+  var args = Array.prototype.slice.call(arguments);
+
+  if (args.length === 2) {
+    handler = current;
+    current = pre;
+  } // TODO: 根据 EventTarget 生成正则
+
+
+  var TARGET_EV_REGEXP = /(.*)\.(.*)/;
+
+  var _getEventTargetTuple = function _getEventTargetTuple(et) {
+    return TARGET_EV_REGEXP.test(et) ? et.match(TARGET_EV_REGEXP).slice(1, 3) : [];
+  };
+
+  var _getTarget = function _getTarget(target) {
+    return target === 'window' ? window : window[target];
+  };
+
+  var _getEventTargetTuple2 = _getEventTargetTuple(pre),
+      _getEventTargetTuple3 = _slicedToArray(_getEventTargetTuple2, 3),
+      _1 = _getEventTargetTuple3[0],
+      preEvent = _getEventTargetTuple3[1],
+      _getEventTargetTuple4 = _getEventTargetTuple3[2],
+      preTarget = _getEventTargetTuple4 === void 0 ? _getTarget(_1) : _getEventTargetTuple4;
+
+  var _getEventTargetTuple5 = _getEventTargetTuple(current),
+      _getEventTargetTuple6 = _slicedToArray(_getEventTargetTuple5, 3),
+      _2 = _getEventTargetTuple6[0],
+      currentEvent = _getEventTargetTuple6[1],
+      _getEventTargetTuple7 = _getEventTargetTuple6[2],
+      currentTarget = _getEventTargetTuple7 === void 0 ? _getTarget(_2) : _getEventTargetTuple7;
+
+  var isSameTe = pre === current;
+
+  var _outerHandler = function _outerHandler(e1) {
+    var _proxyHandler = function _proxyHandler(e2) {
+      handler.call(_this, e2);
+      currentTarget.removeEventListener(currentEvent, isSameTe ? _outerHandler : _proxyHandler, options);
+    };
+
+    if (isSameTe) return _proxyHandler.call(_this, e1);
+    currentTarget && currentEvent && currentTarget.addEventListener(currentEvent, _proxyHandler, options);
+  };
+
+  preTarget && preEvent && preTarget.addEventListener(preEvent, _outerHandler, options);
+};
+
+var E = /*#__PURE__*/Object.freeze({
+  once: once
+});
+
+
+
+var index$3 = /*#__PURE__*/Object.freeze({
+  E: E
+});
+
 exports.core = index;
 exports.functional = index$1;
 exports.is = is;
 exports.fp = index$2;
+exports.dom = index$3;
 /** Follow me: @qddegtya (https://github.com/qddegtya) */
