@@ -21,4 +21,9 @@ function isFunction(obj) {
   )
 }
 
-export { isArray, isFunction, isObject }
+function isBoolean(value) {
+  return value === true || value === false ||
+    (isObject(value) && typeToString(value) == '[object Boolean]')
+}
+
+export { isArray, isFunction, isObject, isBoolean }

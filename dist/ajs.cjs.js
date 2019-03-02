@@ -117,10 +117,15 @@ function isFunction(obj) {
   return objType === '[object Function]' || objType === '[object AsyncFunction]' || objType === '[object GeneratorFunction]' || objType === '[object Proxy]';
 }
 
+function isBoolean(value) {
+  return value === true || value === false || isObject(value) && typeToString(value) == '[object Boolean]';
+}
+
 var is = /*#__PURE__*/Object.freeze({
   isArray: isArray,
   isFunction: isFunction,
-  isObject: isObject
+  isObject: isObject,
+  isBoolean: isBoolean
 });
 
 /**
