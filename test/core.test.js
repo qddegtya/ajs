@@ -16,7 +16,7 @@ let MyDate = AJS.core.base.Class(function() {
 });
 
 let A = AJS.core.base.Class(function() {
-  // 私有变量
+  // 类私有变量
   let $privateA = "xiaoa";
 
   return {

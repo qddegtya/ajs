@@ -1,46 +1,44 @@
 import Class from './class'
 
 const Deferred = Class(function() {
-  // private
-  let _done = false,
-    _promise,
-    _resolve,
-    _reject
-
   return {
     $ctor: function() {
+      // private
+      this._done = false
+      const self = this
+
       // promise 延迟执行容器
-      _promise = new Promise(function(resolve, reject) {
-        (_resolve = resolve), (_reject = reject)
+      this._promise = new Promise(function(resolve, reject) {
+        (self._resolve = resolve), (self._reject = reject)
       })
     },
 
     resolve(o) {
-      _done = true
-      _resolve(o)
+      this._done = true
+      this._resolve(o)
     },
 
     reject(o) {
-      (_done = true), _reject(o)
+      (this._done = true), this._reject(o)
     },
 
     get isDone() {
-      return _done
+      return this._done
     },
 
     then() {
-      return Promise.prototype.then.apply(_promise, arguments)
+      return Promise.prototype.then.apply(this._promise, arguments)
     },
 
     catch() {
-      return Promise.prototype.catch.apply(_promise, arguments)
+      return Promise.prototype.catch.apply(this._promise, arguments)
     },
 
     done() {
       // 先将 onFulfill, onReject 扔入容器
       let promise = arguments.length
-        ? _promise.then.apply(_promise, arguments)
-        : _promise
+        ? this.promise.then.apply(this._promise, arguments)
+        : this._promise
 
       // 执行最后的 done 操作，模拟正常返回 undefined
       // 异常直接抛出，可由后续的 catch 继续捕获，但 done 不处理

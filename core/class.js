@@ -27,7 +27,7 @@
  * })
  *
  * // 支持直接传入 function
- * // 可以利用闭包进行私有属性/方法的支持
+ * // 可以利用闭包进行类私有属性/方法的定义
  * let B = A.$extends(function () {
  *   // private here
  *

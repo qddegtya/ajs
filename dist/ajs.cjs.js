@@ -157,7 +157,7 @@ var is = /*#__PURE__*/Object.freeze({
  * })
  *
  * // 支持直接传入 function
- * // 可以利用闭包进行私有属性/方法的支持
+ * // 可以利用闭包进行类私有属性/方法的定义
  * let B = A.$extends(function () {
  *   // private here
  *
@@ -286,41 +286,38 @@ var ClassShape = function ClassShape(option) {
 };
 
 var Deferred = ClassShape(function () {
-  // private
-  var _done = false,
-      _promise,
-      _resolve,
-      _reject;
-
   return {
     $ctor: function $ctor() {
-      // promise 延迟执行容器
-      _promise = new Promise(function (resolve, reject) {
-        _resolve = resolve, _reject = reject;
+      // private
+      this._done = false;
+      var self = this; // promise 延迟执行容器
+
+      this._promise = new Promise(function (resolve, reject) {
+        self._resolve = resolve, self._reject = reject;
       });
     },
     resolve: function resolve(o) {
-      _done = true;
+      this._done = true;
 
-      _resolve(o);
+      this._resolve(o);
     },
     reject: function reject(o) {
-      _done = true, _reject(o);
+      this._done = true, this._reject(o);
     },
 
     get isDone() {
-      return _done;
+      return this._done;
     },
 
     then: function then() {
-      return Promise.prototype.then.apply(_promise, arguments);
+      return Promise.prototype.then.apply(this._promise, arguments);
     },
     catch: function _catch() {
-      return Promise.prototype.catch.apply(_promise, arguments);
+      return Promise.prototype.catch.apply(this._promise, arguments);
     },
     done: function done() {
       // 先将 onFulfill, onReject 扔入容器
-      var promise = arguments.length ? _promise.then.apply(_promise, arguments) : _promise; // 执行最后的 done 操作，模拟正常返回 undefined
+      var promise = arguments.length ? this.promise.then.apply(this._promise, arguments) : this._promise; // 执行最后的 done 操作，模拟正常返回 undefined
       // 异常直接抛出，可由后续的 catch 继续捕获，但 done 不处理
 
       promise.then(void 0, function (err) {
