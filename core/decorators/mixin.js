@@ -1,9 +1,7 @@
+import { hasOwnProp } from '../../__internal__'
+
 const mixin = function mixin() {
   let mixins = arguments
-
-  let _hasOwnProperty = function(target, key) {
-    return Object.prototype.hasOwnProperty.call(target, key)
-  }
 
   return function _mixin_decorate(target) {
     let _mixins
@@ -25,8 +23,8 @@ const mixin = function mixin() {
 
       for (let k in _currentMixinSrc) {
         // when the mixin is X.prototype, we do not assign `X.prototype.constructor` property
-        if (_hasOwnProperty(_currentMixinSrc, k) && k !== 'constructor') {
-          if (!_hasOwnProperty(target.prototype, k)) {
+        if (hasOwnProp(_currentMixinSrc, k) && k !== 'constructor') {
+          if (!hasOwnProp(target.prototype, k)) {
             let desc = Object.getOwnPropertyDescriptor(_currentMixinSrc, k)
 
             if (desc) {

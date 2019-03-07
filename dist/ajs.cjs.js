@@ -1,4 +1,4 @@
-/** AJS (1.0.7):  💗 A collection of utility libraries used by @qddegtya*/
+/** AJS (1.0.8):  💗 A collection of utility libraries used by @qddegtya*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -126,6 +126,18 @@ var is = /*#__PURE__*/Object.freeze({
   isFunction: isFunction,
   isObject: isObject,
   isBoolean: isBoolean
+});
+
+var hasOwnProp = (function (target, key) {
+  return Object.prototype.hasOwnProperty.call(target, key);
+});
+
+
+
+var index = /*#__PURE__*/Object.freeze({
+  assign: assign,
+  is: is,
+  hasOwnProp: hasOwnProp
 });
 
 /**
@@ -331,11 +343,6 @@ var Deferred = ClassShape(function () {
 
 var mixin = function mixin() {
   var mixins = arguments;
-
-  var _hasOwnProperty = function _hasOwnProperty(target, key) {
-    return Object.prototype.hasOwnProperty.call(target, key);
-  };
-
   return function _mixin_decorate(target) {
     var _mixins;
 
@@ -356,8 +363,8 @@ var mixin = function mixin() {
 
       for (var k in _currentMixinSrc) {
         // when the mixin is X.prototype, we do not assign `X.prototype.constructor` property
-        if (_hasOwnProperty(_currentMixinSrc, k) && k !== 'constructor') {
-          if (!_hasOwnProperty(target.prototype, k)) {
+        if (hasOwnProp(_currentMixinSrc, k) && k !== 'constructor') {
+          if (!hasOwnProp(target.prototype, k)) {
             var desc = Object.getOwnPropertyDescriptor(_currentMixinSrc, k);
 
             if (desc) {
@@ -380,7 +387,7 @@ var decorators = {
   mixin: mixin
 };
 
-var index = /*#__PURE__*/Object.freeze({
+var index$1 = /*#__PURE__*/Object.freeze({
   base: base,
   decorators: decorators
 });
@@ -539,7 +546,7 @@ var helper = {
   sleep: sleep
 };
 
-var index$1 = /*#__PURE__*/Object.freeze({
+var index$2 = /*#__PURE__*/Object.freeze({
   helper: helper
 });
 
@@ -566,7 +573,7 @@ var compose = (function () {
 
 
 
-var index$2 = /*#__PURE__*/Object.freeze({
+var index$3 = /*#__PURE__*/Object.freeze({
   compose: compose
 });
 
@@ -626,13 +633,13 @@ var E = /*#__PURE__*/Object.freeze({
 
 
 
-var index$3 = /*#__PURE__*/Object.freeze({
+var index$4 = /*#__PURE__*/Object.freeze({
   E: E
 });
 
-exports.core = index;
-exports.functional = index$1;
-exports.is = is;
-exports.fp = index$2;
-exports.dom = index$3;
+exports.core = index$1;
+exports.functional = index$2;
+exports.fp = index$3;
+exports.dom = index$4;
+exports.internal = index;
 /** Follow me: @qddegtya (https://github.com/qddegtya) */
