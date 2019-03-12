@@ -540,10 +540,35 @@ var sleep = (function (ms) {
   });
 });
 
+var SENTRY_ERROR_MSG = '@@__JUST_ONE_SENTRY_ERROR__';
+
+function tryNext(func) {
+  var patchedFunc = function patchedFunc() {
+    try {
+      func.apply(void 0, arguments); // sentry ^HAHA
+
+      throw new Error(SENTRY_ERROR_MSG);
+    } catch (error) {
+      if (error.message === SENTRY_ERROR_MSG) ; else {
+        // !!!call next patched-FUNCTION when catch some error
+        patchedFunc.nextChainFunc && patchedFunc.nextChainFunc.apply(patchedFunc, arguments);
+      }
+    }
+  };
+
+  patchedFunc.tryNext = function (nextTryFunc) {
+    patchedFunc.nextChainFunc = tryNext(nextTryFunc);
+    return patchedFunc.nextChainFunc;
+  };
+
+  return patchedFunc;
+}
+
 var helper = {
   intercepter: intercepter,
   promisify: promisify,
-  sleep: sleep
+  sleep: sleep,
+  tryNext: tryNext
 };
 
 var index$2 = /*#__PURE__*/Object.freeze({

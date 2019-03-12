@@ -1,6 +1,6 @@
 const SENTRY_ERROR_MSG = '@@__JUST_ONE_SENTRY_ERROR__'
 
-function makeTryCatchChain(func) {
+function tryNext(func) {
   let patchedFunc = (...args) => {
     try {
       func(...args)
@@ -16,12 +16,12 @@ function makeTryCatchChain(func) {
     }
   }
 
-  patchedFunc.nextTry = nextTryFunc => {
-    patchedFunc.nextChainFunc = makeTryCatchChain(nextTryFunc)
+  patchedFunc.tryNext = nextTryFunc => {
+    patchedFunc.nextChainFunc = tryNext(nextTryFunc)
     return patchedFunc.nextChainFunc
   }
 
   return patchedFunc
 }
 
-export default makeTryCatchChain
+export default tryNext
