@@ -1,4 +1,3 @@
-// TODO
 export default (...fns) => {
   return function() {
     const args = arguments,
