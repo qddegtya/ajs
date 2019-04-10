@@ -1,4 +1,4 @@
-// @see ttps://github.com/nx-js/observer-util/
+// @see https://github.com/nx-js/observer-util/
 
 import { base } from '../core'
 
