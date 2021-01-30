@@ -3,5 +3,6 @@ import * as functional from './functional'
 import * as fp from './fp'
 import * as dom from './dom'
 import * as internal from './__internal__'
+import * as future from './__future__'
 
-export { core, functional, fp, dom, internal }
+export { core, functional, fp, dom, internal, future }

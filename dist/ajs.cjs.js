@@ -843,9 +843,78 @@ var index$4 = /*#__PURE__*/Object.freeze({
   E: E
 });
 
+// @experimental
+var TR = function TR(o) {
+  var _o = typeof o === 'function' ? o() : o,
+      getter = typeof o === 'function' ? o : null,
+      notify = null,
+      binds = [],
+      preOldVal = null,
+      preNewVal = null;
+
+  return {
+    bind: function bind(r) {
+      binds.push(r);
+    },
+    get: function get() {
+      return _o;
+    },
+    observe: function observe(cb) {
+      notify = cb;
+      return this;
+    },
+    change: function change() {
+      var m = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (o) {
+        return o;
+      };
+      var oldVal = _o;
+      var newVal = getter ? getter() : _o = m(_o); // 值稳定
+
+      if (preOldVal === oldVal && preNewVal === newVal) return;
+      preOldVal = oldVal;
+      preNewVal = newVal; // 深度优先
+
+      if (binds.length > 0) {
+        binds.forEach(function (r) {
+          return r.change();
+        });
+      } // 回溯
+
+
+      notify && notify(oldVal, newVal);
+    }
+  };
+};
+
+TR.compute = function (computation) {
+  return function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var newR = TR(function () {
+      return computation.apply(null, args.map(function (arg) {
+        return arg.get();
+      }));
+    }); // add deps
+
+    args.forEach(function (r) {
+      return r.bind(newR);
+    });
+    return newR;
+  };
+};
+
+
+
+var index$5 = /*#__PURE__*/Object.freeze({
+  TR: TR
+});
+
 exports.core = index$1;
 exports.functional = index$2;
 exports.fp = index$3;
 exports.dom = index$4;
 exports.internal = index;
+exports.future = index$5;
 /** Follow me: @qddegtya (https://github.com/qddegtya) */
