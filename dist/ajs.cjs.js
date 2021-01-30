@@ -851,14 +851,14 @@ var TR = function TR(o) {
       binds = [],
       preOldVal = null,
       preNewVal = null,
-      latestVal = null;
+      latestVal = _o;
 
   return {
     bind: function bind(r) {
       binds.push(r);
     },
     get: function get() {
-      return _o;
+      return latestVal;
     },
     observe: function observe(cb) {
       notify = cb;
@@ -875,6 +875,7 @@ var TR = function TR(o) {
       if (preOldVal === oldVal && preNewVal === newVal) return;
       preOldVal = oldVal;
       preNewVal = newVal; // 深度优先
+      // TODO: 拓扑执行
 
       if (binds.length > 0) {
         binds.forEach(function (r) {

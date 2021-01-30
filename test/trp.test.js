@@ -33,4 +33,8 @@ setTimeout(() => {
   });
 }, 1000);
 
+console.log("before: ", count2.get());
+
 count2.change(() => 6);
+
+console.log("after: ", count2.get());

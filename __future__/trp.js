@@ -6,7 +6,7 @@ const TR = (o) => {
     binds = [],
     preOldVal = null,
     preNewVal = null,
-    latestVal = null
+    latestVal = _o
 
   return {
     bind(r) {
@@ -14,7 +14,7 @@ const TR = (o) => {
     },
 
     get() {
-      return _o
+      return latestVal
     },
 
     observe(cb) {
@@ -35,6 +35,7 @@ const TR = (o) => {
       preNewVal = newVal
 
       // 深度优先
+      // TODO: 拓扑执行
       if (binds.length > 0) {
         binds.forEach((r) => r.change())
       }
