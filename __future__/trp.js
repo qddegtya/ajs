@@ -5,7 +5,8 @@ const TR = (o) => {
     notify = null,
     binds = [],
     preOldVal = null,
-    preNewVal = null
+    preNewVal = null,
+    latestVal = null
 
   return {
     bind(r) {
@@ -25,6 +26,8 @@ const TR = (o) => {
       const oldVal = _o
       const newVal = getter ? getter() : (_o = m(_o))
 
+      latestVal = newVal || oldVal
+
       // 值稳定
       if (preOldVal === oldVal && preNewVal === newVal) return
 
@@ -37,7 +40,7 @@ const TR = (o) => {
       }
 
       // 回溯
-      notify && notify(oldVal, newVal)
+      notify && notify(latestVal)
     },
   }
 }

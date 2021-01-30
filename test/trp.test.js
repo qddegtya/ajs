@@ -12,12 +12,25 @@ const plus = TR.compute((a, b) => {
 const plusCounter = plus(count1, count2);
 const plusCounter2 = plus(plusCounter, count2);
 
-plusCounter.observe((oldVal, newVal) => {
-  console.log(oldVal, newVal);
+plusCounter.observe((val) => {
+  console.log(val);
 });
 
-plusCounter2.observe((oldVal, newVal) => {
-  console.log(oldVal, newVal);
+plusCounter2.observe((val) => {
+  console.log(val);
 });
+
+// mobx official example
+const arr = TR(["high prio", "medium prio", "low prio"]);
+
+arr.observe((val) => {
+  console.log(val);
+});
+
+setTimeout(() => {
+  arr.change((arr) => {
+    arr.push("prio: for fun");
+  });
+}, 1000);
 
 count2.change(() => 6);

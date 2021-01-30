@@ -850,7 +850,8 @@ var TR = function TR(o) {
       notify = null,
       binds = [],
       preOldVal = null,
-      preNewVal = null;
+      preNewVal = null,
+      latestVal = null;
 
   return {
     bind: function bind(r) {
@@ -868,7 +869,8 @@ var TR = function TR(o) {
         return o;
       };
       var oldVal = _o;
-      var newVal = getter ? getter() : _o = m(_o); // 值稳定
+      var newVal = getter ? getter() : _o = m(_o);
+      latestVal = newVal || oldVal; // 值稳定
 
       if (preOldVal === oldVal && preNewVal === newVal) return;
       preOldVal = oldVal;
@@ -881,7 +883,7 @@ var TR = function TR(o) {
       } // 回溯
 
 
-      notify && notify(oldVal, newVal);
+      notify && notify(latestVal);
     }
   };
 };
