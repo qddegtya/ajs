@@ -908,10 +908,48 @@ TR.compute = function (computation) {
   };
 };
 
+// @experimental
+// Simple template engine based on Tag Function.
+// eslint-disable-next-line
+var T = function T(ctx) {
+  return function (strings) {
+    for (var _len = arguments.length, keys = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      keys[_key - 1] = arguments[_key];
+    }
+
+    return function () {
+      for (var _len2 = arguments.length, values = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        values[_key2] = arguments[_key2];
+      }
+
+      var dict = values[values.length - 1] || {};
+
+      if (keys.length !== Object.keys(dict).length) {
+        throw new Error('please check params.');
+      }
+
+      var result = [strings[0]];
+      keys.forEach(function (key, i) {
+        var value = Number.isInteger(key) ? values[key] : dict[key];
+        result.push(value, strings[i + 1]);
+      });
+      return result.join('');
+    };
+  };
+};
+
+var tpl = {};
+
+tpl.exec = function (tplStr, ctx) {
+  var e = new Function('T', 'ctx', ['return T(ctx)`', tplStr, '`;'].join(''));
+  return e(T, ctx)(ctx);
+};
+
 
 
 var index$5 = /*#__PURE__*/Object.freeze({
-  TR: TR
+  TR: TR,
+  tpl: tpl
 });
 
 exports.core = index$1;

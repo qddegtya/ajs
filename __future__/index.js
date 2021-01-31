@@ -1,5 +1,7 @@
 import TR from './trp'
+import tpl from './tft'
 
 export {
-  TR
+  TR,
+  tpl
 }
