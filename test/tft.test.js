@@ -10,6 +10,9 @@ const tplContent = fs
 
 console.log(
   tpl.exec(tplContent, {
-    clsName: "HelloWorldClass",
+    name: "Add",
+    command: "add",
+    alias: "a",
+    description: "add",
   })
 );

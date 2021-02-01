@@ -5,11 +5,6 @@
 const T = ctx => (strings, ...keys) => {
   return (...values) => {
     const dict = values[values.length - 1] || {}
-
-    if (keys.length !== Object.keys(dict).length) {
-      throw new Error('please check params.')
-    }
-
     const result = [strings[0]]
     keys.forEach((key, i) => {
       const value = Number.isInteger(key) ? values[key] : dict[key]

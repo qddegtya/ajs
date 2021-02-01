@@ -1,4 +1,4 @@
-/** AJS (1.0.10):  💗 A collection of utility libraries used by @qddegtya*/
+/** AJS (1.0.11):  💗 A collection of utility libraries used by @qddegtya*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -923,11 +923,6 @@ var T = function T(ctx) {
       }
 
       var dict = values[values.length - 1] || {};
-
-      if (keys.length !== Object.keys(dict).length) {
-        throw new Error('please check params.');
-      }
-
       var result = [strings[0]];
       keys.forEach(function (key, i) {
         var value = Number.isInteger(key) ? values[key] : dict[key];
