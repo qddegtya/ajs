@@ -1,4 +1,4 @@
-/** AJS (1.0.9):  💗 A collection of utility libraries used by @qddegtya*/
+/** AJS (1.0.10):  💗 A collection of utility libraries used by @qddegtya*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -952,10 +952,27 @@ var index$5 = /*#__PURE__*/Object.freeze({
   tpl: tpl
 });
 
+var MagicString = function MagicString(str) {
+  var _string = str;
+  if (typeof _string !== 'string') throw new Error('Must be a string.');
+  return {
+    capitalize: function capitalize() {
+      return "".concat(str.charAt(0).toUpperCase()).concat(str.slice(1));
+    }
+  };
+};
+
+
+
+var index$6 = /*#__PURE__*/Object.freeze({
+  MagicString: MagicString
+});
+
 exports.core = index$1;
 exports.functional = index$2;
 exports.fp = index$3;
 exports.dom = index$4;
 exports.internal = index;
 exports.future = index$5;
+exports.lang = index$6;
 /** Follow me: @qddegtya (https://github.com/qddegtya) */
