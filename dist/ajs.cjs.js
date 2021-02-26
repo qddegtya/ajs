@@ -1,4 +1,4 @@
-/** AJS (1.0.11):  💗 A collection of utility libraries used by @qddegtya*/
+/** AJS (1.0.12):  💗 A collection of utility libraries used by @qddegtya*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -745,12 +745,118 @@ function (_Promise) {
   return PLazy;
 }(_wrapNativeSuper(Promise));
 
+// class Suber
+var Suber =
+/*#__PURE__*/
+function () {
+  function Suber(name, context) {
+    _classCallCheck(this, Suber);
+
+    this.name = name;
+    this._context = context;
+    this._pubers = {};
+  }
+
+  _createClass(Suber, [{
+    key: "rss",
+    value: function rss(puber, _rss) {
+      // TODO
+      // check rss
+      if (!(puber instanceof Puber)) {
+        throw new Error('puber must be instanceof Puber.');
+      }
+
+      var _currentPuber = this._pubers[puber.name];
+      _rss = Array.isArray(_rss) ? _rss : [_rss];
+
+      if (_currentPuber) {
+        _currentPuber.rss.concat(_rss);
+      } else {
+        this._pubers[puber.name] = {
+          puber: puber,
+          rss: _rss
+        };
+      }
+
+      return this;
+    }
+  }]);
+
+  return Suber;
+}(); // class Puber
+
+
+var Puber =
+/*#__PURE__*/
+function () {
+  function Puber(name, context) {
+    _classCallCheck(this, Puber);
+
+    this.name = name;
+    this._context = context;
+    this._subers = {};
+  }
+
+  _createClass(Puber, [{
+    key: "addSuber",
+    value: function addSuber(suber) {
+      if (this._subers[suber.name]) {
+        throw new Error('This suber has already exists, it can not rss [' + this.name + '] again.');
+      }
+
+      this._subers[suber.name] = suber;
+    }
+  }, {
+    key: "pub",
+    value: function pub(msg, payload) {
+      var _this = this;
+
+      var _loop = function _loop(suberKey) {
+        // find self
+        var self = _this._subers[suberKey]._pubers[_this.name]; // find cache handler
+
+        var cacheHandler = self.cacheRss && self.cacheRss[msg];
+
+        if (cacheHandler) {
+          cacheHandler.call(self._context, payload);
+        } else {
+          self.rss.forEach(function (rss) {
+            if (rss.msg === msg) {
+              // exec first
+              rss.handler.call(self._context, payload); // create cache area
+
+              if (!self.cacheRss) {
+                self.cacheRss = {};
+              } // add cache
+
+
+              self.cacheRss[msg] = rss.handler;
+            }
+          });
+        }
+      };
+
+      for (var suberKey in this._subers) {
+        _loop(suberKey);
+      }
+    }
+  }]);
+
+  return Puber;
+}();
+
+var PS = {
+  Puber: Puber,
+  Suber: Suber
+};
+
 var helper = {
   intercepter: intercepter,
   promisify: promisify,
   sleep: sleep,
   tryNext: tryNext,
-  PLazy: PLazy
+  PLazy: PLazy,
+  PS: PS
 };
 
 var index$2 = /*#__PURE__*/Object.freeze({
