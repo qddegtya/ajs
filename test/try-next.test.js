@@ -6,7 +6,8 @@ const _print = AJS.functional.helper
   console.log(`i throw a error ${msg}`)
   throw new Error('i throw a error')
 })
-.tryNext((msg) => {
+
+_print.tryNext((msg) => {
   console.log(`i throw a error ${msg}`)
   throw new Error('i throw a error too')
 })
