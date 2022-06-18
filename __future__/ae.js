@@ -1,14 +1,14 @@
 export default (entry) => {
-  let watcher;
+  let watcher
 
   const handle = (watch) => {
-    watcher = (handler) => watch(handler);
-  };
+    watcher = (handler) => watch(handler)
+  }
 
   const perform = (handler) => {
-    const ge = watcher(handler);
-    return ge.next().value;
-  };
+    const ge = watcher(handler)
+    return ge.next().value
+  }
 
-  entry(perform, handle);
-};
+  entry(perform, handle)
+}
