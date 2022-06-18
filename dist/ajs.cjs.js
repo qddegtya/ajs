@@ -45,17 +45,13 @@ var assign = function assign() {
 };
 
 function _typeof(obj) {
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
+  "@babel/helpers - typeof";
 
-  return _typeof(obj);
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof(obj);
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -77,6 +73,9 @@ function _defineProperties(target, props) {
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
+  Object.defineProperty(Constructor, "prototype", {
+    writable: false
+  });
   return Constructor;
 }
 
@@ -92,32 +91,34 @@ function _inherits(subClass, superClass) {
       configurable: true
     }
   });
+  Object.defineProperty(subClass, "prototype", {
+    writable: false
+  });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
 
 function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
     return o.__proto__ || Object.getPrototypeOf(o);
   };
   return _getPrototypeOf(o);
 }
 
 function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
     o.__proto__ = p;
     return o;
   };
-
   return _setPrototypeOf(o, p);
 }
 
-function isNativeReflectConstruct() {
+function _isNativeReflectConstruct() {
   if (typeof Reflect === "undefined" || !Reflect.construct) return false;
   if (Reflect.construct.sham) return false;
   if (typeof Proxy === "function") return true;
 
   try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
     return true;
   } catch (e) {
     return false;
@@ -125,8 +126,8 @@ function isNativeReflectConstruct() {
 }
 
 function _construct(Parent, args, Class) {
-  if (isNativeReflectConstruct()) {
-    _construct = Reflect.construct;
+  if (_isNativeReflectConstruct()) {
+    _construct = Reflect.construct.bind();
   } else {
     _construct = function _construct(Parent, args, Class) {
       var a = [null];
@@ -190,13 +191,34 @@ function _assertThisInitialized(self) {
 function _possibleConstructorReturn(self, call) {
   if (call && (typeof call === "object" || typeof call === "function")) {
     return call;
+  } else if (call !== void 0) {
+    throw new TypeError("Derived constructors may only return object or undefined");
   }
 
   return _assertThisInitialized(self);
 }
 
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
 function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
 function _arrayWithHoles(arr) {
@@ -204,13 +226,17 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
   var _arr = [];
   var _n = true;
   var _d = false;
-  var _e = undefined;
+
+  var _s, _e;
 
   try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
 
       if (i && _arr.length === i) break;
@@ -229,8 +255,25 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 var string = Object.prototype.toString;
@@ -259,6 +302,7 @@ function isBoolean(value) {
 }
 
 var is = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   isArray: isArray,
   isFunction: isFunction,
   isObject: isObject,
@@ -272,6 +316,7 @@ var hasOwnProp = (function (target, key) {
 
 
 var index = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   assign: assign,
   is: is,
   hasOwnProp: hasOwnProp
@@ -461,8 +506,8 @@ var Deferred = ClassShape(function () {
     then: function then() {
       return Promise.prototype.then.apply(this._promise, arguments);
     },
-    catch: function _catch() {
-      return Promise.prototype.catch.apply(this._promise, arguments);
+    "catch": function _catch() {
+      return Promise.prototype["catch"].apply(this._promise, arguments);
     },
     done: function done() {
       // 先将 onFulfill, onReject 扔入容器
@@ -525,6 +570,7 @@ var decorators = {
 };
 
 var index$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   base: base,
   decorators: decorators
 });
@@ -582,8 +628,8 @@ var IntercepterRunnerContainer = base.Class({
       }).then(function (res) {
         if (!_continue) return res; // 执行 ret 返回后，_after 不需要返回，因此直接 () => res 即可
         else _startChainInvoke(_self._after).then(function () {
-            return res;
-          });
+          return res;
+        });
       });
     };
   },
@@ -703,19 +749,19 @@ function tryNext(func) {
 
 // promise is not lazy
 // @see https://github.com/sindresorhus/p-lazy
-var PLazy =
-/*#__PURE__*/
-function (_Promise) {
+var PLazy = /*#__PURE__*/function (_Promise) {
   _inherits(PLazy, _Promise);
+
+  var _super = _createSuper(PLazy);
 
   function PLazy(executor) {
     var _this;
 
     _classCallCheck(this, PLazy);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(PLazy).call(this, function (resolve) {
+    _this = _super.call(this, function (resolve) {
       resolve();
-    }));
+    });
     _this._executor = executor;
     _this._promise = null;
     return _this;
@@ -731,7 +777,7 @@ function (_Promise) {
     key: "catch",
     value: function _catch(onRejected) {
       this._promise = this._promise || new Promise(this._executor);
-      return this._promise.catch(onRejected);
+      return this._promise["catch"](onRejected);
     }
   }], [{
     key: "from",
@@ -743,12 +789,10 @@ function (_Promise) {
   }]);
 
   return PLazy;
-}(_wrapNativeSuper(Promise));
+}( /*#__PURE__*/_wrapNativeSuper(Promise));
 
 // class Suber
-var Suber =
-/*#__PURE__*/
-function () {
+var Suber = /*#__PURE__*/function () {
   function Suber(name, context) {
     _classCallCheck(this, Suber);
 
@@ -786,9 +830,7 @@ function () {
 }(); // class Puber
 
 
-var Puber =
-/*#__PURE__*/
-function () {
+var Puber = /*#__PURE__*/function () {
   function Puber(name, context) {
     _classCallCheck(this, Puber);
 
@@ -860,6 +902,7 @@ var helper = {
 };
 
 var index$2 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   helper: helper
 });
 
@@ -886,6 +929,7 @@ var compose = (function () {
 
 
 var index$3 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   compose: compose
 });
 
@@ -940,12 +984,14 @@ var once = function once(pre, current, handler, options) {
 };
 
 var E = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   once: once
 });
 
 
 
 var index$4 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   E: E
 });
 
@@ -1046,11 +1092,30 @@ tpl.exec = function (tplStr, ctx) {
   return e(T, ctx)(ctx);
 };
 
+var ae = (function (entry) {
+  var watcher;
+
+  var handle = function handle(watch) {
+    watcher = function watcher(handler) {
+      return watch(handler);
+    };
+  };
+
+  var perform = function perform(handler) {
+    var ge = watcher(handler);
+    return ge.next().value;
+  };
+
+  entry(perform, handle);
+});
+
 
 
 var index$5 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   TR: TR,
-  tpl: tpl
+  tpl: tpl,
+  eff: ae
 });
 
 var MagicString = function MagicString(str) {
@@ -1066,14 +1131,15 @@ var MagicString = function MagicString(str) {
 
 
 var index$6 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   MagicString: MagicString
 });
 
 exports.core = index$1;
-exports.functional = index$2;
-exports.fp = index$3;
 exports.dom = index$4;
-exports.internal = index;
+exports.fp = index$3;
+exports.functional = index$2;
 exports.future = index$5;
+exports.internal = index;
 exports.lang = index$6;
 /** Follow me: @qddegtya (https://github.com/qddegtya) */
