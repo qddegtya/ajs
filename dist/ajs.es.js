@@ -1,8 +1,4 @@
 /** AJS (1.0.14):  💗 A collection of utility libraries used by @qddegtya*/
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
 var assign = function assign() {
   var args = arguments,
     thisArg,
@@ -1037,11 +1033,5 @@ var index$6 = /*#__PURE__*/Object.freeze({
   MagicString: MagicString
 });
 
-exports.core = index$1;
-exports.dom = index$4;
-exports.fp = index$3;
-exports.functional = index$2;
-exports.future = index$5;
-exports.internal = index;
-exports.lang = index$6;
+export { index$1 as core, index$4 as dom, index$3 as fp, index$2 as functional, index$5 as future, index as internal, index$6 as lang };
 /** Follow me: @qddegtya (https://github.com/qddegtya) */
