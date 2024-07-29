@@ -3,6 +3,12 @@
 
 > 💗 A collection of utility libraries used by [@qddegtya](https://github.com/qddegtya)
 
+## About
+
+AJS is an open-source JavaScript utility library designed to simplify common tasks in web development. It provides a wide range of useful functions and tools, including DOM manipulation, event handling, Ajax, animations, date handling, and more. AJS is characterized by its small size, ease of use, and high flexibility, making it a helpful tool for developers to improve project efficiency.
+
+🧪 AJS not only offers practical features for common web development tasks, but also boasts an elegant design and incorporates experimental functionality. With its small size and high flexibility, AJS allows developers to easily accomplish complex tasks and streamline their projects. Additionally, AJS provides a range of cutting-edge features that enable developers to experiment and explore new possibilities in their development work. Overall, AJS is a powerful and versatile tool for modern web development.
+
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/all-contributors/all-contributors#emoji-key)):
