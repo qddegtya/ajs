@@ -4,6 +4,7 @@ import sleep from './sleep'
 import tryNext from './try-next'
 import PLazy from './lazy-p'
 import PS from './pub-sub'
+import { provide, inject } from './di'
 
 const helper = {
   intercepter,
@@ -11,7 +12,11 @@ const helper = {
   sleep,
   tryNext,
   PLazy,
-  PS
+  PS,
+  di: {
+    provide,
+    inject
+  }
 }
 
 export {
