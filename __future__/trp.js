@@ -94,3 +94,5 @@ TR.compute = (computation) => {
     return Object.assign(newR, { dispose })
   }
 }
+
+export default TR

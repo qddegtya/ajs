@@ -1,4 +1,4 @@
-/** AJS (1.0.16): 💗 A collection of utility libraries used by @qddegtya */
+/** AJS (1.0.17): 💗 A collection of utility libraries used by @qddegtya */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -1056,7 +1056,8 @@ var TR = function TR(o) {
       binds = [],
       preOldVal = null,
       preNewVal = null,
-      latestVal = _o;
+      latestVal = _o,
+      disposed = false;
 
   return {
     bind: function bind(r) {
@@ -1084,25 +1085,26 @@ var TR = function TR(o) {
       var m = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (o) {
         return o;
       };
+      if (disposed) return;
       var oldVal = _o;
       var newVal = getter ? getter() : _o = m(_o);
-      latestVal = newVal || oldVal; // 值稳定
+      latestVal = newVal || oldVal; // 值稳定性检查
 
       if (preOldVal === oldVal && preNewVal === newVal) return;
       preOldVal = oldVal;
-      preNewVal = newVal; // 深度优先
-      // TODO: 拓扑执行
+      preNewVal = newVal; // 深度优先遍历
 
       if (binds.length > 0) {
         binds.forEach(function (r) {
           return r.change();
         });
-      } // 回溯
+      } // 触发观察者回调
 
 
       notify && notify(latestVal);
     },
     dispose: function dispose() {
+      disposed = true;
       binds.length = 0;
       notify = null;
     }
@@ -1115,6 +1117,7 @@ TR.compute = function (computation) {
       args[_key] = arguments[_key];
     }
 
+    // 依赖
     var deps = new Set();
     var newR = TR(function () {
       deps.clear();
