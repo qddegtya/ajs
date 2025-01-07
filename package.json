@@ -1,6 +1,6 @@
 {
   "name": "xajs",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "💗 A collection of utility libraries used by @qddegtya",
   "main": "dist/ajs.cjs.js",
   "directories": {
