@@ -6,11 +6,21 @@ const TR = (o) => {
     binds = [],
     preOldVal = null,
     preNewVal = null,
-    latestVal = _o
+    latestVal = _o,
+    disposed = false
 
   return {
     bind(r) {
-      binds.push(r)
+      if (!binds.includes(r)) {
+        binds.push(r)
+      }
+    },
+
+    unbind(r) {
+      const index = binds.indexOf(r)
+      if (index > -1) {
+        binds.splice(index, 1)
+      }
     },
 
     get() {
@@ -19,6 +29,8 @@ const TR = (o) => {
 
     observe(cb) {
       notify = cb
+      // 立即执行一次回调
+      cb(latestVal)
       return this
     },
 
@@ -43,22 +55,40 @@ const TR = (o) => {
       // 回溯
       notify && notify(latestVal)
     },
+
+    dispose() {
+      disposed = true
+      binds.length = 0
+      notify = null
+    }
   }
 }
 
 TR.compute = (computation) => {
   return (...args) => {
-    const newR = TR(() =>
-      computation.apply(
+    const deps = new Set()
+    const newR = TR(() => {
+      deps.clear()
+      return computation.apply(
         null,
-        args.map((arg) => arg.get())
+        args.map(arg => {
+          deps.add(arg)
+          return arg.get()
+        })
       )
-    )
+    })
 
-    // add deps
-    args.forEach((r) => r.bind(newR))
+    // 添加依赖
+    args.forEach(r => r.bind(newR))
 
-    return newR
+    // 清理函数
+    const dispose = () => {
+      deps.forEach(dep => dep.unbind(newR))
+      deps.clear()
+      newR.dispose()
+    }
+
+    return Object.assign(newR, { dispose })
   }
 }
 

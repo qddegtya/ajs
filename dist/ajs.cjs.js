@@ -1060,13 +1060,24 @@ var TR = function TR(o) {
 
   return {
     bind: function bind(r) {
-      binds.push(r);
+      if (!binds.includes(r)) {
+        binds.push(r);
+      }
+    },
+    unbind: function unbind(r) {
+      var index = binds.indexOf(r);
+
+      if (index > -1) {
+        binds.splice(index, 1);
+      }
     },
     get: function get() {
       return latestVal;
     },
     observe: function observe(cb) {
-      notify = cb;
+      notify = cb; // 立即执行一次回调
+
+      cb(latestVal);
       return this;
     },
     change: function change() {
@@ -1090,6 +1101,10 @@ var TR = function TR(o) {
 
 
       notify && notify(latestVal);
+    },
+    dispose: function dispose() {
+      binds.length = 0;
+      notify = null;
     }
   };
 };
@@ -1100,16 +1115,30 @@ TR.compute = function (computation) {
       args[_key] = arguments[_key];
     }
 
+    var deps = new Set();
     var newR = TR(function () {
+      deps.clear();
       return computation.apply(null, args.map(function (arg) {
+        deps.add(arg);
         return arg.get();
       }));
-    }); // add deps
+    }); // 添加依赖
 
     args.forEach(function (r) {
       return r.bind(newR);
+    }); // 清理函数
+
+    var dispose = function dispose() {
+      deps.forEach(function (dep) {
+        return dep.unbind(newR);
+      });
+      deps.clear();
+      newR.dispose();
+    };
+
+    return Object.assign(newR, {
+      dispose: dispose
     });
-    return newR;
   };
 };
 
