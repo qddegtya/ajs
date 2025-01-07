@@ -755,17 +755,46 @@ var index$4 = /*#__PURE__*/Object.freeze({
 
 /* eslint-disable no-console */
 // @experimental
-const TR = o => {
-  let _o = typeof o === 'function' ? o() : o,
-      getter = typeof o === 'function' ? o : null,
-      notify = null,
-      binds = [],
-      preOldVal = null,
-      preNewVal = null,
-      latestVal = _o,
-      disposed = false;
+const TR = initialValue => {
+  let _value = typeof initialValue === 'function' ? initialValue() : initialValue;
 
-  return {
+  let notify = null;
+  let binds = [];
+  let preOldVal = null;
+  let preNewVal = null;
+  let disposed = false; // 创建代理函数
+
+  const accessor = (...args) => {
+    // getter
+    if (args.length === 0) {
+      return _value;
+    } // setter
+
+
+    if (disposed) return;
+
+    try {
+      const oldVal = _value;
+      const newVal = args[0];
+      _value = typeof newVal === 'function' ? newVal(_value) : newVal; // 值稳定性检查
+
+      if (preOldVal === oldVal && preNewVal === _value) return;
+      preOldVal = oldVal;
+      preNewVal = _value; // 深度优先遍历
+
+      if (binds.length > 0) {
+        binds.forEach(r => r());
+      } // 触发观察者回调
+
+
+      notify && notify(_value);
+    } catch (error) {
+      console.error('Error in setter:', error);
+    }
+  }; // 扩展方法
+
+
+  return Object.assign(accessor, {
     bind(r) {
       if (!binds.includes(r)) {
         binds.push(r);
@@ -780,10 +809,6 @@ const TR = o => {
       }
     },
 
-    get() {
-      return latestVal;
-    },
-
     observe(cb) {
       if (typeof cb !== 'function') {
         console.error('Observer callback must be a function');
@@ -792,31 +817,8 @@ const TR = o => {
 
       notify = cb; // 立即执行一次回调
 
-      cb(latestVal);
+      cb(_value);
       return this;
-    },
-
-    change(m = o => o) {
-      if (disposed) return;
-
-      try {
-        const oldVal = _o;
-        const newVal = getter ? getter() : _o = m(_o);
-        latestVal = newVal !== undefined && newVal !== null ? newVal : oldVal; // 值稳定性检查
-
-        if (preOldVal === oldVal && preNewVal === newVal) return;
-        preOldVal = oldVal;
-        preNewVal = newVal; // 深度优先遍历
-
-        if (binds.length > 0) {
-          binds.forEach(r => r.change());
-        } // 触发观察者回调
-
-
-        notify && notify(latestVal);
-      } catch (error) {
-        console.error('Error in change:', error);
-      }
     },
 
     dispose() {
@@ -825,12 +827,12 @@ const TR = o => {
       notify = null;
     }
 
-  };
-};
+  });
+}; // 计算属性的实现也相应调整
+
 
 TR.compute = computation => {
   return (...args) => {
-    // 依赖
     const deps = new Set();
     let isDisposed = false;
     const newR = TR(() => {
@@ -838,7 +840,7 @@ TR.compute = computation => {
       deps.clear();
       return computation.apply(null, args.map(arg => {
         deps.add(arg);
-        return arg.get();
+        return arg(); // 使用新的调用方式
       }));
     }); // 添加依赖
 
@@ -846,11 +848,9 @@ TR.compute = computation => {
 
     const dispose = () => {
       if (isDisposed) return;
-      isDisposed = true; // 先解绑依赖
-
+      isDisposed = true;
       deps.forEach(dep => dep.unbind(newR));
-      deps.clear(); // 最后处理自身
-
+      deps.clear();
       newR.dispose();
     };
 
