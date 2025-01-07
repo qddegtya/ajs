@@ -69,8 +69,10 @@ TR.compute = (computation) => {
   return (...args) => {
     // 依赖
     const deps = new Set()
+    let isDisposed = false
 
     const newR = TR(() => {
+      if (isDisposed) return undefined
       deps.clear()
       return computation.apply(
         null,
@@ -86,8 +88,12 @@ TR.compute = (computation) => {
 
     // 清理函数
     const dispose = () => {
+      if (isDisposed) return
+      isDisposed = true
+      // 先解绑依赖
       deps.forEach(dep => dep.unbind(newR))
       deps.clear()
+      // 最后处理自身
       newR.dispose()
     }
 

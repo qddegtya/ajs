@@ -1115,7 +1115,9 @@ TR.compute = function (computation) {
 
     // 依赖
     var deps = new Set();
+    var isDisposed = false;
     var newR = TR(function () {
+      if (isDisposed) return undefined;
       deps.clear();
       return computation.apply(null, args.map(function (arg) {
         deps.add(arg);
@@ -1128,10 +1130,14 @@ TR.compute = function (computation) {
     }); // 清理函数
 
     var dispose = function dispose() {
+      if (isDisposed) return;
+      isDisposed = true; // 先解绑依赖
+
       deps.forEach(function (dep) {
         return dep.unbind(newR);
       });
-      deps.clear();
+      deps.clear(); // 最后处理自身
+
       newR.dispose();
     };
 
