@@ -1,4 +1,4 @@
-/** AJS (1.0.20): 💗 A collection of utility libraries used by @qddegtya */
+/** AJS (1.0.21): 💗 A collection of utility libraries used by @qddegtya */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
