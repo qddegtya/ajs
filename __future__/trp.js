@@ -35,24 +35,25 @@ const TR = (o) => {
     },
 
     change(m = (o) => o) {
+      if (disposed) return
+
       const oldVal = _o
       const newVal = getter ? getter() : (_o = m(_o))
 
       latestVal = newVal || oldVal
 
-      // 值稳定
+      // 值稳定性检查
       if (preOldVal === oldVal && preNewVal === newVal) return
 
       preOldVal = oldVal
       preNewVal = newVal
 
-      // 深度优先
-      // TODO: 拓扑执行
+      // 深度优先遍历
       if (binds.length > 0) {
         binds.forEach((r) => r.change())
       }
 
-      // 回溯
+      // 触发观察者回调
       notify && notify(latestVal)
     },
 
@@ -66,7 +67,9 @@ const TR = (o) => {
 
 TR.compute = (computation) => {
   return (...args) => {
+    // 依赖
     const deps = new Set()
+
     const newR = TR(() => {
       deps.clear()
       return computation.apply(
@@ -91,5 +94,3 @@ TR.compute = (computation) => {
     return Object.assign(newR, { dispose })
   }
 }
-
-export default TR
