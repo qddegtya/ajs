@@ -1,3 +1,10 @@
 {
-  "presets": [["@babel/preset-env", { "loose": false }]]
+  "presets": [
+    ["@babel/preset-env", {
+      "loose": false,
+      "targets": {
+        "node": "current"
+      }
+    }]
+  ]
 }

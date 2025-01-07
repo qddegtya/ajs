@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // @experimental
 const TR = (o) => {
   let _o = typeof o === 'function' ? o() : o,
@@ -28,6 +29,11 @@ const TR = (o) => {
     },
 
     observe(cb) {
+      if (typeof cb !== 'function') {
+        console.error('Observer callback must be a function')
+        return this
+      }
+      
       notify = cb
       // 立即执行一次回调
       cb(latestVal)
@@ -36,25 +42,29 @@ const TR = (o) => {
 
     change(m = (o) => o) {
       if (disposed) return
+      
+      try {
+        const oldVal = _o
+        const newVal = getter ? getter() : (_o = m(_o))
+        
+        latestVal = (newVal !== undefined && newVal !== null) ? newVal : oldVal
+        
+        // 值稳定性检查
+        if (preOldVal === oldVal && preNewVal === newVal) return
 
-      const oldVal = _o
-      const newVal = getter ? getter() : (_o = m(_o))
+        preOldVal = oldVal
+        preNewVal = newVal
 
-      latestVal = newVal || oldVal
+        // 深度优先遍历
+        if (binds.length > 0) {
+          binds.forEach((r) => r.change())
+        }
 
-      // 值稳定性检查
-      if (preOldVal === oldVal && preNewVal === newVal) return
-
-      preOldVal = oldVal
-      preNewVal = newVal
-
-      // 深度优先遍历
-      if (binds.length > 0) {
-        binds.forEach((r) => r.change())
+        // 触发观察者回调
+        notify && notify(latestVal)
+      } catch (error) {
+        console.error('Error in change:', error)
       }
-
-      // 触发观察者回调
-      notify && notify(latestVal)
     },
 
     dispose() {
