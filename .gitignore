@@ -27,10 +27,6 @@ yarn-error.log*
 .env.local
 .env.*
 
-# Package manager locks
-*-lock.*
-*.lock
-
 # Cache
 .cache/
 .temp/
