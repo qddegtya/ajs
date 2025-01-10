@@ -11,7 +11,7 @@
     "url": "git+https://github.com/qddegtya/ajs.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint **/*.js --fix",
     "build": "rimraf ./dist && ./node_modules/.bin/rollup -c",
     "prepublishOnly": "npm run build"
@@ -28,6 +28,7 @@
     "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
     "eslint": "^5.14.1",
+    "jest": "^29.7.0",
     "rimraf": "^2.6.3",
     "rollup": "^1.2.2",
     "rollup-plugin-babel": "^4.3.2",

@@ -9,7 +9,7 @@ const LIB_NAME = `AJS`;
 const AUTHOR_NAME = `qddegtya`;
 
 export default {
-  input: "./index.js",
+  input: "./src/index.js",
   output: [
     {
       file: "dist/ajs.cjs.js",

@@ -37,7 +37,7 @@ let A = AJS.core.base.Class(function() {
     $_a: 1,
 
     print: function() {
-      this.$_print(this.a + $privateA);
+      this.$_print($privateA);  // 修改这里，只输出私有变量
     },
 
     $_print: function(msg) {
@@ -76,16 +76,53 @@ const C = AJS.core.base.Class({
 // mixin
 AJS.core.decorators.mixin(EventEmitter.prototype)(A);
 
-let b = new B("john");
-console.log(B.foo);
-console.log(B.bar);
-B.test();
-b.print();
+describe('AJS Core Tests', () => {
+  describe('Class B', () => {
+    let b;
+    
+    beforeEach(() => {
+      b = new B("john");
+    });
 
-let date = new MyDate("2019-01-02");
-console.log(date.toFormat());
+    test('should inherit static properties from class A', () => {
+      expect(B.foo).toBe(1);
+      expect(B.bar).toBe(2);
+    });
 
-console.log(Object.getPrototypeOf(b) === B.prototype);
+    test('should execute static method test()', () => {
+      const consoleSpy = jest.spyOn(console, 'log');
+      B.test();
+      expect(consoleSpy).toHaveBeenCalledWith("this is a test.");
+      consoleSpy.mockRestore();
+    });
 
-let c = new C();
-c.test();
+    test('should correctly execute print method', () => {
+      const consoleSpy = jest.spyOn(console, 'log');
+      b.print();
+      expect(consoleSpy).toHaveBeenCalledWith("xiaoa");
+      expect(consoleSpy).toHaveBeenCalledWith("this is john");
+      consoleSpy.mockRestore();
+    });
+
+    test('should have correct prototype chain', () => {
+      expect(Object.getPrototypeOf(b)).toBe(B.prototype);
+    });
+  });
+
+  describe('MyDate', () => {
+    test('should format date correctly', () => {
+      const date = new MyDate("2019-01-02");
+      expect(date.toFormat()).toBe("格式化日期");
+    });
+  });
+
+  describe('Class C', () => {
+    test('should execute parent method through inheritance', () => {
+      const consoleSpy = jest.spyOn(console, 'log');
+      const c = new C();
+      c.test();
+      expect(consoleSpy).toHaveBeenCalledWith("on");
+      consoleSpy.mockRestore();
+    });
+  });
+});

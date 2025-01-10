@@ -5,13 +5,11 @@ function isArray(obj) {
 }
 
 function isObject(obj) {
-  const type = typeof obj
-  return obj != null && (type == 'object' || type == 'function')
+  if (obj === null || typeof obj !== 'object') return false
+  return typeToString(obj) === '[object Object]'
 }
 
 function isFunction(obj) {
-  if (!isObject(obj)) return false
-
   const objType = typeToString(obj)
   return (
     objType === '[object Function]' ||

@@ -1,14 +1,22 @@
 const AJS = require('../dist/ajs.cjs');
-
 const di = AJS.functional.helper.di;
 
-// provide
-di.provide('clzA')(class A {
-  constructor (a, b) {
-    this.a = a;
-    this.b = b;
-  }
-});
+describe('DI Tests', () => {
+  test('should correctly provide and inject class A', () => {
+    // provide
+    di.provide('clzA')(class A {
+      constructor (a, b) {
+        this.a = a;
+        this.b = b;
+      }
+    });
 
-// inject
-console.log(di.inject('clzA', 1, 2));
+    // inject
+    const result = di.inject('clzA', 1, 2);
+    
+    // assertions
+    expect(result).toBeDefined();
+    expect(result.a).toBe(1);
+    expect(result.b).toBe(2);
+  });
+});

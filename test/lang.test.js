@@ -1,7 +1,9 @@
 const AJS = require('../dist/ajs.cjs')
-
 const MagicString = AJS.lang.MagicString
 
-const str = MagicString('abc')
-
-console.log(str.capitalize())
+describe('MagicString', () => {
+  test('should capitalize string correctly', () => {
+    const str = MagicString('abc')
+    expect(str.capitalize()).toBe('Abc')
+  })
+})

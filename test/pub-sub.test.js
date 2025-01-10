@@ -1,20 +1,33 @@
-const AJS = require('../dist/ajs.cjs')
+const AJS = require('../dist/ajs.cjs');
+const { Puber, Suber } = AJS.functional.helper.PS;
 
-const { Puber, Suber } = AJS.functional.helper.PS
+describe('Pub-Sub System Tests', () => {
+  let p, s;
+  let mockHandler;
 
-const p = new Puber('a-b', {})
-const s = new Suber('b-a', {})
+  beforeEach(() => {
+    p = new Puber('a-b', {});
+    s = new Suber('b-a', {});
+    mockHandler = jest.fn();
+  });
 
-p.addSuber(s)
-s.rss(p, [
-  {
-    msg: 'a',
-    handler: (payload) => {
-      console.log(`hello ${payload}.`)
-    }
-  }
-])
+  test('should handle pub-sub communication correctly', (done) => {
+    p.addSuber(s);
+    s.rss(p, [
+      {
+        msg: 'a',
+        handler: (payload) => {
+          mockHandler(payload);
+          expect(payload).toBe('world');
+          done();
+        }
+      }
+    ]);
 
-setTimeout(() => {
-  p.pub('a', 'world')
-}, 1000)
+    p.pub('a', 'world');
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+});

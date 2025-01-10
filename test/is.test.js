@@ -1,13 +1,27 @@
 const AJS = require('../dist/ajs.cjs')
 
-// is array
-console.log(AJS.internal.is.isArray([1, 2, 3]))
+describe('AJS.internal.is', () => {
+  test('isArray should correctly identify arrays', () => {
+    expect(AJS.internal.is.isArray([1, 2, 3])).toBe(true)
+    expect(AJS.internal.is.isArray([])).toBe(true)
+    expect(AJS.internal.is.isArray({})).toBe(false)
+  })
 
-// is object
-console.log(AJS.internal.is.isObject({a: 1, b: 2}))
+  test('isObject should correctly identify objects', () => {
+    expect(AJS.internal.is.isObject({a: 1, b: 2})).toBe(true)
+    expect(AJS.internal.is.isObject({})).toBe(true)
+    expect(AJS.internal.is.isObject([])).toBe(false)
+  })
 
-// is function
-console.log(AJS.internal.is.isFunction(async function testAsync() {}))
+  test('isFunction should correctly identify functions', () => {
+    expect(AJS.internal.is.isFunction(async function testAsync() {})).toBe(true)
+    expect(AJS.internal.is.isFunction(() => {})).toBe(true)
+    expect(AJS.internal.is.isFunction({})).toBe(false)
+  })
 
-// is boolean
-console.log(AJS.internal.is.isBoolean(true))
+  test('isBoolean should correctly identify booleans', () => {
+    expect(AJS.internal.is.isBoolean(true)).toBe(true)
+    expect(AJS.internal.is.isBoolean(false)).toBe(true)
+    expect(AJS.internal.is.isBoolean(1)).toBe(false)
+  })
+})

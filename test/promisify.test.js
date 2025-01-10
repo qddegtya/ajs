@@ -1,11 +1,26 @@
 const AJS = require("../dist/ajs.cjs");
+const fs = require("fs");
+const path = require("path");
 
-const readFile = AJS.functional.helper.promisify(require("fs").readFile);
+describe('AJS.functional.helper.promisify', () => {
+  const readFile = AJS.functional.helper.promisify(fs.readFile);
 
-readFile("./core.test.js", "utf-8").then(ret => {
-  console.log(ret);
-});
+  test('should successfully read an existing file', async () => {
+    const filePath = path.join(__dirname, "core.test.js");
+    const content = await readFile(filePath, "utf-8");
+    expect(content).toBeTruthy();
+    expect(typeof content).toBe('string');
+  });
 
-readFile("xxxx", "utf-8").catch(err => {
-  console.log(err);
+  test('should handle error when reading non-existing file', async () => {
+    expect.assertions(1);
+    try {
+      await readFile("xxxx", "utf-8");
+    } catch (err) {
+      // 使用 error.name 进行比较，而不是 instanceof
+      expect(err.name).toBe('Error');
+      // 或者使用 constructor.name
+      // expect(err.constructor.name).toBe('Error');
+    }
+  });
 });
