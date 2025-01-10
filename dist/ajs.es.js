@@ -1,4 +1,4 @@
-/** AJS (1.0.22): 💗 A collection of utility libraries used by @qddegtya */
+/** AJS (1.0.23): 💗 A collection of utility libraries used by @qddegtya */
 const assign = function () {
   let args = arguments,
     thisArg,
