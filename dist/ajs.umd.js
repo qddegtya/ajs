@@ -1,4 +1,4 @@
-/** AJS (1.0.21): 💗 A collection of utility libraries used by @qddegtya */
+/** AJS (1.0.22): 💗 A collection of utility libraries used by @qddegtya */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
