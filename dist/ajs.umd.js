@@ -2,8 +2,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.AJS = {}));
-}(this, (function (exports) { 'use strict';
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.AJS = {}));
+})(this, (function (exports) { 'use strict';
 
   const assign = function () {
     let args = arguments,
@@ -67,22 +67,20 @@
   var is = /*#__PURE__*/Object.freeze({
     __proto__: null,
     isArray: isArray,
+    isBoolean: isBoolean,
     isFunction: isFunction,
-    isObject: isObject,
-    isBoolean: isBoolean
+    isObject: isObject
   });
 
   var hasOwnProp = (target, key) => {
     return Object.prototype.hasOwnProperty.call(target, key);
   };
 
-
-
-  var index = /*#__PURE__*/Object.freeze({
+  var index$6 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     assign: assign,
-    is: is,
-    hasOwnProp: hasOwnProp
+    hasOwnProp: hasOwnProp,
+    is: is
   });
 
   /**
@@ -271,7 +269,7 @@
 
         // 执行最后的 done 操作，模拟正常返回 undefined
         // 异常直接抛出，可由后续的 catch 继续捕获，但 done 不处理
-        promise.then(void 0, function (err) {
+        promise.then(undefined, function (err) {
           setTimeout(function () {
             throw err;
           }, 0);
@@ -323,7 +321,7 @@
     mixin
   };
 
-  var index$1 = /*#__PURE__*/Object.freeze({
+  var index$5 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     base: base,
     decorators: decorators
@@ -353,7 +351,7 @@
           _continue = true;
         const _startChainInvoke = (cbs, index) => {
           index = index || 0;
-          if (index >= cbs.length) return Promise.resolve(void 0);
+          if (index >= cbs.length) return Promise.resolve(undefined);
           let _curCb = cbs[index],
             ret;
           return new Promise((resolve, reject) => {
@@ -624,7 +622,7 @@
     }
   };
 
-  var index$2 = /*#__PURE__*/Object.freeze({
+  var index$4 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     helper: helper
   });
@@ -642,8 +640,6 @@
       }, initialVal);
     };
   };
-
-
 
   var index$3 = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -684,9 +680,7 @@
     once: once
   });
 
-
-
-  var index$4 = /*#__PURE__*/Object.freeze({
+  var index$2 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     E: E
   });
@@ -834,6 +828,11 @@
     };
   };
 
+  // 为了支持具名导入
+  TR.atom;
+  TR.selector;
+  TR.compute;
+
   // @experimental
   // Simple template engine based on Tag Function.
 
@@ -867,13 +866,11 @@
     entry(perform, handle);
   };
 
-
-
-  var index$5 = /*#__PURE__*/Object.freeze({
+  var index$1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     TR: TR,
-    tpl: tpl,
-    eff: ae
+    eff: ae,
+    tpl: tpl
   });
 
   const MagicString = str => {
@@ -886,22 +883,18 @@
     };
   };
 
-
-
-  var index$6 = /*#__PURE__*/Object.freeze({
+  var index = /*#__PURE__*/Object.freeze({
     __proto__: null,
     MagicString: MagicString
   });
 
-  exports.core = index$1;
-  exports.dom = index$4;
+  exports.core = index$5;
+  exports.dom = index$2;
   exports.fp = index$3;
-  exports.functional = index$2;
-  exports.future = index$5;
-  exports.internal = index;
-  exports.lang = index$6;
+  exports.functional = index$4;
+  exports.future = index$1;
+  exports.internal = index$6;
+  exports.lang = index;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+}));
 /** Follow me: @qddegtya (https://github.com/qddegtya) */

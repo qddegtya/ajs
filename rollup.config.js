@@ -1,9 +1,10 @@
-import {
-  version as LIB_VERSION,
-  description as LIB_DESCRIPTION,
-} from "./package.json";
-import resolve from "rollup-plugin-node-resolve";
-import babel from "rollup-plugin-babel";
+import json from "@rollup/plugin-json";
+import resolve from "@rollup/plugin-node-resolve";
+import babel from "@rollup/plugin-babel";
+import fs from 'fs';
+
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+const { version: LIB_VERSION, description: LIB_DESCRIPTION } = pkg;
 
 const LIB_NAME = `AJS`;
 const AUTHOR_NAME = `qddegtya`;
@@ -33,5 +34,15 @@ export default {
       format: "es",
     },
   ],
-  plugins: [resolve(), babel()],
+  plugins: [
+    json({
+      preferConst: true,
+      compact: true,
+      namedExports: true
+    }), 
+    resolve(), 
+    babel({
+      babelHelpers: 'bundled'
+    })
+  ],
 };
