@@ -15,10 +15,10 @@
   },
   "type": "module",
   "packageManager": "npm@10.8.2",
-  "directories": {
-    "test": "test",
-    "dist": "dist"
-  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qddegtya/ajs.git"
@@ -27,7 +27,8 @@
     "test": "jest",
     "lint": "eslint **/*.js --fix",
     "build": "rimraf ./dist && ./node_modules/.bin/rollup -c",
-    "prepublishOnly": "npm run build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
     "security-check": "npm audit"
   },
   "keywords": [
