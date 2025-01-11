@@ -4,16 +4,20 @@
   "description": "💗 A collection of utility libraries used by @qddegtya",
   "main": "./dist/ajs.cjs.js",
   "module": "./dist/ajs.es.js",
+  "browser": "./dist/ajs.umd.js",
   "exports": {
     ".": {
+      "browser": "./dist/ajs.umd.js",
       "require": "./dist/ajs.cjs.js",
-      "import": "./dist/ajs.es.js"
+      "import": "./dist/ajs.es.js",
+      "default": "./dist/ajs.cjs.js"
     }
   },
   "type": "module",
   "packageManager": "npm@10.8.2",
   "directories": {
-    "test": "test"
+    "test": "test",
+    "dist": "dist"
   },
   "repository": {
     "type": "git",
