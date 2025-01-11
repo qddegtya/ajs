@@ -1,4 +1,4 @@
-/** AJS (1.0.24): 💗 A collection of utility libraries used by @qddegtya */
+/** AJS (1.0.25): 💗 A collection of utility libraries used by @qddegtya */
 'use strict';
 
 const assign = function () {
