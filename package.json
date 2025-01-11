@@ -2,7 +2,14 @@
   "name": "xajs",
   "version": "1.0.23",
   "description": "💗 A collection of utility libraries used by @qddegtya",
-  "main": "dist/ajs.cjs.js",
+  "main": "./dist/ajs.cjs.js",
+  "module": "./dist/ajs.es.js",
+  "exports": {
+    ".": {
+      "require": "./dist/ajs.cjs.js",
+      "import": "./dist/ajs.es.js"
+    }
+  },
   "type": "module",
   "packageManager": "npm@10.8.2",
   "directories": {
