@@ -13,7 +13,9 @@
       "default": "./dist/ajs.cjs.js"
     }
   },
-  "type": "module",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "packageManager": "npm@10.8.2",
   "files": [
     "dist",
@@ -26,7 +28,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint **/*.js --fix",
-    "build": "rimraf ./dist && ./node_modules/.bin/rollup -c",
+    "build": "rimraf ./dist && ./node_modules/.bin/rollup -c rollup.config.mjs",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "security-check": "npm audit"

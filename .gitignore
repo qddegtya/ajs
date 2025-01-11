@@ -1,6 +1,6 @@
 # Dependencies
-node_modules/
-bower_components/
+node_modules
+bower_components
 
 # IDE & Editors
 .idea/
@@ -10,13 +10,13 @@ bower_components/
 .DS_Store
 
 # Build output
-dist/
-build/
-coverage/
-.coverage/
+dist
+build
+coverage
+.coverage
 
 # Logs
-logs/
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -28,5 +28,5 @@ yarn-error.log*
 .env.*
 
 # Cache
-.cache/
-.temp/
+.cache
+.temp
