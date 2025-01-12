@@ -6,7 +6,7 @@ const tpl = AJS.future.tpl;
 describe('Template Function Tests', () => {
   test('should render template correctly', () => {
     const tplContent = fs
-      .readFileSync(path.join(__dirname, "..", "_fixtures/hello.tpl"))
+      .readFileSync(path.join(__dirname, ".", "_fixtures/hello.tpl"))
       .toString();
 
     const result = tpl.exec(tplContent, {
