@@ -1,4 +1,4 @@
-const AJS = require('../dist/ajs.cjs');
+const AJS = require("../src/index");
 
 describe('AJS.functional.helper.tryNext', () => {
   test('should execute the last successful handler in the chain', () => {

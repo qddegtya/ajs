@@ -1,4 +1,4 @@
-const AJS = require("../dist/ajs.cjs");
+const AJS = require("../src/index");
 
 describe('AJS Function Composition Tests', () => {
   let logOutput = '';

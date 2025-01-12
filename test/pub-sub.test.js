@@ -1,4 +1,4 @@
-const AJS = require('../dist/ajs.cjs');
+const AJS = require('../src/index');
 const { Puber, Suber } = AJS.functional.helper.PS;
 
 describe('Pub-Sub System Tests', () => {

@@ -1,4 +1,4 @@
-const AJS = require("../dist/ajs.cjs");
+const AJS = require("../src/index");
 const TR = AJS.future.TR;
 const { atom, selector, compute } = AJS.future.TR;
 
@@ -6,7 +6,7 @@ describe('TR Basic Operations', () => {
   test('should compute sum of two TR values', () => {
     const count1 = TR(1);
     const count2 = TR(2);
-    const plus = TR.compute((a, b) => a + b);
+    const plus = compute((a, b) => a + b);
     
     const plusCounter = plus(count1, count2);
     const plusCounter2 = plus(plusCounter, count2);
@@ -82,7 +82,7 @@ describe('TR Basic Operations', () => {
   test('should dispose compute', () => {
     const num1 = TR(5);
     const num2 = TR(10);
-    const sum = TR.compute((a, b) => a + b)(num1, num2);
+    const sum = compute((a, b) => a + b)(num1, num2);
     expect(sum()).toBe(15);
     num1(v => v + 1);
     expect(sum()).toBe(16);

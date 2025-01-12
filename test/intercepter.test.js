@@ -1,4 +1,4 @@
-const AJS = require("../dist/ajs.cjs");
+const AJS = require("../src/index");
 const sleep = AJS.functional.helper.sleep;
 
 describe('Intercepter Tests', () => {

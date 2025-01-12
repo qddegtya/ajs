@@ -1,4 +1,4 @@
-const AJS = require("../dist/ajs.cjs");
+const AJS = require("../src/index");
 const EventEmitter = require('events');
 
 let MyDate = AJS.core.base.Class(function() {
