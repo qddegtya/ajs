@@ -1,13 +1,53 @@
 # AJS
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
-> 💗 A collection of utility libraries used by [@qddegtya](https://github.com/qddegtya)
+> 💗 A modern, lightweight JavaScript utility library with functional programming support and experimental features
 
 ## About
 
-AJS is an open-source JavaScript utility library designed to simplify common tasks in web development. It provides a wide range of useful functions and tools, including DOM manipulation, event handling, Ajax, animations, date handling, and more. AJS is characterized by its small size, ease of use, and high flexibility, making it a helpful tool for developers to improve project efficiency.
+AJS is a thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.
 
-🧪 AJS not only offers practical features for common web development tasks, but also boasts an elegant design and incorporates experimental functionality. With its small size and high flexibility, AJS allows developers to easily accomplish complex tasks and streamline their projects. Additionally, AJS provides a range of cutting-edge features that enable developers to experiment and explore new possibilities in their development work. Overall, AJS is a powerful and versatile tool for modern web development.
+## ✨ Features
+
+- **Core Utilities**
+  - Powerful Class system with inheritance and mixins support
+  - Flexible Deferred implementation for better async control
+  - Robust decorators system
+
+- **Functional Programming**
+  - First-class support for functional programming patterns
+  - Advanced interceptors for function composition
+  - Dependency injection system
+  - Pub/Sub pattern implementation
+  - Promise utilities including promisification
+  - Lazy evaluation support
+
+- **DOM & Mobile**
+  - Efficient DOM manipulation utilities
+  - Mobile-specific optimizations and helpers
+  - Event handling with advanced features like `once`
+
+- **Experimental Features** 🧪
+  - Template rendering engine
+  - Reactive programming utilities
+  - Advanced effect system
+  - Cutting-edge async patterns
+
+## 🎯 Design Philosophy
+
+- **Lightweight**: Focused on providing essential utilities without bloat
+- **Modular**: Well-organized modules for selective importing
+- **Flexible**: Adaptable to different programming styles and patterns
+- **Future-Ready**: Experimental features for exploring next-gen JavaScript patterns
+
+## 🚀 Innovation
+
+AJS stands out by seamlessly combining traditional utility functions with modern programming concepts:
+
+- Innovative class system that enforces proper inheritance patterns
+- Advanced functional programming tools that maintain code clarity
+- Experimental features that push the boundaries of JavaScript capabilities
+- Smart integration of reactive programming concepts
 
 ## Contributors
 
