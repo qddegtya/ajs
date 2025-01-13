@@ -125,4 +125,114 @@ describe('AJS Core Tests', () => {
       consoleSpy.mockRestore();
     });
   });
+
+  describe('Deprecate Decorator', () => {
+    let warnSpy;
+  
+    beforeEach(() => {
+      warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+      warnSpy.mockRestore();
+    });
+
+    test('should show warning for deprecated method', () => {
+      class TestClass {
+        @AJS.core.decorators.deprecate()
+        oldMethod() {
+          return 'result';
+        }
+      }
+
+      const instance = new TestClass();
+      const result = instance.oldMethod();
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Warning: TestClass.oldMethod is deprecated and will be removed in a future version.'
+      );
+      expect(result).toBe('result');
+    });
+
+    test('should show custom warning message', () => {
+      class TestClass {
+        @AJS.core.decorators.deprecate('Custom warning message')
+        oldMethod() {
+          return 'result';
+        }
+      }
+
+      const instance = new TestClass();
+      instance.oldMethod();
+
+      expect(warnSpy).toHaveBeenCalledWith('Custom warning message');
+    });
+
+    test('should show warning only once per instance', () => {
+      class TestClass {
+        @AJS.core.decorators.deprecate()
+        oldMethod() {}
+      }
+
+      const instance = new TestClass();
+      instance.oldMethod();
+      instance.oldMethod();
+      instance.oldMethod();
+
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('should show warning for different instances separately', () => {
+      class TestClass {
+        @AJS.core.decorators.deprecate()
+        oldMethod() {}
+      }
+
+      const instance1 = new TestClass();
+      const instance2 = new TestClass();
+
+      instance1.oldMethod();
+      instance2.oldMethod();
+
+      expect(warnSpy).toHaveBeenCalledTimes(2);
+    });
+
+    test('should show warning for deprecated getter', () => {
+      class TestClass {
+        @AJS.core.decorators.deprecate()
+        get oldProp() {
+          return 'value';
+        }
+      }
+
+      const instance = new TestClass();
+      const value = instance.oldProp;
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Warning: TestClass.oldProp is deprecated and will be removed in a future version.'
+      );
+      expect(value).toBe('value');
+    });
+
+    test('should show warning for deprecated setter', () => {
+      class TestClass {
+        constructor() {
+          this._value = '';
+        }
+
+        @AJS.core.decorators.deprecate()
+        set oldProp(value) {
+          this._value = value;
+        }
+      }
+
+      const instance = new TestClass();
+      instance.oldProp = 'new value';
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Warning: TestClass.oldProp is deprecated and will be removed in a future version.'
+      );
+      expect(instance._value).toBe('new value');
+    });
+  });
 });

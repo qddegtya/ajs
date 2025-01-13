@@ -1,2 +1,3 @@
 import mixin from './mixin'
-export { mixin }
+import { deprecate } from './deprecate'
+export { mixin, deprecate }

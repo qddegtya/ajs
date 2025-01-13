@@ -1,6 +1,6 @@
 import Class from './class'
 import Deferred from './Deferred'
-import { mixin } from './decorators'
+import { mixin, deprecate } from './decorators'
 
 const base = {
   Class,
@@ -8,7 +8,8 @@ const base = {
 }
 
 const decorators = {
-  mixin
+  mixin,
+  deprecate
 }
 
 export {
