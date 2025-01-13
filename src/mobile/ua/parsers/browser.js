@@ -1,4 +1,4 @@
-import { BaseParser } from './base';
+import { BaseParser } from './base'
 
 /**
  * 浏览器解析器
@@ -11,32 +11,32 @@ export class BrowserParser extends BaseParser {
     { name: 'Safari', regex: /Version\/(\d+(\.\d+)+).+Safari/i },
     { name: 'IE', regex: /(?:MSIE |Trident\/.*rv:)(\d+(\.\d+)?)/i },
     { name: 'Opera', regex: /(?:Opera|OPR)\/(\d+(\.\d+)+)/i }
-  ];
+  ]
 
   parse() {
-    const result = { name: '', version: '' };
+    const result = { name: '', version: '' }
 
     if (!this.ua) {
-      return { browser: result };
+      return { browser: result }
     }
 
     for (const pattern of BrowserParser.patterns) {
-      const match = this.ua.match(pattern.regex);
+      const match = this.ua.match(pattern.regex)
       if (match) {
-        result.name = pattern.name;
-        result.version = match[1];
-        break;
+        result.name = pattern.name
+        result.version = match[1]
+        break
       }
     }
 
-    return { browser: result };
+    return { browser: result }
   }
 
   getPriority() {
-    return 100;
+    return 100
   }
 
   canParse() {
-    return true;
+    return true
   }
 }

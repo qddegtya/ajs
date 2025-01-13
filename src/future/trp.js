@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 // @experimental
 const TR = (initialValue) => {
   let _value = typeof initialValue === 'function' ? initialValue() : initialValue

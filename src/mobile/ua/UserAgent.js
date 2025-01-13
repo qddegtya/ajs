@@ -1,5 +1,4 @@
-import { BrowserParser, EngineParser, OSParser, DeviceParser } from './parsers';
-import { BaseParser } from './parsers/base';
+import { BrowserParser, EngineParser, OSParser, DeviceParser } from './parsers'
 
 /**
  * UserAgent 解析器类
@@ -11,21 +10,21 @@ export class UserAgent {
     EngineParser,
     OSParser,
     DeviceParser
-  ]);
+  ])
 
   /**
    * @param {string} [userAgent] - UserAgent 字符串，如果不提供则使用 navigator.userAgent
    */
   constructor(userAgent) {
-    this.ua = userAgent || (typeof navigator !== 'undefined' ? navigator.userAgent : '');
+    this.ua = userAgent || (typeof navigator !== 'undefined' ? navigator.userAgent : '')
     this.result = {
       browser: { name: '', version: '' },
       os: { name: '', version: '' },
       device: { type: '', model: '', vendor: '' },
       engine: { name: '', version: '' }
-    };
+    }
     if (this.ua) {
-      this.parse();
+      this.parse()
     }
   }
 
@@ -34,7 +33,7 @@ export class UserAgent {
    * @param {typeof BaseParser} ParserClass - 解析器类
    */
   static registerParser(ParserClass) {
-    UserAgent.parsers.add(ParserClass);
+    UserAgent.parsers.add(ParserClass)
   }
 
   /**
@@ -42,7 +41,7 @@ export class UserAgent {
    * @param {typeof BaseParser} ParserClass - 解析器类
    */
   static unregisterParser(ParserClass) {
-    UserAgent.parsers.delete(ParserClass);
+    UserAgent.parsers.delete(ParserClass)
   }
 
   /**
@@ -53,13 +52,13 @@ export class UserAgent {
     // 获取所有解析器实例并按优先级排序
     const parsers = Array.from(UserAgent.parsers)
       .map(Parser => new Parser(this.ua))
-      .sort((a, b) => b.getPriority() - a.getPriority());
+      .sort((a, b) => b.getPriority() - a.getPriority())
 
     // 依次执行可用的解析器
     for (const parser of parsers) {
       if (parser.canParse()) {
-        const result = parser.parse();
-        Object.assign(this.result, result);
+        const result = parser.parse()
+        Object.assign(this.result, result)
       }
     }
   }
@@ -69,7 +68,7 @@ export class UserAgent {
    * @returns {boolean}
    */
   isMobile() {
-    return this.result.device.type === 'mobile';
+    return this.result.device.type === 'mobile'
   }
 
   /**
@@ -77,7 +76,7 @@ export class UserAgent {
    * @returns {boolean}
    */
   isTablet() {
-    return this.result.device.type === 'tablet';
+    return this.result.device.type === 'tablet'
   }
 
   /**
@@ -85,7 +84,7 @@ export class UserAgent {
    * @returns {boolean}
    */
   isDesktop() {
-    return this.result.device.type === 'desktop';
+    return this.result.device.type === 'desktop'
   }
 
   /**
@@ -94,7 +93,7 @@ export class UserAgent {
    * @returns {boolean}
    */
   isBrowser(name) {
-    return this.result.browser.name.toLowerCase() === name.toLowerCase();
+    return this.result.browser.name.toLowerCase() === name.toLowerCase()
   }
 
   /**
@@ -103,7 +102,7 @@ export class UserAgent {
    * @returns {boolean}
    */
   isOS(name) {
-    return this.result.os.name.toLowerCase() === name.toLowerCase();
+    return this.result.os.name.toLowerCase() === name.toLowerCase()
   }
 
   /**
@@ -111,6 +110,6 @@ export class UserAgent {
    * @returns {Object} 包含浏览器、操作系统、设备信息的对象
    */
   getResult() {
-    return { ...this.result };
+    return { ...this.result }
   }
 }

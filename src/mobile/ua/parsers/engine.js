@@ -1,4 +1,4 @@
-import { BaseParser } from './base';
+import { BaseParser } from './base'
 
 /**
  * 引擎解析器
@@ -9,32 +9,32 @@ export class EngineParser extends BaseParser {
     { name: 'Gecko', regex: /Gecko\/(\d+)/i },
     { name: 'Trident', regex: /Trident\/(\d+(\.\d+)?)/i },
     { name: 'Presto', regex: /Presto\/(\d+(\.\d+)+)/i }
-  ];
+  ]
 
   parse() {
-    const result = { name: '', version: '' };
+    const result = { name: '', version: '' }
 
     if (!this.ua) {
-      return { engine: result };
+      return { engine: result }
     }
 
     for (const pattern of EngineParser.patterns) {
-      const match = this.ua.match(pattern.regex);
+      const match = this.ua.match(pattern.regex)
       if (match) {
-        result.name = pattern.name;
-        result.version = match[1];
-        break;
+        result.name = pattern.name
+        result.version = match[1]
+        break
       }
     }
 
-    return { engine: result };
+    return { engine: result }
   }
 
   getPriority() {
-    return 90;
+    return 90
   }
 
   canParse() {
-    return true;
+    return true
   }
 }

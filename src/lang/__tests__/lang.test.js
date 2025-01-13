@@ -1,7 +1,6 @@
-const AJS = require('../src/index')
-const MagicString = AJS.lang.MagicString
+import { MagicString } from '../index'
 
-describe('MagicString', () => {
+describe('Language Utilities Tests', () => {
   test('should capitalize string correctly', () => {
     const str = MagicString('abc')
     expect(str.capitalize()).toBe('Abc')

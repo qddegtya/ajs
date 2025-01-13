@@ -1,5 +1,6 @@
-import compose from './compose'
+import { compose, composeAsync } from './compose'
 
 export {
-  compose
+  compose,
+  composeAsync
 }

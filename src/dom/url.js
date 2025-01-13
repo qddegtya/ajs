@@ -2,7 +2,7 @@
  * URL 正则表达式，用于解析 URL 的各个部分
  * 格式: [protocol://][username:password@]hostname[:port][/path][?query][#hash]
  */
-const URL_REGEX = /^(?:([^:/?#]+):\/\/)?(?:([^:@]*):?([^:@]*)@)?([^:/?#]*)(?::(\d*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?$/;
+const URL_REGEX = /^(?:([^:/?#]+):\/\/)?(?:([^:@]*):?([^:@]*)@)?([^:/?#]*)(?::(\d*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?$/
 
 /**
  * 解析查询字符串
@@ -10,28 +10,28 @@ const URL_REGEX = /^(?:([^:/?#]+):\/\/)?(?:([^:@]*):?([^:@]*)@)?([^:/?#]*)(?::(\
  * @returns {Object} 解析后的查询参数对象
  */
 function parseQueryString(queryString) {
-  const params = {};
-  if (!queryString) return params;
+  const params = {}
+  if (!queryString) return params
 
   queryString.split('&').forEach(param => {
-    if (!param) return;
-    const [key, ...values] = param.split('=');
-    const value = values.join('='); // 处理值中包含 = 的情况
-    const decodedKey = decodeURIComponent(key);
-    const decodedValue = value ? decodeURIComponent(value) : '';
+    if (!param) return
+    const [key, ...values] = param.split('=')
+    const value = values.join('=') // 处理值中包含 = 的情况
+    const decodedKey = decodeURIComponent(key)
+    const decodedValue = value ? decodeURIComponent(value) : ''
 
     if (decodedKey) {
       if (params[decodedKey]) {
         params[decodedKey] = Array.isArray(params[decodedKey])
           ? [...params[decodedKey], decodedValue]
-          : [params[decodedKey], decodedValue];
+          : [params[decodedKey], decodedValue]
       } else {
-        params[decodedKey] = decodedValue;
+        params[decodedKey] = decodedValue
       }
     }
-  });
+  })
 
-  return params;
+  return params
 }
 
 /**
@@ -40,18 +40,18 @@ function parseQueryString(queryString) {
  * @returns {string} 序列化后的查询字符串
  */
 function stringifyQueryParams(params) {
-  if (!params || typeof params !== 'object') return '';
+  if (!params || typeof params !== 'object') return ''
 
   return Object.entries(params)
     .map(([key, value]) => {
       if (Array.isArray(value)) {
         return value
           .map(v => `${encodeURIComponent(key)}=${encodeURIComponent(v ?? '')}`)
-          .join('&');
+          .join('&')
       }
-      return `${encodeURIComponent(key)}=${encodeURIComponent(value ?? '')}`;
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value ?? '')}`
     })
-    .join('&');
+    .join('&')
 }
 
 /**
@@ -61,62 +61,62 @@ function stringifyQueryParams(params) {
  */
 function isValidUrl(url) {
   // 空 URL 是有效的
-  if (!url) return true;
+  if (!url) return true
 
   // 检查是否包含非法字符（允许更多特殊字符）
   if (url.match(/[^\x21-\x7E]/)) {
-    return false;
+    return false
   }
 
   // 检查协议部分
-  const protocolIndex = url.indexOf('://');
+  const protocolIndex = url.indexOf('://')
   if (protocolIndex !== -1) {
-    const protocol = url.substring(0, protocolIndex);
+    const protocol = url.substring(0, protocolIndex)
     // 检查协议格式
     if (!protocol.match(/^[a-zA-Z][a-zA-Z0-9+.-]*$/)) {
-      return false;
+      return false
     }
     // 检查协议后的部分是否为空
     if (url.length <= protocolIndex + 3) {
-      return false;
+      return false
     }
   }
 
   // 提取主机部分
-  let hostPart = url;
+  let hostPart = url
   if (protocolIndex !== -1) {
-    hostPart = url.substring(protocolIndex + 3);
+    hostPart = url.substring(protocolIndex + 3)
   }
 
   // 检查认证信息
-  const atIndex = hostPart.indexOf('@');
+  const atIndex = hostPart.indexOf('@')
   if (atIndex !== -1) {
-    const authPart = hostPart.substring(0, atIndex);
-    const colonCount = (authPart.match(/:/g) || []).length;
+    const authPart = hostPart.substring(0, atIndex)
+    const colonCount = (authPart.match(/:/g) || []).length
     // 认证信息中最多只能有一个冒号（用于分隔用户名和密码）
     if (colonCount > 1) {
-      return false;
+      return false
     }
-    hostPart = hostPart.substring(atIndex + 1);
+    hostPart = hostPart.substring(atIndex + 1)
   }
 
   // 检查主机和端口
-  const pathIndex = hostPart.indexOf('/');
-  const queryIndex = hostPart.indexOf('?');
-  const hashIndex = hostPart.indexOf('#');
-  let endIndex = hostPart.length;
-  if (pathIndex !== -1) endIndex = Math.min(endIndex, pathIndex);
-  if (queryIndex !== -1) endIndex = Math.min(endIndex, queryIndex);
-  if (hashIndex !== -1) endIndex = Math.min(endIndex, hashIndex);
+  const pathIndex = hostPart.indexOf('/')
+  const queryIndex = hostPart.indexOf('?')
+  const hashIndex = hostPart.indexOf('#')
+  let endIndex = hostPart.length
+  if (pathIndex !== -1) endIndex = Math.min(endIndex, pathIndex)
+  if (queryIndex !== -1) endIndex = Math.min(endIndex, queryIndex)
+  if (hashIndex !== -1) endIndex = Math.min(endIndex, hashIndex)
 
-  const host = hostPart.substring(0, endIndex);
-  const colonCount = (host.match(/:/g) || []).length;
+  const host = hostPart.substring(0, endIndex)
+  const colonCount = (host.match(/:/g) || []).length
   // 主机部分最多只能有一个冒号（用于分隔主机名和端口）
   if (colonCount > 1) {
-    return false;
+    return false
   }
 
-  return true;
+  return true
 }
 
 /**
@@ -127,7 +127,7 @@ export class UrlParser {
    * @param {string} url - 要解析的 URL
    */
   constructor(url) {
-    this.parse(url || '');
+    this.parse(url || '')
   }
 
   /**
@@ -138,12 +138,12 @@ export class UrlParser {
    */
   parse(url) {
     if (!isValidUrl(url)) {
-      throw new Error('Invalid URL format');
+      throw new Error('Invalid URL format')
     }
 
-    const matches = URL_REGEX.exec(url);
+    const matches = URL_REGEX.exec(url)
     if (!matches) {
-      throw new Error('Invalid URL format');
+      throw new Error('Invalid URL format')
     }
 
     const [
@@ -156,22 +156,22 @@ export class UrlParser {
       path,
       query,
       hash
-    ] = matches;
+    ] = matches
 
     // 检查端口格式
     if (port && !/^\d+$/.test(port)) {
-      throw new Error('Invalid URL format');
+      throw new Error('Invalid URL format')
     }
 
-    this.protocol = protocol || '';
-    this.username = username || '';
-    this.password = password || '';
-    this.hostname = hostname || '';
-    this.port = port || '';
-    this.path = path || '';
-    this.query = query || '';
-    this.hash = hash || '';
-    this.queryParams = parseQueryString(this.query);
+    this.protocol = protocol || ''
+    this.username = username || ''
+    this.password = password || ''
+    this.hostname = hostname || ''
+    this.port = port || ''
+    this.path = path || ''
+    this.query = query || ''
+    this.hash = hash || ''
+    this.queryParams = parseQueryString(this.query)
   }
 
   /**
@@ -179,43 +179,43 @@ export class UrlParser {
    * @returns {string} 完整的 URL
    */
   toString() {
-    let url = '';
+    let url = ''
 
     // 添加协议
     if (this.protocol) {
-      url += `${this.protocol}://`;
+      url += `${this.protocol}://`
     }
 
     // 添加主机部分
     if (this.hostname) {
       if (this.username) {
-        url += this.username;
+        url += this.username
         if (this.password) {
-          url += `:${this.password}`;
+          url += `:${this.password}`
         }
-        url += '@';
+        url += '@'
       }
-      url += this.hostname;
+      url += this.hostname
       if (this.port) {
-        url += `:${this.port}`;
+        url += `:${this.port}`
       }
     }
 
     // 添加路径
-    url += this.path;
+    url += this.path
 
     // 添加查询参数
-    const queryString = stringifyQueryParams(this.queryParams);
+    const queryString = stringifyQueryParams(this.queryParams)
     if (queryString) {
-      url += `?${queryString}`;
+      url += `?${queryString}`
     }
 
     // 添加哈希
     if (this.hash) {
-      url += `#${this.hash}`;
+      url += `#${this.hash}`
     }
 
-    return url;
+    return url
   }
 
   /**
@@ -225,8 +225,8 @@ export class UrlParser {
    * @returns {UrlParser} 当前实例，支持链式调用
    */
   setQueryParam(key, value) {
-    this.queryParams[key] = value;
-    return this;
+    this.queryParams[key] = value
+    return this
   }
 
   /**
@@ -235,7 +235,7 @@ export class UrlParser {
    * @returns {string|string[]|undefined} 参数值
    */
   getQueryParam(key) {
-    return this.queryParams[key];
+    return this.queryParams[key]
   }
 
   /**
@@ -244,8 +244,8 @@ export class UrlParser {
    * @returns {UrlParser} 当前实例，支持链式调用
    */
   removeQueryParam(key) {
-    delete this.queryParams[key];
-    return this;
+    delete this.queryParams[key]
+    return this
   }
 
   /**
@@ -255,38 +255,38 @@ export class UrlParser {
    */
   resolve(relativePath) {
     if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
-      return new UrlParser(relativePath);
+      return new UrlParser(relativePath)
     }
 
-    const base = this.toString();
-    const baseUrl = base.split('#')[0].split('?')[0];
-    const isAbsolute = relativePath.startsWith('/');
+    const base = this.toString()
+    const baseUrl = base.split('#')[0].split('?')[0]
+    const isAbsolute = relativePath.startsWith('/')
 
-    let newPath;
+    let newPath
     if (isAbsolute) {
-      newPath = relativePath;
+      newPath = relativePath
     } else {
       const basePath = baseUrl.endsWith('/')
         ? baseUrl
-        : baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1);
-      newPath = basePath.replace(/^[^/]*:\/\/[^/]+/, '') + relativePath;
+        : baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1)
+      newPath = basePath.replace(/^[^/]*:\/\/[^/]+/, '') + relativePath
     }
 
     // 处理 ../
-    const parts = newPath.split('/');
-    const stack = [];
+    const parts = newPath.split('/')
+    const stack = []
     for (const part of parts) {
       if (part === '..') {
-        stack.pop();
+        stack.pop()
       } else if (part !== '.' && part !== '') {
-        stack.push(part);
+        stack.push(part)
       }
     }
 
-    const finalPath = '/' + stack.join('/');
+    const finalPath = '/' + stack.join('/')
     return new UrlParser(
       `${this.protocol}://${this.hostname}${this.port ? ':' + this.port : ''}${finalPath}`
-    );
+    )
   }
 
   /**
@@ -294,6 +294,6 @@ export class UrlParser {
    * @returns {UrlParser} 新的 URL 解析器实例
    */
   clone() {
-    return new UrlParser(this.toString());
+    return new UrlParser(this.toString())
   }
 }

@@ -1,5 +1,5 @@
 // Track which warnings have been shown
-const warningMap = new WeakMap();
+const warningMap = new WeakMap()
 
 /**
  * Decorator factory for marking methods or properties as deprecated
@@ -8,39 +8,39 @@ const warningMap = new WeakMap();
  */
 export function deprecate(message) {
   return function(target, key, descriptor) {
-    const componentName = target.constructor ? target.constructor.name : 'Unknown';
-    const defaultMessage = `Warning: ${componentName}.${key} is deprecated and will be removed in a future version.`;
-    const warningMessage = message || defaultMessage;
+    const componentName = target.constructor ? target.constructor.name : 'Unknown'
+    const defaultMessage = `Warning: ${componentName}.${key} is deprecated and will be removed in a future version.`
+    const warningMessage = message || defaultMessage
 
     if (descriptor.value) {
       // For methods
-      const original = descriptor.value;
+      const original = descriptor.value
       descriptor.value = function(...args) {
-        showWarning(this, key, warningMessage);
-        return original.apply(this, args);
-      };
+        showWarning(this, key, warningMessage)
+        return original.apply(this, args)
+      }
     } else if (descriptor.get || descriptor.set) {
       // For getters/setters
-      const getter = descriptor.get;
-      const setter = descriptor.set;
+      const getter = descriptor.get
+      const setter = descriptor.set
 
       if (getter) {
         descriptor.get = function() {
-          showWarning(this, key, warningMessage);
-          return getter.call(this);
-        };
+          showWarning(this, key, warningMessage)
+          return getter.call(this)
+        }
       }
 
       if (setter) {
         descriptor.set = function(value) {
-          showWarning(this, key, warningMessage);
-          setter.call(this, value);
-        };
+          showWarning(this, key, warningMessage)
+          setter.call(this, value)
+        }
       }
     }
 
-    return descriptor;
-  };
+    return descriptor
+  }
 }
 
 /**
@@ -51,12 +51,12 @@ export function deprecate(message) {
  */
 function showWarning(instance, key, message) {
   if (!warningMap.has(instance)) {
-    warningMap.set(instance, new Set());
+    warningMap.set(instance, new Set())
   }
   
-  const warnings = warningMap.get(instance);
+  const warnings = warningMap.get(instance)
   if (!warnings.has(key)) {
-    console.warn(message);
-    warnings.add(key);
+    console.warn(message)
+    warnings.add(key)
   }
 }

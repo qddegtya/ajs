@@ -3,12 +3,18 @@ const once = function(pre, current, handler, options) {
 
   if (args.length === 2) {
     handler = current
+    options = undefined
+    current = pre
+  } else if (args.length === 3 && typeof current === 'function') {
+    options = handler
+    handler = current
     current = pre
   }
 
   // TODO: 根据 EventTarget 生成正则
   const TARGET_EV_REGEXP = /(.*)\.(.*)/
   const _getEventTargetTuple = et => {
+    if (!et || typeof et !== 'string') return []
     return TARGET_EV_REGEXP.test(et)
       ? et.match(TARGET_EV_REGEXP).slice(1, 3)
       : []

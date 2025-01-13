@@ -1,1 +1,1 @@
-export * from './ua';
+export * from './ua'
