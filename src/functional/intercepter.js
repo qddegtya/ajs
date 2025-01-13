@@ -1,4 +1,4 @@
-import { is } from '../__internal__'
+import { is } from '../internal'
 import { base } from '../core'
 
 // TODO

@@ -1,4 +1,4 @@
-import { hasOwnProp } from '../../__internal__'
+import { hasOwnProp } from '../../internal'
 
 const mixin = function mixin() {
   let mixins = arguments

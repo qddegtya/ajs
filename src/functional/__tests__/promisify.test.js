@@ -1,4 +1,4 @@
-const AJS = require("../src/index");
+const AJS = require("../../index");
 const fs = require("fs");
 const path = require("path");
 
@@ -6,7 +6,7 @@ describe('AJS.functional.helper.promisify', () => {
   const readFile = AJS.functional.helper.promisify(fs.readFile);
 
   test('should successfully read an existing file', async () => {
-    const filePath = path.join(__dirname, "core.test.js");
+    const filePath = path.join(__dirname, ".", "di.test.js");
     const content = await readFile(filePath, "utf-8");
     expect(content).toBeTruthy();
     expect(typeof content).toBe('string');

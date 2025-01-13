@@ -1,12 +1,12 @@
 const fs = require("fs");
 const path = require("path");
-const AJS = require("../src/index");
+const AJS = require("../../index");
 const tpl = AJS.future.tpl;
 
 describe('Template Function Tests', () => {
   test('should render template correctly', () => {
     const tplContent = fs
-      .readFileSync(path.join(__dirname, ".", "_fixtures/hello.tpl"))
+      .readFileSync(path.join(__dirname, ".", "__fixtures__/hello.tpl"))
       .toString();
 
     const result = tpl.exec(tplContent, {

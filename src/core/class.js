@@ -41,7 +41,7 @@
  * let b = B.$new()
  *
  */
-import { assign } from '../__internal__'
+import { assign } from '../internal'
 
 const ClassShape = option => {
   let INSTANCE_PROPERTY_REGEXP = /^\$_[^$_]+/
