@@ -33,6 +33,80 @@ AJS is a thoughtfully crafted JavaScript utility library that combines classical
   - Advanced effect system
   - Cutting-edge async patterns
 
+## 🚀 Quick Start
+
+### Installation
+
+```bash
+npm install xajs@latest
+```
+
+### Usage
+
+#### Full Package Import
+
+```javascript
+// Import the entire AJS library
+import { core, functional, fp, dom } from 'xajs'
+
+// Use core functionality
+const MyClass = core.base.Class({
+  $ctor() {
+    this.name = 'ajs'
+  }
+})
+
+// Use functional utilities
+const logged = functional.helper.intercepter(fn)
+  .before(args => console.log('Before:', args))
+  .after(args => console.log('After:', args))
+  .$runner
+```
+
+#### Module Import (Recommended)
+
+```javascript
+// Import only what you need
+import { base } from 'xajs/core'
+import { h } from 'xajs/dom'
+import { compose } from 'xajs/fp'
+import { TR } from 'xajs/future'
+
+// Use Class system
+const Component = base.Class({
+  render() {
+    return h('div', { className: 'component' }, 'Hello AJS!')
+  }
+})
+
+// Use functional programming
+const pipeline = compose(fn1, fn2, fn3)
+
+// Use reactive features
+const count = TR(0)
+count.observe(val => console.log('count changed:', val))
+```
+
+### Supported Modules
+
+AJS supports independent imports for these modules:
+
+* xajs/core - Core functionality (Class, decorators)
+* xajs/functional - Functional programming tools
+* xajs/fp - Functional programming paradigms
+* xajs/dom - DOM manipulation tools
+* xajs/mobile - Mobile utilities
+* xajs/internal - Internal utilities
+* xajs/future - Experimental features
+* xajs/lang - Language enhancements
+
+Each module is independent and can be imported separately, providing:
+
+* 🚀 Minimal bundle size
+* 📦 Better code splitting
+* 🔥 Faster loading
+* 🎯 Precise dependency management
+
 ## 🎯 Design Philosophy
 
 - **Lightweight**: Focused on providing essential utilities without bloat
