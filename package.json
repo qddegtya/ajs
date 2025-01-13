@@ -1,7 +1,7 @@
 {
   "name": "xajs",
   "version": "1.0.27",
-  "description": "💗 A collection of utility libraries used by @qddegtya",
+  "description": " A collection of utility libraries used by @qddegtya",
   "main": "./dist/ajs.cjs.js",
   "module": "./dist/ajs.es.js",
   "browser": "./dist/ajs.umd.js",
@@ -11,6 +11,54 @@
       "require": "./dist/ajs.cjs.js",
       "import": "./dist/ajs.es.js",
       "default": "./dist/ajs.cjs.js"
+    },
+    "./core": {
+      "browser": "./dist/core/core.umd.js",
+      "import": "./dist/core/core.es.js",
+      "require": "./dist/core/core.cjs.js",
+      "default": "./dist/core/core.cjs.js"
+    },
+    "./mobile": {
+      "browser": "./dist/mobile/mobile.umd.js",
+      "import": "./dist/mobile/mobile.es.js",
+      "require": "./dist/mobile/mobile.cjs.js",
+      "default": "./dist/mobile/mobile.cjs.js"
+    },
+    "./dom": {
+      "browser": "./dist/dom/dom.umd.js",
+      "import": "./dist/dom/dom.es.js",
+      "require": "./dist/dom/dom.cjs.js",
+      "default": "./dist/dom/dom.cjs.js"
+    },
+    "./fp": {
+      "browser": "./dist/fp/fp.umd.js",
+      "import": "./dist/fp/fp.es.js",
+      "require": "./dist/fp/fp.cjs.js",
+      "default": "./dist/fp/fp.cjs.js"
+    },
+    "./functional": {
+      "browser": "./dist/functional/functional.umd.js",
+      "import": "./dist/functional/functional.es.js",
+      "require": "./dist/functional/functional.cjs.js",
+      "default": "./dist/functional/functional.cjs.js"
+    },
+    "./internal": {
+      "browser": "./dist/internal/internal.umd.js",
+      "import": "./dist/internal/internal.es.js",
+      "require": "./dist/internal/internal.cjs.js",
+      "default": "./dist/internal/internal.cjs.js"
+    },
+    "./future": {
+      "browser": "./dist/future/future.umd.js",
+      "import": "./dist/future/future.es.js",
+      "require": "./dist/future/future.cjs.js",
+      "default": "./dist/future/future.cjs.js"
+    },
+    "./lang": {
+      "browser": "./dist/lang/lang.umd.js",
+      "import": "./dist/lang/lang.es.js",
+      "require": "./dist/lang/lang.cjs.js",
+      "default": "./dist/lang/lang.cjs.js"
     }
   },
   "engines": {
