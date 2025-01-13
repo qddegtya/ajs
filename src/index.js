@@ -5,5 +5,6 @@ import * as dom from './dom'
 import * as internal from './internal'
 import * as future from './future'
 import * as lang from './lang'
+import * as mobile from './mobile'
 
-export { core, functional, fp, dom, internal, future, lang }
+export { core, functional, fp, dom, internal, future, lang, mobile }
