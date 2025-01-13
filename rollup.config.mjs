@@ -95,7 +95,7 @@ const moduleConfigs = modules.map(mod => ({
   // 外部依赖处理
   external: [
     // 将其他模块标记为外部依赖
-    ...modules.filter(m => m !== mod).map(m => `@xajs/${m}`),
+    ...modules.filter(m => m !== mod).map(m => `xajs/${m}`),
     // 添加其他可能的外部依赖
     /^@babel\/runtime/
   ]
