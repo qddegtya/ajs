@@ -1,80 +1,78 @@
 {
-  "description": "Core module providing fundamental building blocks for AJS Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.",
-  "namespaces": [
+  "name": "index.js",
+  "description": "Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.",
+  "features": [
     {
-      "title": "ClassSystem",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "inheritance",
-          "description": "Advanced class inheritance with $extends and $mixins support"
-        },
-        {
-          "type": "Object",
-          "name": "constructor",
-          "description": "Constructor lifecycle management with $ctor"
-        },
-        {
-          "type": "Object",
-          "name": "methods",
-          "description": "Method overriding and super calls"
-        },
-        {
-          "type": "Object",
-          "name": "static",
-          "description": "Static and instance method support"
-        }
-      ]
+      "namespace": "ClassSystem",
+      "property": "inheritance",
+      "type": "Object",
+      "description": "Advanced class inheritance with $extends and $mixins support"
     },
     {
-      "title": "Decorators",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "functions",
-          "description": "Function and class decorators"
-        },
-        {
-          "type": "Object",
-          "name": "builtin",
-          "description": "Built-in decorators like @mixin and @deprecate"
-        },
-        {
-          "type": "Object",
-          "name": "factory",
-          "description": "Custom decorator factory support"
-        },
-        {
-          "type": "Object",
-          "name": "properties",
-          "description": "Method and property decorators"
-        }
-      ]
+      "namespace": "ClassSystem",
+      "property": "constructor",
+      "type": "Object",
+      "description": "Constructor lifecycle management with $ctor"
     },
     {
-      "title": "Deferred",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "promise",
-          "description": "Promise-like interface with resolve/reject"
-        },
-        {
-          "type": "Object",
-          "name": "progress",
-          "description": "Progress tracking with notify"
-        },
-        {
-          "type": "Object",
-          "name": "chain",
-          "description": "Chainable then/catch/finally"
-        },
-        {
-          "type": "Object",
-          "name": "cancel",
-          "description": "Cancellation support"
-        }
-      ]
+      "namespace": "ClassSystem",
+      "property": "methods",
+      "type": "Object",
+      "description": "Method overriding and super calls"
+    },
+    {
+      "namespace": "ClassSystem",
+      "property": "static",
+      "type": "Object",
+      "description": "Static and instance method support"
+    },
+    {
+      "namespace": "Decorators",
+      "property": "functions",
+      "type": "Object",
+      "description": "Function and class decorators"
+    },
+    {
+      "namespace": "Decorators",
+      "property": "builtin",
+      "type": "Object",
+      "description": "Built-in decorators like @mixin and @deprecate"
+    },
+    {
+      "namespace": "Decorators",
+      "property": "factory",
+      "type": "Object",
+      "description": "Custom decorator factory support"
+    },
+    {
+      "namespace": "Decorators",
+      "property": "properties",
+      "type": "Object",
+      "description": "Method and property decorators"
+    },
+    {
+      "namespace": "Deferred",
+      "property": "promise",
+      "type": "Object",
+      "description": "Promise-like interface with resolve/reject"
+    },
+    {
+      "namespace": "Deferred",
+      "property": "progress",
+      "type": "Object",
+      "description": "Progress tracking with notify"
+    },
+    {
+      "namespace": "Deferred",
+      "property": "chain",
+      "type": "Object",
+      "description": "Chainable then/catch/finally"
+    },
+    {
+      "namespace": "Deferred",
+      "property": "cancel",
+      "type": "Object",
+      "description": "Cancellation support"
     }
   ],
   "examples": [
@@ -87,10 +85,94 @@
       "code": "import { decorators } from 'xajs/core'\nclass Enhanced {\nenhancedMethod() {\n// Enhanced functionality\n}\n}\n"
     }
   ],
+  "exports": [
+    "base",
+    "decorators"
+  ],
+  "related": [
+    "."
+  ],
   "see": [
     {
       "url": "https://ajs.dev/docs/core",
       "text": "Core Module Documentation"
     }
-  ]
+  ],
+  "namespaces": {
+    "ClassSystem": {
+      "name": "ClassSystem",
+      "properties": {
+        "inheritance": {
+          "type": "Object",
+          "name": "inheritance",
+          "description": "Advanced class inheritance with $extends and $mixins support"
+        },
+        "constructor": {
+          "type": "Object",
+          "name": "constructor",
+          "description": "Constructor lifecycle management with $ctor"
+        },
+        "methods": {
+          "type": "Object",
+          "name": "methods",
+          "description": "Method overriding and super calls"
+        },
+        "static": {
+          "type": "Object",
+          "name": "static",
+          "description": "Static and instance method support"
+        }
+      }
+    },
+    "Decorators": {
+      "name": "Decorators",
+      "properties": {
+        "functions": {
+          "type": "Object",
+          "name": "functions",
+          "description": "Function and class decorators"
+        },
+        "builtin": {
+          "type": "Object",
+          "name": "builtin",
+          "description": "Built-in decorators like @mixin and @deprecate"
+        },
+        "factory": {
+          "type": "Object",
+          "name": "factory",
+          "description": "Custom decorator factory support"
+        },
+        "properties": {
+          "type": "Object",
+          "name": "properties",
+          "description": "Method and property decorators"
+        }
+      }
+    },
+    "Deferred": {
+      "name": "Deferred",
+      "properties": {
+        "promise": {
+          "type": "Object",
+          "name": "promise",
+          "description": "Promise-like interface with resolve/reject"
+        },
+        "progress": {
+          "type": "Object",
+          "name": "progress",
+          "description": "Progress tracking with notify"
+        },
+        "chain": {
+          "type": "Object",
+          "name": "chain",
+          "description": "Chainable then/catch/finally"
+        },
+        "cancel": {
+          "type": "Object",
+          "name": "cancel",
+          "description": "Cancellation support"
+        }
+      }
+    }
+  }
 }

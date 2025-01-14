@@ -14,8 +14,8 @@ export function replaceContent(content, placeholder, newContent) {
   // 获取缩进
   const indentation = getIndentation(content, startIndex);
 
-  // 处理新内容，保持适当的缩进
-  const lines = newContent.split('\n');
+  // 处理新内容
+  const lines = newContent.trim().split('\n');
   const processedLines = lines.map((line, index) => {
     // 空行处理
     if (!line.trim()) {
@@ -27,28 +27,35 @@ export function replaceContent(content, placeholder, newContent) {
     const codeBlockMarkers = prevLines.filter(l => l.trim().startsWith('```')).length;
     const isInCodeBlock = codeBlockMarkers % 2 === 1;
 
-    // 代码块内的内容不缩进
+    // 代码块内的内容保持原样
     if (isInCodeBlock) {
-      return line;
-    }
-
-    // 代码块标记和标题的特殊处理
-    if (line.trim().startsWith('```') || line.trim().startsWith('#')) {
-      // 代码块开始标记前添加空行
-      if (line.trim().startsWith('```')) {
-        return '\n' + indentation + line;
-      }
       return indentation + line;
     }
 
-    // 其他内容添加额外缩进
-    return indentation + '  ' + line;
+    // 特殊行处理（标题、列表项等）
+    if (line.trim().startsWith('#') || 
+        line.trim().startsWith('-') || 
+        line.trim().startsWith('*') ||
+        line.trim().startsWith('1.')) {
+      return indentation + line.trim();
+    }
+
+    // 代码块标记处理
+    if (line.trim().startsWith('```')) {
+      return (index > 0 ? '\n' : '') + indentation + line.trim();
+    }
+
+    // 普通内容处理
+    return indentation + '  ' + line.trim();
   });
 
-  // 确保内容前后有空行
-  const processedContent = processedLines.join('\n');
-  return content.slice(0, startIndex + startMarker.length) + '\n\n' +
-    processedContent + '\n\n' +
+  // 确保内容前后有空行，并且移除多余的空行
+  const processedContent = processedLines
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n');
+
+  return content.slice(0, startIndex + startMarker.length) + '\n' +
+    processedContent.trim() + '\n' +
     content.slice(endIndex);
 }
 

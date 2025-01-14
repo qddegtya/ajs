@@ -1,0 +1,14 @@
+{
+  "name": "index.js",
+  "description": "",
+  "features": [],
+  "examples": [],
+  "exports": [
+    "deprecate",
+    "mixin"
+  ],
+  "related": [
+    "."
+  ],
+  "see": []
+}

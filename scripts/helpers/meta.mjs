@@ -10,8 +10,72 @@ function initializeJSDocInfo() {
     description: '',
     features: [],
     examples: [],
-    see: []
+    see: [],
+    exports: [],
+    namespaces: {}
   };
+}
+
+function cleanDescription(description) {
+  // 移除重复的模块名称
+  return description.replace(/\b\w+\s+-\s+.*?\s+\1\s+/g, '')
+    // 清理多余的空格
+    .replace(/\s+/g, ' ')
+    // 修复标点符号
+    .replace(/\s*([,.!?])\s*/g, '$1 ')
+    .trim();
+}
+
+function extractFeaturesFromDescription(description) {
+  const features = [];
+  const sentences = description.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
+  
+  for (const sentence of sentences) {
+    // 如果句子描述了一个功能或特性
+    if (sentence.includes('provides') || 
+        sentence.includes('supports') || 
+        sentence.includes('enables') ||
+        sentence.includes('allows') ||
+        sentence.includes('featuring')) {
+      features.push(sentence);
+    }
+  }
+  
+  return features;
+}
+
+function extractNamespaceInfo(comment) {
+  const namespaces = {};
+  const lines = comment.split('\n');
+  let currentNamespace = null;
+
+  for (const line of lines) {
+    const trimmedLine = line.trim();
+    
+    // Extract namespace
+    const namespaceMatch = trimmedLine.match(/@namespace\s+(\w+)/);
+    if (namespaceMatch) {
+      currentNamespace = namespaceMatch[1];
+      namespaces[currentNamespace] = {
+        name: currentNamespace,
+        properties: {}
+      };
+      continue;
+    }
+
+    // Extract properties for current namespace
+    const propertyMatch = trimmedLine.match(/@property\s+{([^}]+)}\s+(\w+)\s*-?\s*(.*)/);
+    if (propertyMatch && currentNamespace) {
+      const [, type, name, description] = propertyMatch;
+      namespaces[currentNamespace].properties[name] = {
+        type: type.trim(),
+        name: name.trim(),
+        description: description.trim()
+      };
+    }
+  }
+
+  return namespaces;
 }
 
 function handleTagLine(line, tag, context) {
@@ -20,33 +84,34 @@ function handleTagLine(line, tag, context) {
 
   switch (tag) {
     case '@module':
-      return { currentSection, currentFeature, currentExample };
+      // 不要在描述中添加模块名
+      return { currentSection: 'description', currentFeature, currentExample };
     case '@description':
       if (content) descriptionLines.push(content);
       return { currentSection: 'description', currentFeature, currentExample };
     case '@feature':
-      const newFeature = {
-        title: content,
-        items: []
-      };
-      info.features.push(newFeature);
-      return { currentSection: 'feature', currentFeature: newFeature, currentExample };
+      if (content) {
+        info.features.push(content);
+      }
+      return { currentSection: 'feature', currentFeature: null, currentExample };
     case '@example':
-      const captionMatch = content.match(/<caption>([^<]+)<\/caption>/);
       const newExample = {
-        caption: captionMatch ? captionMatch[1].trim() : '',
+        caption: content.replace(/<caption>(.*?)<\/caption>/, '$1').trim(),
         code: ''
       };
       info.examples.push(newExample);
       return { currentSection: 'example', currentFeature, currentExample: newExample };
     case '@see':
-      const linkMatch = content.match(/\{@link\s+([^\s}]+)(?:\s+([^}]+))?\}/);
-      if (linkMatch) {
-        const [_, url, text] = linkMatch;
-        info.see.push({
-          url: url.trim(),
-          text: text ? text.trim() : url.trim()
-        });
+      if (content) {
+        // 修复 {@link url text} 格式
+        const match = content.match(/{@link\s+([^\s}]+)(?:\s+([^}]+))?}/) ||
+                     content.match(/([^\s]+)(?:\s+(.+))?/);
+        if (match) {
+          info.see.push({
+            url: match[1],
+            text: match[2] || match[1]
+          });
+        }
       }
       return { currentSection: null, currentFeature, currentExample };
     default:
@@ -55,15 +120,15 @@ function handleTagLine(line, tag, context) {
 }
 
 function handleContentLine(line, section, context) {
-  const { descriptionLines, currentFeature, currentExample } = context;
+  const { descriptionLines, currentExample } = context;
 
   switch (section) {
     case 'description':
       descriptionLines.push(line);
       break;
     case 'feature':
-      if (line.startsWith('-') && currentFeature) {
-        currentFeature.items.push(line.substring(1).trim());
+      if (line.startsWith('-')) {
+        context.info.features.push(line.substring(1).trim());
       }
       break;
     case 'example':
@@ -78,47 +143,57 @@ function handleContentLine(line, section, context) {
   }
 }
 
-export function parseJSDocComment(comment) {
-  const lines = comment.value.split('\n');
+function parseJSDocComment(comment) {
   const info = initializeJSDocInfo();
+  const descriptionLines = [];
   let context = {
     info,
     currentSection: null,
     currentFeature: null,
     currentExample: null,
-    descriptionLines: []
+    descriptionLines
   };
 
-  for (const line of lines) {
-    const cleanLine = line.trim().replace(/^\*\s*/, '');
-    if (!cleanLine) continue;
+  // Extract namespaces first
+  info.namespaces = extractNamespaceInfo(comment);
 
-    if (cleanLine.startsWith('@')) {
-      const tag = Object.keys(JSDOC_CONFIG.tags)
-        .map(t => '@' + t)
-        .find(t => cleanLine.startsWith(t));
-      
-      if (tag) {
-        context = {
-          ...context,
-          ...handleTagLine(cleanLine, tag, context)
-        };
+  const lines = comment.split('\n');
+  for (const line of lines) {
+    const trimmedLine = line.trim().replace(/^\*\s*/, '');
+    if (!trimmedLine) continue;
+
+    // Handle tag lines
+    if (trimmedLine.startsWith('@')) {
+      const tagMatch = trimmedLine.match(/^@(\w+)/);
+      if (tagMatch) {
+        const tag = '@' + tagMatch[1];
+        const result = handleTagLine(trimmedLine, tag, context);
+        Object.assign(context, result);
       }
-    } else {
-      handleContentLine(cleanLine, context.currentSection, context);
+    } else if (context.currentSection) {
+      handleContentLine(trimmedLine, context.currentSection, context);
     }
   }
 
-  info.description = context.descriptionLines.join(' ').trim();
-  info.examples = info.examples.map(example => ({
-    ...example,
-    code: example.code.trim()
-  }));
+  // Process collected description
+  info.description = cleanDescription(descriptionLines.join(' '));
+  
+  // Extract additional features from namespaces
+  Object.entries(info.namespaces).forEach(([namespace, data]) => {
+    Object.entries(data.properties).forEach(([propName, prop]) => {
+      info.features.push({
+        namespace,
+        property: propName,
+        type: prop.type,
+        description: prop.description
+      });
+    });
+  });
 
   return info;
 }
 
-export async function extractModuleInfo(code, moduleName) {
+export function extractModuleInfo(code, moduleName) {
   logger.debug(`Extracting module info for: ${moduleName}`);
 
   const ast = parse(code, BABEL_PARSER_CONFIG);
@@ -132,18 +207,27 @@ export async function extractModuleInfo(code, moduleName) {
     see: []
   };
 
-  // 提取 JSDoc 注释
-  const moduleComments = ast.comments.filter(comment => 
-    comment.type === 'CommentBlock' && 
-    comment.value.includes('@module')
+  // Extract module comments from the AST
+  const comments = [];
+  if (ast.comments) {
+    comments.push(...ast.comments);
+  }
+  if (ast.program && ast.program.innerComments) {
+    comments.push(...ast.program.innerComments);
+  }
+  if (ast.program && ast.program.leadingComments) {
+    comments.push(...ast.program.leadingComments);
+  }
+
+  const moduleComments = comments.filter(
+    comment => comment.type === 'CommentBlock' && comment.value.includes('@module')
   );
 
   if (moduleComments.length > 0) {
-    const moduleInfo = parseJSDocComment(moduleComments[0]);
+    const moduleInfo = parseJSDocComment(moduleComments[0].value);
     Object.assign(info, moduleInfo);
   }
 
-  // 提取导出
   traverse(ast, {
     ExportNamedDeclaration(path) {
       handleExportDeclaration(path, info);
@@ -156,7 +240,7 @@ export async function extractModuleInfo(code, moduleName) {
     }
   });
 
-  // 清理和排序
+  // Clean up and sort
   info.exports = [...new Set(info.exports)].sort();
   info.related = [...new Set(info.related)].sort();
 
@@ -200,3 +284,5 @@ function handleImportDeclaration(path, info) {
     }
   }
 }
+
+export { parseJSDocComment };

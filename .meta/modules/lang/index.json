@@ -1,30 +1,30 @@
 {
-  "description": "Language Enhancement Module Advanced language utilities for string manipulation and code generation.",
-  "namespaces": [
+  "name": "index.js",
+  "description": "Advanced language utilities for string manipulation and code generation.",
+  "features": [
     {
-      "title": "LanguageUtilities",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "string",
-          "description": "String manipulation and transformation"
-        },
-        {
-          "type": "Object",
-          "name": "language",
-          "description": "Enhanced JavaScript language features"
-        },
-        {
-          "type": "Object",
-          "name": "generation",
-          "description": "Code generation utilities"
-        },
-        {
-          "type": "Object",
-          "name": "dsl",
-          "description": "DSL support tools"
-        }
-      ]
+      "namespace": "LanguageUtilities",
+      "property": "string",
+      "type": "Object",
+      "description": "String manipulation and transformation"
+    },
+    {
+      "namespace": "LanguageUtilities",
+      "property": "language",
+      "type": "Object",
+      "description": "Enhanced JavaScript language features"
+    },
+    {
+      "namespace": "LanguageUtilities",
+      "property": "generation",
+      "type": "Object",
+      "description": "Code generation utilities"
+    },
+    {
+      "namespace": "LanguageUtilities",
+      "property": "dsl",
+      "type": "Object",
+      "description": "DSL support tools"
     }
   ],
   "examples": [
@@ -33,5 +33,38 @@
       "code": "import { MagicString } from 'xajs/lang'\n// Create a magic string for code manipulation\nconst code = new MagicString('function hello() { return \"world\" }')\n// Manipulate the code\ncode\n.update(8, 13, 'greet')\n.append('hello()')\nconsole.log(code.toString())\n// Output: function greet() { return \"world\" }hello()\n"
     }
   ],
-  "see": []
+  "exports": [
+    "MagicString"
+  ],
+  "related": [
+    "."
+  ],
+  "see": [],
+  "namespaces": {
+    "LanguageUtilities": {
+      "name": "LanguageUtilities",
+      "properties": {
+        "string": {
+          "type": "Object",
+          "name": "string",
+          "description": "String manipulation and transformation"
+        },
+        "language": {
+          "type": "Object",
+          "name": "language",
+          "description": "Enhanced JavaScript language features"
+        },
+        "generation": {
+          "type": "Object",
+          "name": "generation",
+          "description": "Code generation utilities"
+        },
+        "dsl": {
+          "type": "Object",
+          "name": "dsl",
+          "description": "DSL support tools"
+        }
+      }
+    }
+  }
 }

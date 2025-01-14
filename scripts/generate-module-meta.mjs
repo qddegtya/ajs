@@ -3,9 +3,11 @@ import { parseJSDocComment, extractModuleInfo } from './helpers/meta.mjs';
 import { readFile, writeFile, mkdir, rm } from './helpers/fs.mjs';
 import * as logger from './helpers/logger.mjs';
 import path from 'path';
+import fs from 'fs/promises';
 
 async function generateModuleMeta(modulePath) {
-  const info = await extractModuleInfo(modulePath);
+  const code = await readFile(modulePath, 'utf-8');
+  const info = await extractModuleInfo(code, path.basename(modulePath));
   if (!info) return null;
 
   const relativePath = path.relative(SRC_DIR, modulePath);
@@ -22,7 +24,7 @@ async function generateAllMeta() {
   await ensureMetaDirTracked();
 
   const processDirectory = async (dir) => {
-    const entries = await readFile(dir, { withFileTypes: true });
+    const entries = await fs.readdir(dir, { withFileTypes: true });
     const results = [];
 
     for (const entry of entries) {
@@ -90,7 +92,7 @@ async function ensureMetaDirTracked() {
 async function main() {
   try {
     const allMeta = await generateAllMeta();
-    logger.info('Successfully generated module metadata', { count: allMeta.length });
+    logger.info('Successfully generated module metadata');
   } catch (error) {
     logger.error('Failed to generate module metadata', error);
     process.exit(1);

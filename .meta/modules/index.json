@@ -1,105 +1,102 @@
 {
-  "description": "AJS - A thoughtfully crafted JavaScript utility library A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.",
-  "namespaces": [
+  "name": "index.js",
+  "description": "A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.",
+  "features": [
     {
-      "title": "CoreUtilities",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "classSystem",
-          "description": "Powerful class system with inheritance and mixins"
-        },
-        {
-          "type": "Object",
-          "name": "decorators",
-          "description": "Flexible decorators for enhancing classes and methods"
-        },
-        {
-          "type": "Object",
-          "name": "promises",
-          "description": "Promise utilities and deferred execution"
-        },
-        {
-          "type": "Object",
-          "name": "types",
-          "description": "Type checking and object manipulation"
-        }
-      ]
+      "namespace": "CoreUtilities",
+      "property": "classSystem",
+      "type": "Object",
+      "description": "Powerful class system with inheritance and mixins"
     },
     {
-      "title": "DOMManipulation",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "vdom",
-          "description": "Lightweight virtual DOM implementation"
-        },
-        {
-          "type": "Object",
-          "name": "events",
-          "description": "Event handling and delegation"
-        },
-        {
-          "type": "Object",
-          "name": "touch",
-          "description": "Mobile-optimized touch events"
-        },
-        {
-          "type": "Object",
-          "name": "url",
-          "description": "URL parsing and manipulation"
-        }
-      ]
+      "namespace": "CoreUtilities",
+      "property": "decorators",
+      "type": "Object",
+      "description": "Flexible decorators for enhancing classes and methods"
     },
     {
-      "title": "FunctionalProgramming",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "composition",
-          "description": "Function composition and currying"
-        },
-        {
-          "type": "Object",
-          "name": "di",
-          "description": "Dependency injection system"
-        },
-        {
-          "type": "Object",
-          "name": "pubsub",
-          "description": "Pub/Sub event system"
-        },
-        {
-          "type": "Object",
-          "name": "promiseUtils",
-          "description": "Promise-based utilities"
-        }
-      ]
+      "namespace": "CoreUtilities",
+      "property": "promises",
+      "type": "Object",
+      "description": "Promise utilities and deferred execution"
     },
     {
-      "title": "LanguageExtensions",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "string",
-          "description": "Enhanced string manipulation"
-        },
-        {
-          "type": "Object",
-          "name": "array",
-          "description": "Advanced array operations"
-        },
-        {
-          "type": "Object",
-          "name": "object",
-          "description": "Object transformation utilities"
-        },
-        {
-          "type": "Object",
-          "name": "typeConversion",
-          "description": "Type conversion helpers"
-        }
-      ]
+      "namespace": "CoreUtilities",
+      "property": "types",
+      "type": "Object",
+      "description": "Type checking and object manipulation"
+    },
+    {
+      "namespace": "DOMManipulation",
+      "property": "vdom",
+      "type": "Object",
+      "description": "Lightweight virtual DOM implementation"
+    },
+    {
+      "namespace": "DOMManipulation",
+      "property": "events",
+      "type": "Object",
+      "description": "Event handling and delegation"
+    },
+    {
+      "namespace": "DOMManipulation",
+      "property": "touch",
+      "type": "Object",
+      "description": "Mobile-optimized touch events"
+    },
+    {
+      "namespace": "DOMManipulation",
+      "property": "url",
+      "type": "Object",
+      "description": "URL parsing and manipulation"
+    },
+    {
+      "namespace": "FunctionalProgramming",
+      "property": "composition",
+      "type": "Object",
+      "description": "Function composition and currying"
+    },
+    {
+      "namespace": "FunctionalProgramming",
+      "property": "di",
+      "type": "Object",
+      "description": "Dependency injection system"
+    },
+    {
+      "namespace": "FunctionalProgramming",
+      "property": "pubsub",
+      "type": "Object",
+      "description": "Pub/Sub event system"
+    },
+    {
+      "namespace": "FunctionalProgramming",
+      "property": "promiseUtils",
+      "type": "Object",
+      "description": "Promise-based utilities"
+    },
+    {
+      "namespace": "LanguageExtensions",
+      "property": "string",
+      "type": "Object",
+      "description": "Enhanced string manipulation"
+    },
+    {
+      "namespace": "LanguageExtensions",
+      "property": "array",
+      "type": "Object",
+      "description": "Advanced array operations"
+    },
+    {
+      "namespace": "LanguageExtensions",
+      "property": "object",
+      "type": "Object",
+      "description": "Object transformation utilities"
+    },
+    {
+      "namespace": "LanguageExtensions",
+      "property": "typeConversion",
+      "type": "Object",
+      "description": "Type conversion helpers"
     }
   ],
   "examples": [
@@ -116,5 +113,120 @@
       "code": "import { helper } from 'xajs/functional';\nconst { tryNext } = helper;\nconst result = await tryNext([\nasync () => await primaryAPI(),\nasync () => await fallbackAPI()\n]);\n"
     }
   ],
-  "see": []
+  "exports": [
+    "core",
+    "dom",
+    "fp",
+    "functional",
+    "future",
+    "internal",
+    "lang",
+    "mobile"
+  ],
+  "related": [
+    "."
+  ],
+  "see": [],
+  "namespaces": {
+    "CoreUtilities": {
+      "name": "CoreUtilities",
+      "properties": {
+        "classSystem": {
+          "type": "Object",
+          "name": "classSystem",
+          "description": "Powerful class system with inheritance and mixins"
+        },
+        "decorators": {
+          "type": "Object",
+          "name": "decorators",
+          "description": "Flexible decorators for enhancing classes and methods"
+        },
+        "promises": {
+          "type": "Object",
+          "name": "promises",
+          "description": "Promise utilities and deferred execution"
+        },
+        "types": {
+          "type": "Object",
+          "name": "types",
+          "description": "Type checking and object manipulation"
+        }
+      }
+    },
+    "DOMManipulation": {
+      "name": "DOMManipulation",
+      "properties": {
+        "vdom": {
+          "type": "Object",
+          "name": "vdom",
+          "description": "Lightweight virtual DOM implementation"
+        },
+        "events": {
+          "type": "Object",
+          "name": "events",
+          "description": "Event handling and delegation"
+        },
+        "touch": {
+          "type": "Object",
+          "name": "touch",
+          "description": "Mobile-optimized touch events"
+        },
+        "url": {
+          "type": "Object",
+          "name": "url",
+          "description": "URL parsing and manipulation"
+        }
+      }
+    },
+    "FunctionalProgramming": {
+      "name": "FunctionalProgramming",
+      "properties": {
+        "composition": {
+          "type": "Object",
+          "name": "composition",
+          "description": "Function composition and currying"
+        },
+        "di": {
+          "type": "Object",
+          "name": "di",
+          "description": "Dependency injection system"
+        },
+        "pubsub": {
+          "type": "Object",
+          "name": "pubsub",
+          "description": "Pub/Sub event system"
+        },
+        "promiseUtils": {
+          "type": "Object",
+          "name": "promiseUtils",
+          "description": "Promise-based utilities"
+        }
+      }
+    },
+    "LanguageExtensions": {
+      "name": "LanguageExtensions",
+      "properties": {
+        "string": {
+          "type": "Object",
+          "name": "string",
+          "description": "Enhanced string manipulation"
+        },
+        "array": {
+          "type": "Object",
+          "name": "array",
+          "description": "Advanced array operations"
+        },
+        "object": {
+          "type": "Object",
+          "name": "object",
+          "description": "Object transformation utilities"
+        },
+        "typeConversion": {
+          "type": "Object",
+          "name": "typeConversion",
+          "description": "Type conversion helpers"
+        }
+      }
+    }
+  }
 }

@@ -1,35 +1,36 @@
 {
-  "description": "Mobile Development Module Comprehensive utilities for mobile web development and device detection.",
-  "namespaces": [
+  "name": "index.js",
+  "description": "Comprehensive utilities for mobile web development and device detection.",
+  "features": [
     {
-      "title": "MobileUtilities",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "userAgent",
-          "description": "User agent parsing and detection"
-        },
-        {
-          "type": "Object",
-          "name": "events",
-          "description": "Mobile-specific event handling"
-        },
-        {
-          "type": "Object",
-          "name": "touch",
-          "description": "Touch and gesture support"
-        },
-        {
-          "type": "Object",
-          "name": "device",
-          "description": "Device capability detection"
-        },
-        {
-          "type": "Object",
-          "name": "responsive",
-          "description": "Responsive design helpers"
-        }
-      ]
+      "namespace": "MobileUtilities",
+      "property": "userAgent",
+      "type": "Object",
+      "description": "User agent parsing and detection"
+    },
+    {
+      "namespace": "MobileUtilities",
+      "property": "events",
+      "type": "Object",
+      "description": "Mobile-specific event handling"
+    },
+    {
+      "namespace": "MobileUtilities",
+      "property": "touch",
+      "type": "Object",
+      "description": "Touch and gesture support"
+    },
+    {
+      "namespace": "MobileUtilities",
+      "property": "device",
+      "type": "Object",
+      "description": "Device capability detection"
+    },
+    {
+      "namespace": "MobileUtilities",
+      "property": "responsive",
+      "type": "Object",
+      "description": "Responsive design helpers"
     }
   ],
   "examples": [
@@ -38,5 +39,39 @@
       "code": "import { ua } from 'xajs/mobile'\n// Detect device and platform\nconst userAgent = ua.parse(navigator.userAgent)\nif (userAgent.isIOS) {\n// iOS specific handling\n} else if (userAgent.isAndroid) {\n// Android specific handling\n}\n"
     }
   ],
-  "see": []
+  "exports": [],
+  "related": [],
+  "see": [],
+  "namespaces": {
+    "MobileUtilities": {
+      "name": "MobileUtilities",
+      "properties": {
+        "userAgent": {
+          "type": "Object",
+          "name": "userAgent",
+          "description": "User agent parsing and detection"
+        },
+        "events": {
+          "type": "Object",
+          "name": "events",
+          "description": "Mobile-specific event handling"
+        },
+        "touch": {
+          "type": "Object",
+          "name": "touch",
+          "description": "Touch and gesture support"
+        },
+        "device": {
+          "type": "Object",
+          "name": "device",
+          "description": "Device capability detection"
+        },
+        "responsive": {
+          "type": "Object",
+          "name": "responsive",
+          "description": "Responsive design helpers"
+        }
+      }
+    }
+  }
 }

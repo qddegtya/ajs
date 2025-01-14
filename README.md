@@ -10,47 +10,31 @@ A thoughtfully crafted JavaScript utility library that combines classical utilit
 ## ✨ Features
 
 <!--FEATURES_START-->
-
-### CoreUtilities
-
-  - Powerful class system with inheritance and mixins
-  - Flexible decorators for enhancing classes and methods
-  - Promise utilities and deferred execution
-  - Type checking and object manipulation
-
-### DOMManipulation
-
-  - Lightweight virtual DOM implementation
-  - Event handling and delegation
-  - Mobile-optimized touch events
-  - URL parsing and manipulation
-
-### FunctionalProgramming
-
-  - Function composition and currying
-  - Dependency injection system
-  - Pub/Sub event system
-  - Promise-based utilities
-
-### LanguageExtensions
-
-  - Enhanced string manipulation
-  - Advanced array operations
-  - Object transformation utilities
-  - Type conversion helpers
-
-
-
+- CoreUtilities.classSystem: Powerful class system with inheritance and mixins
+- CoreUtilities.decorators: Flexible decorators for enhancing classes and methods
+- CoreUtilities.promises: Promise utilities and deferred execution
+- CoreUtilities.types: Type checking and object manipulation
+- DOMManipulation.vdom: Lightweight virtual DOM implementation
+- DOMManipulation.events: Event handling and delegation
+- DOMManipulation.touch: Mobile-optimized touch events
+- DOMManipulation.url: URL parsing and manipulation
+- FunctionalProgramming.composition: Function composition and currying
+- FunctionalProgramming.di: Dependency injection system
+- FunctionalProgramming.pubsub: Pub/Sub event system
+- FunctionalProgramming.promiseUtils: Promise-based utilities
+- LanguageExtensions.string: Enhanced string manipulation
+- LanguageExtensions.array: Advanced array operations
+- LanguageExtensions.object: Object transformation utilities
+- LanguageExtensions.typeConversion: Type conversion helpers
+- Available exports: core, dom, fp, functional, future, internal, lang, mobile
 <!--FEATURES_END-->
 
 ## 🚀 Quick Start
 
 <!--QUICK_START_START-->
-
 ## Quick Start
 
 ### Class System
-
 
 ```javascript
 import { Class } from 'xajs/core';
@@ -60,19 +44,20 @@ const MyClass = Class({
   $ctor() {
     this.name = 'example';
   }
-});```
+});
+```
 
 ### DOM Manipulation
 
 ```javascript
-  import { h } from 'xajs/dom';
-  const vnode = h('div', { className: 'container' }, [
-    h('h1', null, 'Hello AJS!'),
-    h('button', { onClick: () => alert('Clicked!') }, 'Click Me')
-  ]);```
+import { h } from 'xajs/dom';
+const vnode = h('div', { className: 'container' }, [
+  h('h1', null, 'Hello AJS!'),
+  h('button', { onClick: () => alert('Clicked!') }, 'Click Me')
+]);
+```
 
 ### Functional Programming
-
 
 ```javascript
 import { helper } from 'xajs/functional';
@@ -80,58 +65,48 @@ const { tryNext } = helper;
 const result = await tryNext([
   async () => await primaryAPI(),
   async () => await fallbackAPI()
-]);```
-
-
-
+]);
+```
 <!--QUICK_START_END-->
 
 ## 📦 Modules
 
 <!--MODULES_START-->
+## Available Modules
 
   | Module | Description | Import Path |
   |---------|-------------|-------------|
-  | core |  | `xajs/core` |
-  | dom |  | `xajs/dom` |
-  | fp |  | `xajs/fp` |
-  | functional |  | `xajs/functional` |
-  | future |  | `xajs/future` |
-  | index.js |  | `xajs/index.js` |
-  | internal |  | `xajs/internal` |
-  | lang |  | `xajs/lang` |
-  | mobile |  | `xajs/mobile` |
-  | mobile |  | `xajs/mobile` |
-  | mobile |  | `xajs/mobile` |
+  | core | Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods. | `xajs/core` |
+  | dom | Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices. | `xajs/dom` |
+  | fp | Core functional programming utilities focusing on pure function composition and immutable data handling. | `xajs/fp` |
+  | functional | Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities. | `xajs/functional` |
+  | future | Experimental and cutting-edge features for next-generation JavaScript development. | `xajs/future` |
+  | lang | Advanced language utilities for string manipulation and code generation. | `xajs/lang` |
+  | mobile | Comprehensive utilities for mobile web development and device detection. | `xajs/mobile` |
 
 ### core
 
-  Core module providing fundamental building blocks for AJS Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.
+  Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.
 
-### Key Features
+### Features
 
-  **ClassSystem**
-  - Advanced class inheritance with $extends and $mixins support
-  - Constructor lifecycle management with $ctor
-  - Method overriding and super calls
-  - Static and instance method support
-
-  **Decorators**
-  - Function and class decorators
-  - Built-in decorators like @mixin and @deprecate
-  - Custom decorator factory support
-  - Method and property decorators
-
-  **Deferred**
-  - Promise-like interface with resolve/reject
-  - Progress tracking with notify
-  - Chainable then/catch/finally
-  - Cancellation support
+- ClassSystem.inheritance: Advanced class inheritance with $extends and $mixins support
+- ClassSystem.constructor: Constructor lifecycle management with $ctor
+- ClassSystem.methods: Method overriding and super calls
+- ClassSystem.static: Static and instance method support
+- Decorators.functions: Function and class decorators
+- Decorators.builtin: Built-in decorators like @mixin and @deprecate
+- Decorators.factory: Custom decorator factory support
+- Decorators.properties: Method and property decorators
+- Deferred.promise: Promise-like interface with resolve/reject
+- Deferred.progress: Progress tracking with notify
+- Deferred.chain: Chainable then/catch/finally
+- Deferred.cancel: Cancellation support
+- Available exports: base, decorators
 
 ### Examples
 
-  **Class System with Inheritance**
-
+**Class System with Inheritance**
 
 ```javascript
 import { base } from 'xajs/core';
@@ -147,8 +122,7 @@ const MyClass = base.Class({
 });
 ```
 
-  ,**Using Decorators**
-
+**Using Decorators**
 
 ```javascript
 import { decorators } from 'xajs/core';
@@ -159,37 +133,29 @@ class Enhanced {
 }
 ```
 
-
-
-
 ### dom
 
-  DOM manipulation and event handling utilities Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.
+  Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.
 
-### Key Features
+### Features
 
-  **VirtualDOM**
-  - Lightweight virtual DOM implementation
-  - Efficient diff and patch algorithm
-  - Component lifecycle management
-  - Event delegation support
-
-  **EventHandling**
-  - Advanced event management
-  - Event delegation and bubbling
-  - Mobile touch event optimization
-  - Event once and off support
-
-  **URLParsing**
-  - Robust URL parsing and manipulation
-  - Query string handling
-  - Path normalization
-  - URL parameter extraction
+- VirtualDOM.implementation: Lightweight virtual DOM implementation
+- VirtualDOM.diff: Efficient diff and patch algorithm
+- VirtualDOM.lifecycle: Component lifecycle management
+- VirtualDOM.events: Event delegation support
+- EventHandling.management: Advanced event management
+- EventHandling.delegation: Event delegation and bubbling
+- EventHandling.touch: Mobile touch event optimization
+- EventHandling.lifecycle: Event once and off support
+- URLParsing.parser: Robust URL parsing and manipulation
+- URLParsing.query: Query string handling
+- URLParsing.path: Path normalization
+- URLParsing.params: URL parameter extraction
+- Available exports: E, UrlParser, h, tags
 
 ### Examples
 
-  **Virtual DOM Creation**
-
+**Virtual DOM Creation**
 
 ```javascript
 import { h } from 'xajs/dom';
@@ -199,8 +165,7 @@ const vnode = h('div', { className: 'container' }, [
 ]);
 ```
 
-  ,**Event Handling**
-
+**Event Handling**
 
 ```javascript
 import { E } from 'xajs/dom';
@@ -212,8 +177,7 @@ E.once(element, 'load', event => {
 });
 ```
 
-  ,**URL Parsing**
-
+**URL Parsing**
 
 ```javascript
 import { UrlParser } from 'xajs/dom';
@@ -222,23 +186,19 @@ console.log(parser.pathname); // '/path'
 console.log(parser.query); // { query: 'value' }
 ```
 
-
-
-
 ### fp
 
-  Functional Programming Core Module Core functional programming utilities focusing on pure function composition and immutable data handling.
+  Core functional programming utilities focusing on pure function composition and immutable data handling.
 
-### Key Features
+### Features
 
-  **FunctionalCore**
-  - Pure function composition utilities
-  - Point-free programming support
-  - Function currying and partial application
-  - Immutable data handling patterns
+- FunctionalCore.composition: Pure function composition utilities
+- FunctionalCore.pointfree: Point-free programming support
+- FunctionalCore.currying: Function currying and partial application
+- FunctionalCore.immutable: Immutable data handling patterns
+- Available exports: compose, composeAsync
 
 ### Examples
-
 
 ```javascript
 import { compose } from 'xajs/fp';
@@ -248,43 +208,33 @@ const pipeline = compose(uppercase, trim, normalize);
 const result = pipeline('  hello world  ');
 ```
 
-
-
-
 ### functional
 
-  Functional programming utilities and patterns Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities.
+  Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities.
 
-### Key Features
+### Features
 
-  **FunctionComposition**
-  - Advanced interceptors for function composition
-  - Support for async function composition
-  - Error handling in composition chains
-  - Middleware pattern support
-
-  **DependencyInjection**
-  - Decorator-based DI system
-  - Automatic dependency resolution
-  - Circular dependency detection
-  - Scoped container support
-
-  **EventSystem**
-  - Pub/Sub pattern implementation
-  - Event prioritization
-  - Async event handling
-  - Event cancellation
-
-  **PromiseUtilities**
-  - Promise-based lazy evaluation
-  - Promise chain interception
-  - Fallback chain with tryNext
-  - Timeout and retry support
+- FunctionComposition.interceptors: Advanced interceptors for function composition
+- FunctionComposition.async: Support for async function composition
+- FunctionComposition.errorHandling: Error handling in composition chains
+- FunctionComposition.middleware: Middleware pattern support
+- DependencyInjection.decorators: Decorator-based DI system
+- DependencyInjection.resolution: Automatic dependency resolution
+- DependencyInjection.circular: Circular dependency detection
+- DependencyInjection.scoping: Scoped container support
+- EventSystem.pubsub: Pub/Sub pattern implementation
+- EventSystem.priority: Event prioritization
+- EventSystem.async: Async event handling
+- EventSystem.cancellation: Event cancellation
+- PromiseUtilities.lazy: Promise-based lazy evaluation
+- PromiseUtilities.interception: Promise chain interception
+- PromiseUtilities.fallback: Fallback chain with tryNext
+- PromiseUtilities.timeout: Timeout and retry support
+- Available exports: helper
 
 ### Examples
 
-  **Function Composition**
-
+**Function Composition**
 
 ```javascript
 import { helper } from 'xajs/functional';
@@ -292,8 +242,7 @@ const { intercepter } = helper;
 const enhance = intercepter.compose([addLogging, addValidation, addCaching]);
 ```
 
-  ,**Dependency Injection**
-
+**Dependency Injection**
 
 ```javascript
 import { helper } from 'xajs/functional';
@@ -305,8 +254,7 @@ class Config {
 }
 ```
 
-  ,**Pub/Sub Pattern**
-
+**Pub/Sub Pattern**
 
 ```javascript
 import { helper } from 'xajs/functional';
@@ -318,24 +266,20 @@ events.on('userUpdate', user => {
 events.emit('userUpdate', { id: 1, name: 'John' });
 ```
 
-
-
-
 ### future
 
-  Experimental Features Module Experimental and cutting-edge features for next-generation JavaScript development.
+  Experimental and cutting-edge features for next-generation JavaScript development.
 
-### Key Features
+### Features
 
-  **ExperimentalFeatures**
-  - Template rendering engine with reactive updates
-  - Advanced effect system for side-effect management
-  - Reactive programming utilities and patterns
-  - Next-generation async patterns and control
-  - Cutting-edge JavaScript features exploration
+- ExperimentalFeatures.templates: Template rendering engine with reactive updates
+- ExperimentalFeatures.effects: Advanced effect system for side-effect management
+- ExperimentalFeatures.reactive: Reactive programming utilities and patterns
+- ExperimentalFeatures.async: Next-generation async patterns and control
+- ExperimentalFeatures.experimental: Cutting-edge JavaScript features exploration
+- Available exports: TR, eff, tpl
 
 ### Examples
-
 
 ```javascript
 import { trp, ae } from 'xajs/future';
@@ -356,95 +300,19 @@ ae.effect(() => {
 });
 ```
 
-
-
-
-### index.js
-
-  AJS - A thoughtfully crafted JavaScript utility library A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.
-
-### Key Features
-
-  **CoreUtilities**
-  - Powerful class system with inheritance and mixins
-  - Flexible decorators for enhancing classes and methods
-  - Promise utilities and deferred execution
-  - Type checking and object manipulation
-
-  **DOMManipulation**
-  - Lightweight virtual DOM implementation
-  - Event handling and delegation
-  - Mobile-optimized touch events
-  - URL parsing and manipulation
-
-  **FunctionalProgramming**
-  - Function composition and currying
-  - Dependency injection system
-  - Pub/Sub event system
-  - Promise-based utilities
-
-  **LanguageExtensions**
-  - Enhanced string manipulation
-  - Advanced array operations
-  - Object transformation utilities
-  - Type conversion helpers
-
-### Examples
-
-  **Class System**
-
-
-```javascript
-import { Class } from 'xajs/core';
-const MyClass = Class({
-  $extends: ParentClass,
-  $mixins: [SomeMixin],
-  $ctor() {
-    this.name = 'example';
-  }
-});
-```
-
-  ,**DOM Manipulation**
-
-
-```javascript
-import { h } from 'xajs/dom';
-const vnode = h('div', { className: 'container' }, [
-  h('h1', null, 'Hello AJS!'),
-  h('button', { onClick: () => alert('Clicked!') }, 'Click Me')
-]);
-```
-
-  ,**Functional Programming**
-
-
-```javascript
-import { helper } from 'xajs/functional';
-const { tryNext } = helper;
-const result = await tryNext([
-  async () => await primaryAPI(),
-  async () => await fallbackAPI()
-]);
-```
-
-
-
-
 ### internal
 
-  Internal Utilities Module Core internal utilities and helper functions used across the library.
+  Core internal utilities and helper functions used across the library.
 
-### Key Features
+### Features
 
-  **InternalUtilities**
-  - Type checking and validation utilities
-  - Object property manipulation helpers
-  - Common internal helper functions
-  - Shared utilities used across other modules
+- InternalUtilities.typeChecking: Type checking and validation utilities
+- InternalUtilities.objectUtils: Object property manipulation helpers
+- InternalUtilities.helpers: Common internal helper functions
+- InternalUtilities.shared: Shared utilities used across other modules
+- Available exports: assign, hasOwnProp, is
 
 ### Examples
-
 
 ```javascript
 import { is, assign } from 'xajs/internal';
@@ -458,23 +326,19 @@ const merged = assign({}, source, {
 });
 ```
 
-
-
-
 ### lang
 
-  Language Enhancement Module Advanced language utilities for string manipulation and code generation.
+  Advanced language utilities for string manipulation and code generation.
 
-### Key Features
+### Features
 
-  **LanguageUtilities**
-  - String manipulation and transformation
-  - Enhanced JavaScript language features
-  - Code generation utilities
-  - DSL support tools
+- LanguageUtilities.string: String manipulation and transformation
+- LanguageUtilities.language: Enhanced JavaScript language features
+- LanguageUtilities.generation: Code generation utilities
+- LanguageUtilities.dsl: DSL support tools
+- Available exports: MagicString
 
 ### Examples
-
 
 ```javascript
 import { MagicString } from 'xajs/lang';
@@ -486,24 +350,19 @@ console.log(code.toString());
 // Output: function greet() { return "world" }hello()
 ```
 
-
-
-
 ### mobile
 
-  Mobile Development Module Comprehensive utilities for mobile web development and device detection.
+  Comprehensive utilities for mobile web development and device detection.
 
-### Key Features
+### Features
 
-  **MobileUtilities**
-  - User agent parsing and detection
-  - Mobile-specific event handling
-  - Touch and gesture support
-  - Device capability detection
-  - Responsive design helpers
+- MobileUtilities.userAgent: User agent parsing and detection
+- MobileUtilities.events: Mobile-specific event handling
+- MobileUtilities.touch: Touch and gesture support
+- MobileUtilities.device: Device capability detection
+- MobileUtilities.responsive: Responsive design helpers
 
 ### Examples
-
 
 ```javascript
 import { ua } from 'xajs/mobile';
@@ -515,54 +374,6 @@ if (userAgent.isIOS) {
   // Android specific handling
 }
 ```
-
-
-
-
-### mobile
-
-  User Agent Parser Module - Comprehensive user agent parsing - Browser and version detection - Operating system identification - Device type recognition - Engine and rendering capabilities detection
-
-### Examples
-
-
-```javascript
-import { UserAgent } from 'xajs/mobile/ua';
-const ua = new UserAgent(navigator.userAgent);
-console.log({
-  browser: ua.getBrowser(),
-  os: ua.getOS(),
-  device: ua.getDevice(),
-  engine: ua.getEngine()
-});
-```
-
-
-
-
-### mobile
-
-  User Agent Parsers Collection - Modular parser architecture - Extensible parsing rules - High accuracy detection - Customizable parsing strategies
-
-### Examples
-
-
-```javascript
-import { BrowserParser, OSParser } from 'xajs/mobile/ua/parsers';
-const browserInfo = new BrowserParser().parse(userAgent);
-const osInfo = new OSParser().parse(userAgent);
-console.log({
-  browser: browserInfo.name,
-  version: browserInfo.version,
-  os: osInfo.name,
-  platform: osInfo.platform
-});
-```
-
-
-
-
-
 <!--MODULES_END-->
 
 ## 🤝 Contributing

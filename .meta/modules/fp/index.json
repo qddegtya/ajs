@@ -1,30 +1,30 @@
 {
-  "description": "Functional Programming Core Module Core functional programming utilities focusing on pure function composition and immutable data handling.",
-  "namespaces": [
+  "name": "index.js",
+  "description": "Core functional programming utilities focusing on pure function composition and immutable data handling.",
+  "features": [
     {
-      "title": "FunctionalCore",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "composition",
-          "description": "Pure function composition utilities"
-        },
-        {
-          "type": "Object",
-          "name": "pointfree",
-          "description": "Point-free programming support"
-        },
-        {
-          "type": "Object",
-          "name": "currying",
-          "description": "Function currying and partial application"
-        },
-        {
-          "type": "Object",
-          "name": "immutable",
-          "description": "Immutable data handling patterns"
-        }
-      ]
+      "namespace": "FunctionalCore",
+      "property": "composition",
+      "type": "Object",
+      "description": "Pure function composition utilities"
+    },
+    {
+      "namespace": "FunctionalCore",
+      "property": "pointfree",
+      "type": "Object",
+      "description": "Point-free programming support"
+    },
+    {
+      "namespace": "FunctionalCore",
+      "property": "currying",
+      "type": "Object",
+      "description": "Function currying and partial application"
+    },
+    {
+      "namespace": "FunctionalCore",
+      "property": "immutable",
+      "type": "Object",
+      "description": "Immutable data handling patterns"
     }
   ],
   "examples": [
@@ -33,5 +33,39 @@
       "code": "import { compose } from 'xajs/fp'\n// Create a pipeline of pure functions\nconst pipeline = compose(\nuppercase,\ntrim,\nnormalize\n)\n// Apply the transformation\nconst result = pipeline('  hello world  ')\n"
     }
   ],
-  "see": []
+  "exports": [
+    "compose",
+    "composeAsync"
+  ],
+  "related": [
+    "."
+  ],
+  "see": [],
+  "namespaces": {
+    "FunctionalCore": {
+      "name": "FunctionalCore",
+      "properties": {
+        "composition": {
+          "type": "Object",
+          "name": "composition",
+          "description": "Pure function composition utilities"
+        },
+        "pointfree": {
+          "type": "Object",
+          "name": "pointfree",
+          "description": "Point-free programming support"
+        },
+        "currying": {
+          "type": "Object",
+          "name": "currying",
+          "description": "Function currying and partial application"
+        },
+        "immutable": {
+          "type": "Object",
+          "name": "immutable",
+          "description": "Immutable data handling patterns"
+        }
+      }
+    }
+  }
 }

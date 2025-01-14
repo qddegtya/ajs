@@ -1,80 +1,78 @@
 {
-  "description": "DOM manipulation and event handling utilities Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.",
-  "namespaces": [
+  "name": "index.js",
+  "description": "Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.",
+  "features": [
     {
-      "title": "VirtualDOM",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "implementation",
-          "description": "Lightweight virtual DOM implementation"
-        },
-        {
-          "type": "Object",
-          "name": "diff",
-          "description": "Efficient diff and patch algorithm"
-        },
-        {
-          "type": "Object",
-          "name": "lifecycle",
-          "description": "Component lifecycle management"
-        },
-        {
-          "type": "Object",
-          "name": "events",
-          "description": "Event delegation support"
-        }
-      ]
+      "namespace": "VirtualDOM",
+      "property": "implementation",
+      "type": "Object",
+      "description": "Lightweight virtual DOM implementation"
     },
     {
-      "title": "EventHandling",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "management",
-          "description": "Advanced event management"
-        },
-        {
-          "type": "Object",
-          "name": "delegation",
-          "description": "Event delegation and bubbling"
-        },
-        {
-          "type": "Object",
-          "name": "touch",
-          "description": "Mobile touch event optimization"
-        },
-        {
-          "type": "Object",
-          "name": "lifecycle",
-          "description": "Event once and off support"
-        }
-      ]
+      "namespace": "VirtualDOM",
+      "property": "diff",
+      "type": "Object",
+      "description": "Efficient diff and patch algorithm"
     },
     {
-      "title": "URLParsing",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "parser",
-          "description": "Robust URL parsing and manipulation"
-        },
-        {
-          "type": "Object",
-          "name": "query",
-          "description": "Query string handling"
-        },
-        {
-          "type": "Object",
-          "name": "path",
-          "description": "Path normalization"
-        },
-        {
-          "type": "Object",
-          "name": "params",
-          "description": "URL parameter extraction"
-        }
-      ]
+      "namespace": "VirtualDOM",
+      "property": "lifecycle",
+      "type": "Object",
+      "description": "Component lifecycle management"
+    },
+    {
+      "namespace": "VirtualDOM",
+      "property": "events",
+      "type": "Object",
+      "description": "Event delegation support"
+    },
+    {
+      "namespace": "EventHandling",
+      "property": "management",
+      "type": "Object",
+      "description": "Advanced event management"
+    },
+    {
+      "namespace": "EventHandling",
+      "property": "delegation",
+      "type": "Object",
+      "description": "Event delegation and bubbling"
+    },
+    {
+      "namespace": "EventHandling",
+      "property": "touch",
+      "type": "Object",
+      "description": "Mobile touch event optimization"
+    },
+    {
+      "namespace": "EventHandling",
+      "property": "lifecycle",
+      "type": "Object",
+      "description": "Event once and off support"
+    },
+    {
+      "namespace": "URLParsing",
+      "property": "parser",
+      "type": "Object",
+      "description": "Robust URL parsing and manipulation"
+    },
+    {
+      "namespace": "URLParsing",
+      "property": "query",
+      "type": "Object",
+      "description": "Query string handling"
+    },
+    {
+      "namespace": "URLParsing",
+      "property": "path",
+      "type": "Object",
+      "description": "Path normalization"
+    },
+    {
+      "namespace": "URLParsing",
+      "property": "params",
+      "type": "Object",
+      "description": "URL parameter extraction"
     }
   ],
   "examples": [
@@ -91,10 +89,96 @@
       "code": "import { UrlParser } from 'xajs/dom'\nconst parser = new UrlParser('https://example.com/path?query=value')\nconsole.log(parser.pathname) // '/path'\nconsole.log(parser.query)    // { query: 'value' }\n"
     }
   ],
+  "exports": [
+    "E",
+    "UrlParser",
+    "h",
+    "tags"
+  ],
+  "related": [
+    "."
+  ],
   "see": [
     {
       "url": "https://ajs.dev/docs/dom",
       "text": "DOM Module Documentation"
     }
-  ]
+  ],
+  "namespaces": {
+    "VirtualDOM": {
+      "name": "VirtualDOM",
+      "properties": {
+        "implementation": {
+          "type": "Object",
+          "name": "implementation",
+          "description": "Lightweight virtual DOM implementation"
+        },
+        "diff": {
+          "type": "Object",
+          "name": "diff",
+          "description": "Efficient diff and patch algorithm"
+        },
+        "lifecycle": {
+          "type": "Object",
+          "name": "lifecycle",
+          "description": "Component lifecycle management"
+        },
+        "events": {
+          "type": "Object",
+          "name": "events",
+          "description": "Event delegation support"
+        }
+      }
+    },
+    "EventHandling": {
+      "name": "EventHandling",
+      "properties": {
+        "management": {
+          "type": "Object",
+          "name": "management",
+          "description": "Advanced event management"
+        },
+        "delegation": {
+          "type": "Object",
+          "name": "delegation",
+          "description": "Event delegation and bubbling"
+        },
+        "touch": {
+          "type": "Object",
+          "name": "touch",
+          "description": "Mobile touch event optimization"
+        },
+        "lifecycle": {
+          "type": "Object",
+          "name": "lifecycle",
+          "description": "Event once and off support"
+        }
+      }
+    },
+    "URLParsing": {
+      "name": "URLParsing",
+      "properties": {
+        "parser": {
+          "type": "Object",
+          "name": "parser",
+          "description": "Robust URL parsing and manipulation"
+        },
+        "query": {
+          "type": "Object",
+          "name": "query",
+          "description": "Query string handling"
+        },
+        "path": {
+          "type": "Object",
+          "name": "path",
+          "description": "Path normalization"
+        },
+        "params": {
+          "type": "Object",
+          "name": "params",
+          "description": "URL parameter extraction"
+        }
+      }
+    }
+  }
 }

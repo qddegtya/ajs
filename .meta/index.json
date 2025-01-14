@@ -1,83 +1,98 @@
 [
   {
+    "path": "core/decorators/index.js",
+    "info": {
+      "name": "index.js",
+      "description": "",
+      "features": [],
+      "examples": [],
+      "exports": [
+        "deprecate",
+        "mixin"
+      ],
+      "related": [
+        "."
+      ],
+      "see": []
+    }
+  },
+  {
     "path": "core/index.js",
     "info": {
-      "description": "Core module providing fundamental building blocks for AJS Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.",
+      "features": [
         {
-          "title": "ClassSystem",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "inheritance",
-              "description": "Advanced class inheritance with $extends and $mixins support"
-            },
-            {
-              "type": "Object",
-              "name": "constructor",
-              "description": "Constructor lifecycle management with $ctor"
-            },
-            {
-              "type": "Object",
-              "name": "methods",
-              "description": "Method overriding and super calls"
-            },
-            {
-              "type": "Object",
-              "name": "static",
-              "description": "Static and instance method support"
-            }
-          ]
+          "namespace": "ClassSystem",
+          "property": "inheritance",
+          "type": "Object",
+          "description": "Advanced class inheritance with $extends and $mixins support"
         },
         {
-          "title": "Decorators",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "functions",
-              "description": "Function and class decorators"
-            },
-            {
-              "type": "Object",
-              "name": "builtin",
-              "description": "Built-in decorators like @mixin and @deprecate"
-            },
-            {
-              "type": "Object",
-              "name": "factory",
-              "description": "Custom decorator factory support"
-            },
-            {
-              "type": "Object",
-              "name": "properties",
-              "description": "Method and property decorators"
-            }
-          ]
+          "namespace": "ClassSystem",
+          "property": "constructor",
+          "type": "Object",
+          "description": "Constructor lifecycle management with $ctor"
         },
         {
-          "title": "Deferred",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "promise",
-              "description": "Promise-like interface with resolve/reject"
-            },
-            {
-              "type": "Object",
-              "name": "progress",
-              "description": "Progress tracking with notify"
-            },
-            {
-              "type": "Object",
-              "name": "chain",
-              "description": "Chainable then/catch/finally"
-            },
-            {
-              "type": "Object",
-              "name": "cancel",
-              "description": "Cancellation support"
-            }
-          ]
+          "namespace": "ClassSystem",
+          "property": "methods",
+          "type": "Object",
+          "description": "Method overriding and super calls"
+        },
+        {
+          "namespace": "ClassSystem",
+          "property": "static",
+          "type": "Object",
+          "description": "Static and instance method support"
+        },
+        {
+          "namespace": "Decorators",
+          "property": "functions",
+          "type": "Object",
+          "description": "Function and class decorators"
+        },
+        {
+          "namespace": "Decorators",
+          "property": "builtin",
+          "type": "Object",
+          "description": "Built-in decorators like @mixin and @deprecate"
+        },
+        {
+          "namespace": "Decorators",
+          "property": "factory",
+          "type": "Object",
+          "description": "Custom decorator factory support"
+        },
+        {
+          "namespace": "Decorators",
+          "property": "properties",
+          "type": "Object",
+          "description": "Method and property decorators"
+        },
+        {
+          "namespace": "Deferred",
+          "property": "promise",
+          "type": "Object",
+          "description": "Promise-like interface with resolve/reject"
+        },
+        {
+          "namespace": "Deferred",
+          "property": "progress",
+          "type": "Object",
+          "description": "Progress tracking with notify"
+        },
+        {
+          "namespace": "Deferred",
+          "property": "chain",
+          "type": "Object",
+          "description": "Chainable then/catch/finally"
+        },
+        {
+          "namespace": "Deferred",
+          "property": "cancel",
+          "type": "Object",
+          "description": "Cancellation support"
         }
       ],
       "examples": [
@@ -90,93 +105,175 @@
           "code": "import { decorators } from 'xajs/core'\nclass Enhanced {\nenhancedMethod() {\n// Enhanced functionality\n}\n}\n"
         }
       ],
+      "exports": [
+        "base",
+        "decorators"
+      ],
+      "related": [
+        "."
+      ],
       "see": [
         {
           "url": "https://ajs.dev/docs/core",
           "text": "Core Module Documentation"
         }
-      ]
+      ],
+      "namespaces": {
+        "ClassSystem": {
+          "name": "ClassSystem",
+          "properties": {
+            "inheritance": {
+              "type": "Object",
+              "name": "inheritance",
+              "description": "Advanced class inheritance with $extends and $mixins support"
+            },
+            "constructor": {
+              "type": "Object",
+              "name": "constructor",
+              "description": "Constructor lifecycle management with $ctor"
+            },
+            "methods": {
+              "type": "Object",
+              "name": "methods",
+              "description": "Method overriding and super calls"
+            },
+            "static": {
+              "type": "Object",
+              "name": "static",
+              "description": "Static and instance method support"
+            }
+          }
+        },
+        "Decorators": {
+          "name": "Decorators",
+          "properties": {
+            "functions": {
+              "type": "Object",
+              "name": "functions",
+              "description": "Function and class decorators"
+            },
+            "builtin": {
+              "type": "Object",
+              "name": "builtin",
+              "description": "Built-in decorators like @mixin and @deprecate"
+            },
+            "factory": {
+              "type": "Object",
+              "name": "factory",
+              "description": "Custom decorator factory support"
+            },
+            "properties": {
+              "type": "Object",
+              "name": "properties",
+              "description": "Method and property decorators"
+            }
+          }
+        },
+        "Deferred": {
+          "name": "Deferred",
+          "properties": {
+            "promise": {
+              "type": "Object",
+              "name": "promise",
+              "description": "Promise-like interface with resolve/reject"
+            },
+            "progress": {
+              "type": "Object",
+              "name": "progress",
+              "description": "Progress tracking with notify"
+            },
+            "chain": {
+              "type": "Object",
+              "name": "chain",
+              "description": "Chainable then/catch/finally"
+            },
+            "cancel": {
+              "type": "Object",
+              "name": "cancel",
+              "description": "Cancellation support"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "dom/index.js",
     "info": {
-      "description": "DOM manipulation and event handling utilities Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.",
+      "features": [
         {
-          "title": "VirtualDOM",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "implementation",
-              "description": "Lightweight virtual DOM implementation"
-            },
-            {
-              "type": "Object",
-              "name": "diff",
-              "description": "Efficient diff and patch algorithm"
-            },
-            {
-              "type": "Object",
-              "name": "lifecycle",
-              "description": "Component lifecycle management"
-            },
-            {
-              "type": "Object",
-              "name": "events",
-              "description": "Event delegation support"
-            }
-          ]
+          "namespace": "VirtualDOM",
+          "property": "implementation",
+          "type": "Object",
+          "description": "Lightweight virtual DOM implementation"
         },
         {
-          "title": "EventHandling",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "management",
-              "description": "Advanced event management"
-            },
-            {
-              "type": "Object",
-              "name": "delegation",
-              "description": "Event delegation and bubbling"
-            },
-            {
-              "type": "Object",
-              "name": "touch",
-              "description": "Mobile touch event optimization"
-            },
-            {
-              "type": "Object",
-              "name": "lifecycle",
-              "description": "Event once and off support"
-            }
-          ]
+          "namespace": "VirtualDOM",
+          "property": "diff",
+          "type": "Object",
+          "description": "Efficient diff and patch algorithm"
         },
         {
-          "title": "URLParsing",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "parser",
-              "description": "Robust URL parsing and manipulation"
-            },
-            {
-              "type": "Object",
-              "name": "query",
-              "description": "Query string handling"
-            },
-            {
-              "type": "Object",
-              "name": "path",
-              "description": "Path normalization"
-            },
-            {
-              "type": "Object",
-              "name": "params",
-              "description": "URL parameter extraction"
-            }
-          ]
+          "namespace": "VirtualDOM",
+          "property": "lifecycle",
+          "type": "Object",
+          "description": "Component lifecycle management"
+        },
+        {
+          "namespace": "VirtualDOM",
+          "property": "events",
+          "type": "Object",
+          "description": "Event delegation support"
+        },
+        {
+          "namespace": "EventHandling",
+          "property": "management",
+          "type": "Object",
+          "description": "Advanced event management"
+        },
+        {
+          "namespace": "EventHandling",
+          "property": "delegation",
+          "type": "Object",
+          "description": "Event delegation and bubbling"
+        },
+        {
+          "namespace": "EventHandling",
+          "property": "touch",
+          "type": "Object",
+          "description": "Mobile touch event optimization"
+        },
+        {
+          "namespace": "EventHandling",
+          "property": "lifecycle",
+          "type": "Object",
+          "description": "Event once and off support"
+        },
+        {
+          "namespace": "URLParsing",
+          "property": "parser",
+          "type": "Object",
+          "description": "Robust URL parsing and manipulation"
+        },
+        {
+          "namespace": "URLParsing",
+          "property": "query",
+          "type": "Object",
+          "description": "Query string handling"
+        },
+        {
+          "namespace": "URLParsing",
+          "property": "path",
+          "type": "Object",
+          "description": "Path normalization"
+        },
+        {
+          "namespace": "URLParsing",
+          "property": "params",
+          "type": "Object",
+          "description": "URL parameter extraction"
         }
       ],
       "examples": [
@@ -193,43 +290,129 @@
           "code": "import { UrlParser } from 'xajs/dom'\nconst parser = new UrlParser('https://example.com/path?query=value')\nconsole.log(parser.pathname) // '/path'\nconsole.log(parser.query)    // { query: 'value' }\n"
         }
       ],
+      "exports": [
+        "E",
+        "UrlParser",
+        "h",
+        "tags"
+      ],
+      "related": [
+        "."
+      ],
       "see": [
         {
           "url": "https://ajs.dev/docs/dom",
           "text": "DOM Module Documentation"
         }
-      ]
+      ],
+      "namespaces": {
+        "VirtualDOM": {
+          "name": "VirtualDOM",
+          "properties": {
+            "implementation": {
+              "type": "Object",
+              "name": "implementation",
+              "description": "Lightweight virtual DOM implementation"
+            },
+            "diff": {
+              "type": "Object",
+              "name": "diff",
+              "description": "Efficient diff and patch algorithm"
+            },
+            "lifecycle": {
+              "type": "Object",
+              "name": "lifecycle",
+              "description": "Component lifecycle management"
+            },
+            "events": {
+              "type": "Object",
+              "name": "events",
+              "description": "Event delegation support"
+            }
+          }
+        },
+        "EventHandling": {
+          "name": "EventHandling",
+          "properties": {
+            "management": {
+              "type": "Object",
+              "name": "management",
+              "description": "Advanced event management"
+            },
+            "delegation": {
+              "type": "Object",
+              "name": "delegation",
+              "description": "Event delegation and bubbling"
+            },
+            "touch": {
+              "type": "Object",
+              "name": "touch",
+              "description": "Mobile touch event optimization"
+            },
+            "lifecycle": {
+              "type": "Object",
+              "name": "lifecycle",
+              "description": "Event once and off support"
+            }
+          }
+        },
+        "URLParsing": {
+          "name": "URLParsing",
+          "properties": {
+            "parser": {
+              "type": "Object",
+              "name": "parser",
+              "description": "Robust URL parsing and manipulation"
+            },
+            "query": {
+              "type": "Object",
+              "name": "query",
+              "description": "Query string handling"
+            },
+            "path": {
+              "type": "Object",
+              "name": "path",
+              "description": "Path normalization"
+            },
+            "params": {
+              "type": "Object",
+              "name": "params",
+              "description": "URL parameter extraction"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "fp/index.js",
     "info": {
-      "description": "Functional Programming Core Module Core functional programming utilities focusing on pure function composition and immutable data handling.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "Core functional programming utilities focusing on pure function composition and immutable data handling.",
+      "features": [
         {
-          "title": "FunctionalCore",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "composition",
-              "description": "Pure function composition utilities"
-            },
-            {
-              "type": "Object",
-              "name": "pointfree",
-              "description": "Point-free programming support"
-            },
-            {
-              "type": "Object",
-              "name": "currying",
-              "description": "Function currying and partial application"
-            },
-            {
-              "type": "Object",
-              "name": "immutable",
-              "description": "Immutable data handling patterns"
-            }
-          ]
+          "namespace": "FunctionalCore",
+          "property": "composition",
+          "type": "Object",
+          "description": "Pure function composition utilities"
+        },
+        {
+          "namespace": "FunctionalCore",
+          "property": "pointfree",
+          "type": "Object",
+          "description": "Point-free programming support"
+        },
+        {
+          "namespace": "FunctionalCore",
+          "property": "currying",
+          "type": "Object",
+          "description": "Function currying and partial application"
+        },
+        {
+          "namespace": "FunctionalCore",
+          "property": "immutable",
+          "type": "Object",
+          "description": "Immutable data handling patterns"
         }
       ],
       "examples": [
@@ -238,113 +421,144 @@
           "code": "import { compose } from 'xajs/fp'\n// Create a pipeline of pure functions\nconst pipeline = compose(\nuppercase,\ntrim,\nnormalize\n)\n// Apply the transformation\nconst result = pipeline('  hello world  ')\n"
         }
       ],
-      "see": []
+      "exports": [
+        "compose",
+        "composeAsync"
+      ],
+      "related": [
+        "."
+      ],
+      "see": [],
+      "namespaces": {
+        "FunctionalCore": {
+          "name": "FunctionalCore",
+          "properties": {
+            "composition": {
+              "type": "Object",
+              "name": "composition",
+              "description": "Pure function composition utilities"
+            },
+            "pointfree": {
+              "type": "Object",
+              "name": "pointfree",
+              "description": "Point-free programming support"
+            },
+            "currying": {
+              "type": "Object",
+              "name": "currying",
+              "description": "Function currying and partial application"
+            },
+            "immutable": {
+              "type": "Object",
+              "name": "immutable",
+              "description": "Immutable data handling patterns"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "functional/index.js",
     "info": {
-      "description": "Functional programming utilities and patterns Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities.",
+      "features": [
         {
-          "title": "FunctionComposition",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "interceptors",
-              "description": "Advanced interceptors for function composition"
-            },
-            {
-              "type": "Object",
-              "name": "async",
-              "description": "Support for async function composition"
-            },
-            {
-              "type": "Object",
-              "name": "errorHandling",
-              "description": "Error handling in composition chains"
-            },
-            {
-              "type": "Object",
-              "name": "middleware",
-              "description": "Middleware pattern support"
-            }
-          ]
+          "namespace": "FunctionComposition",
+          "property": "interceptors",
+          "type": "Object",
+          "description": "Advanced interceptors for function composition"
         },
         {
-          "title": "DependencyInjection",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "decorators",
-              "description": "Decorator-based DI system"
-            },
-            {
-              "type": "Object",
-              "name": "resolution",
-              "description": "Automatic dependency resolution"
-            },
-            {
-              "type": "Object",
-              "name": "circular",
-              "description": "Circular dependency detection"
-            },
-            {
-              "type": "Object",
-              "name": "scoping",
-              "description": "Scoped container support"
-            }
-          ]
+          "namespace": "FunctionComposition",
+          "property": "async",
+          "type": "Object",
+          "description": "Support for async function composition"
         },
         {
-          "title": "EventSystem",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "pubsub",
-              "description": "Pub/Sub pattern implementation"
-            },
-            {
-              "type": "Object",
-              "name": "priority",
-              "description": "Event prioritization"
-            },
-            {
-              "type": "Object",
-              "name": "async",
-              "description": "Async event handling"
-            },
-            {
-              "type": "Object",
-              "name": "cancellation",
-              "description": "Event cancellation"
-            }
-          ]
+          "namespace": "FunctionComposition",
+          "property": "errorHandling",
+          "type": "Object",
+          "description": "Error handling in composition chains"
         },
         {
-          "title": "PromiseUtilities",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "lazy",
-              "description": "Promise-based lazy evaluation"
-            },
-            {
-              "type": "Object",
-              "name": "interception",
-              "description": "Promise chain interception"
-            },
-            {
-              "type": "Object",
-              "name": "fallback",
-              "description": "Fallback chain with tryNext"
-            },
-            {
-              "type": "Object",
-              "name": "timeout",
-              "description": "Timeout and retry support"
-            }
-          ]
+          "namespace": "FunctionComposition",
+          "property": "middleware",
+          "type": "Object",
+          "description": "Middleware pattern support"
+        },
+        {
+          "namespace": "DependencyInjection",
+          "property": "decorators",
+          "type": "Object",
+          "description": "Decorator-based DI system"
+        },
+        {
+          "namespace": "DependencyInjection",
+          "property": "resolution",
+          "type": "Object",
+          "description": "Automatic dependency resolution"
+        },
+        {
+          "namespace": "DependencyInjection",
+          "property": "circular",
+          "type": "Object",
+          "description": "Circular dependency detection"
+        },
+        {
+          "namespace": "DependencyInjection",
+          "property": "scoping",
+          "type": "Object",
+          "description": "Scoped container support"
+        },
+        {
+          "namespace": "EventSystem",
+          "property": "pubsub",
+          "type": "Object",
+          "description": "Pub/Sub pattern implementation"
+        },
+        {
+          "namespace": "EventSystem",
+          "property": "priority",
+          "type": "Object",
+          "description": "Event prioritization"
+        },
+        {
+          "namespace": "EventSystem",
+          "property": "async",
+          "type": "Object",
+          "description": "Async event handling"
+        },
+        {
+          "namespace": "EventSystem",
+          "property": "cancellation",
+          "type": "Object",
+          "description": "Event cancellation"
+        },
+        {
+          "namespace": "PromiseUtilities",
+          "property": "lazy",
+          "type": "Object",
+          "description": "Promise-based lazy evaluation"
+        },
+        {
+          "namespace": "PromiseUtilities",
+          "property": "interception",
+          "type": "Object",
+          "description": "Promise chain interception"
+        },
+        {
+          "namespace": "PromiseUtilities",
+          "property": "fallback",
+          "type": "Object",
+          "description": "Fallback chain with tryNext"
+        },
+        {
+          "namespace": "PromiseUtilities",
+          "property": "timeout",
+          "type": "Object",
+          "description": "Timeout and retry support"
         }
       ],
       "examples": [
@@ -361,48 +575,157 @@
           "code": "import { helper } from 'xajs/functional'\nconst { PS } = helper\nconst events = new PS()\nevents.on('userUpdate', user => {\nconsole.log('User updated:', user)\n})\nevents.emit('userUpdate', { id: 1, name: 'John' })\n"
         }
       ],
+      "exports": [
+        "helper"
+      ],
+      "related": [
+        "."
+      ],
       "see": [
         {
           "url": "https://ajs.dev/docs/functional",
           "text": "Functional Module Documentation"
         }
-      ]
+      ],
+      "namespaces": {
+        "FunctionComposition": {
+          "name": "FunctionComposition",
+          "properties": {
+            "interceptors": {
+              "type": "Object",
+              "name": "interceptors",
+              "description": "Advanced interceptors for function composition"
+            },
+            "async": {
+              "type": "Object",
+              "name": "async",
+              "description": "Support for async function composition"
+            },
+            "errorHandling": {
+              "type": "Object",
+              "name": "errorHandling",
+              "description": "Error handling in composition chains"
+            },
+            "middleware": {
+              "type": "Object",
+              "name": "middleware",
+              "description": "Middleware pattern support"
+            }
+          }
+        },
+        "DependencyInjection": {
+          "name": "DependencyInjection",
+          "properties": {
+            "decorators": {
+              "type": "Object",
+              "name": "decorators",
+              "description": "Decorator-based DI system"
+            },
+            "resolution": {
+              "type": "Object",
+              "name": "resolution",
+              "description": "Automatic dependency resolution"
+            },
+            "circular": {
+              "type": "Object",
+              "name": "circular",
+              "description": "Circular dependency detection"
+            },
+            "scoping": {
+              "type": "Object",
+              "name": "scoping",
+              "description": "Scoped container support"
+            }
+          }
+        },
+        "EventSystem": {
+          "name": "EventSystem",
+          "properties": {
+            "pubsub": {
+              "type": "Object",
+              "name": "pubsub",
+              "description": "Pub/Sub pattern implementation"
+            },
+            "priority": {
+              "type": "Object",
+              "name": "priority",
+              "description": "Event prioritization"
+            },
+            "async": {
+              "type": "Object",
+              "name": "async",
+              "description": "Async event handling"
+            },
+            "cancellation": {
+              "type": "Object",
+              "name": "cancellation",
+              "description": "Event cancellation"
+            }
+          }
+        },
+        "PromiseUtilities": {
+          "name": "PromiseUtilities",
+          "properties": {
+            "lazy": {
+              "type": "Object",
+              "name": "lazy",
+              "description": "Promise-based lazy evaluation"
+            },
+            "interception": {
+              "type": "Object",
+              "name": "interception",
+              "description": "Promise chain interception"
+            },
+            "fallback": {
+              "type": "Object",
+              "name": "fallback",
+              "description": "Fallback chain with tryNext"
+            },
+            "timeout": {
+              "type": "Object",
+              "name": "timeout",
+              "description": "Timeout and retry support"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "future/index.js",
     "info": {
-      "description": "Experimental Features Module Experimental and cutting-edge features for next-generation JavaScript development.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "Experimental and cutting-edge features for next-generation JavaScript development.",
+      "features": [
         {
-          "title": "ExperimentalFeatures",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "templates",
-              "description": "Template rendering engine with reactive updates"
-            },
-            {
-              "type": "Object",
-              "name": "effects",
-              "description": "Advanced effect system for side-effect management"
-            },
-            {
-              "type": "Object",
-              "name": "reactive",
-              "description": "Reactive programming utilities and patterns"
-            },
-            {
-              "type": "Object",
-              "name": "async",
-              "description": "Next-generation async patterns and control"
-            },
-            {
-              "type": "Object",
-              "name": "experimental",
-              "description": "Cutting-edge JavaScript features exploration"
-            }
-          ]
+          "namespace": "ExperimentalFeatures",
+          "property": "templates",
+          "type": "Object",
+          "description": "Template rendering engine with reactive updates"
+        },
+        {
+          "namespace": "ExperimentalFeatures",
+          "property": "effects",
+          "type": "Object",
+          "description": "Advanced effect system for side-effect management"
+        },
+        {
+          "namespace": "ExperimentalFeatures",
+          "property": "reactive",
+          "type": "Object",
+          "description": "Reactive programming utilities and patterns"
+        },
+        {
+          "namespace": "ExperimentalFeatures",
+          "property": "async",
+          "type": "Object",
+          "description": "Next-generation async patterns and control"
+        },
+        {
+          "namespace": "ExperimentalFeatures",
+          "property": "experimental",
+          "type": "Object",
+          "description": "Cutting-edge JavaScript features exploration"
         }
       ],
       "examples": [
@@ -411,113 +734,150 @@
           "code": "import { trp, ae } from 'xajs/future'\n// Create a template with reactive properties\nconst template = trp`\n<div>\n<h1>${state.title}</h1>\n<p>${state.content}</p>\n</div>\n`\n// Use advanced effects\nae.effect(() => {\n// Side effects automatically tracked and cleaned up\nconst subscription = api.subscribe(data => {\nstate.update(data)\n})\nreturn () => subscription.unsubscribe()\n})\n"
         }
       ],
-      "see": []
+      "exports": [
+        "TR",
+        "eff",
+        "tpl"
+      ],
+      "related": [
+        "."
+      ],
+      "see": [],
+      "namespaces": {
+        "ExperimentalFeatures": {
+          "name": "ExperimentalFeatures",
+          "properties": {
+            "templates": {
+              "type": "Object",
+              "name": "templates",
+              "description": "Template rendering engine with reactive updates"
+            },
+            "effects": {
+              "type": "Object",
+              "name": "effects",
+              "description": "Advanced effect system for side-effect management"
+            },
+            "reactive": {
+              "type": "Object",
+              "name": "reactive",
+              "description": "Reactive programming utilities and patterns"
+            },
+            "async": {
+              "type": "Object",
+              "name": "async",
+              "description": "Next-generation async patterns and control"
+            },
+            "experimental": {
+              "type": "Object",
+              "name": "experimental",
+              "description": "Cutting-edge JavaScript features exploration"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "index.js",
     "info": {
-      "description": "AJS - A thoughtfully crafted JavaScript utility library A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.",
+      "features": [
         {
-          "title": "CoreUtilities",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "classSystem",
-              "description": "Powerful class system with inheritance and mixins"
-            },
-            {
-              "type": "Object",
-              "name": "decorators",
-              "description": "Flexible decorators for enhancing classes and methods"
-            },
-            {
-              "type": "Object",
-              "name": "promises",
-              "description": "Promise utilities and deferred execution"
-            },
-            {
-              "type": "Object",
-              "name": "types",
-              "description": "Type checking and object manipulation"
-            }
-          ]
+          "namespace": "CoreUtilities",
+          "property": "classSystem",
+          "type": "Object",
+          "description": "Powerful class system with inheritance and mixins"
         },
         {
-          "title": "DOMManipulation",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "vdom",
-              "description": "Lightweight virtual DOM implementation"
-            },
-            {
-              "type": "Object",
-              "name": "events",
-              "description": "Event handling and delegation"
-            },
-            {
-              "type": "Object",
-              "name": "touch",
-              "description": "Mobile-optimized touch events"
-            },
-            {
-              "type": "Object",
-              "name": "url",
-              "description": "URL parsing and manipulation"
-            }
-          ]
+          "namespace": "CoreUtilities",
+          "property": "decorators",
+          "type": "Object",
+          "description": "Flexible decorators for enhancing classes and methods"
         },
         {
-          "title": "FunctionalProgramming",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "composition",
-              "description": "Function composition and currying"
-            },
-            {
-              "type": "Object",
-              "name": "di",
-              "description": "Dependency injection system"
-            },
-            {
-              "type": "Object",
-              "name": "pubsub",
-              "description": "Pub/Sub event system"
-            },
-            {
-              "type": "Object",
-              "name": "promiseUtils",
-              "description": "Promise-based utilities"
-            }
-          ]
+          "namespace": "CoreUtilities",
+          "property": "promises",
+          "type": "Object",
+          "description": "Promise utilities and deferred execution"
         },
         {
-          "title": "LanguageExtensions",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "string",
-              "description": "Enhanced string manipulation"
-            },
-            {
-              "type": "Object",
-              "name": "array",
-              "description": "Advanced array operations"
-            },
-            {
-              "type": "Object",
-              "name": "object",
-              "description": "Object transformation utilities"
-            },
-            {
-              "type": "Object",
-              "name": "typeConversion",
-              "description": "Type conversion helpers"
-            }
-          ]
+          "namespace": "CoreUtilities",
+          "property": "types",
+          "type": "Object",
+          "description": "Type checking and object manipulation"
+        },
+        {
+          "namespace": "DOMManipulation",
+          "property": "vdom",
+          "type": "Object",
+          "description": "Lightweight virtual DOM implementation"
+        },
+        {
+          "namespace": "DOMManipulation",
+          "property": "events",
+          "type": "Object",
+          "description": "Event handling and delegation"
+        },
+        {
+          "namespace": "DOMManipulation",
+          "property": "touch",
+          "type": "Object",
+          "description": "Mobile-optimized touch events"
+        },
+        {
+          "namespace": "DOMManipulation",
+          "property": "url",
+          "type": "Object",
+          "description": "URL parsing and manipulation"
+        },
+        {
+          "namespace": "FunctionalProgramming",
+          "property": "composition",
+          "type": "Object",
+          "description": "Function composition and currying"
+        },
+        {
+          "namespace": "FunctionalProgramming",
+          "property": "di",
+          "type": "Object",
+          "description": "Dependency injection system"
+        },
+        {
+          "namespace": "FunctionalProgramming",
+          "property": "pubsub",
+          "type": "Object",
+          "description": "Pub/Sub event system"
+        },
+        {
+          "namespace": "FunctionalProgramming",
+          "property": "promiseUtils",
+          "type": "Object",
+          "description": "Promise-based utilities"
+        },
+        {
+          "namespace": "LanguageExtensions",
+          "property": "string",
+          "type": "Object",
+          "description": "Enhanced string manipulation"
+        },
+        {
+          "namespace": "LanguageExtensions",
+          "property": "array",
+          "type": "Object",
+          "description": "Advanced array operations"
+        },
+        {
+          "namespace": "LanguageExtensions",
+          "property": "object",
+          "type": "Object",
+          "description": "Object transformation utilities"
+        },
+        {
+          "namespace": "LanguageExtensions",
+          "property": "typeConversion",
+          "type": "Object",
+          "description": "Type conversion helpers"
         }
       ],
       "examples": [
@@ -534,38 +894,153 @@
           "code": "import { helper } from 'xajs/functional';\nconst { tryNext } = helper;\nconst result = await tryNext([\nasync () => await primaryAPI(),\nasync () => await fallbackAPI()\n]);\n"
         }
       ],
-      "see": []
+      "exports": [
+        "core",
+        "dom",
+        "fp",
+        "functional",
+        "future",
+        "internal",
+        "lang",
+        "mobile"
+      ],
+      "related": [
+        "."
+      ],
+      "see": [],
+      "namespaces": {
+        "CoreUtilities": {
+          "name": "CoreUtilities",
+          "properties": {
+            "classSystem": {
+              "type": "Object",
+              "name": "classSystem",
+              "description": "Powerful class system with inheritance and mixins"
+            },
+            "decorators": {
+              "type": "Object",
+              "name": "decorators",
+              "description": "Flexible decorators for enhancing classes and methods"
+            },
+            "promises": {
+              "type": "Object",
+              "name": "promises",
+              "description": "Promise utilities and deferred execution"
+            },
+            "types": {
+              "type": "Object",
+              "name": "types",
+              "description": "Type checking and object manipulation"
+            }
+          }
+        },
+        "DOMManipulation": {
+          "name": "DOMManipulation",
+          "properties": {
+            "vdom": {
+              "type": "Object",
+              "name": "vdom",
+              "description": "Lightweight virtual DOM implementation"
+            },
+            "events": {
+              "type": "Object",
+              "name": "events",
+              "description": "Event handling and delegation"
+            },
+            "touch": {
+              "type": "Object",
+              "name": "touch",
+              "description": "Mobile-optimized touch events"
+            },
+            "url": {
+              "type": "Object",
+              "name": "url",
+              "description": "URL parsing and manipulation"
+            }
+          }
+        },
+        "FunctionalProgramming": {
+          "name": "FunctionalProgramming",
+          "properties": {
+            "composition": {
+              "type": "Object",
+              "name": "composition",
+              "description": "Function composition and currying"
+            },
+            "di": {
+              "type": "Object",
+              "name": "di",
+              "description": "Dependency injection system"
+            },
+            "pubsub": {
+              "type": "Object",
+              "name": "pubsub",
+              "description": "Pub/Sub event system"
+            },
+            "promiseUtils": {
+              "type": "Object",
+              "name": "promiseUtils",
+              "description": "Promise-based utilities"
+            }
+          }
+        },
+        "LanguageExtensions": {
+          "name": "LanguageExtensions",
+          "properties": {
+            "string": {
+              "type": "Object",
+              "name": "string",
+              "description": "Enhanced string manipulation"
+            },
+            "array": {
+              "type": "Object",
+              "name": "array",
+              "description": "Advanced array operations"
+            },
+            "object": {
+              "type": "Object",
+              "name": "object",
+              "description": "Object transformation utilities"
+            },
+            "typeConversion": {
+              "type": "Object",
+              "name": "typeConversion",
+              "description": "Type conversion helpers"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "internal/index.js",
     "info": {
-      "description": "Internal Utilities Module Core internal utilities and helper functions used across the library.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "Core internal utilities and helper functions used across the library.",
+      "features": [
         {
-          "title": "InternalUtilities",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "typeChecking",
-              "description": "Type checking and validation utilities"
-            },
-            {
-              "type": "Object",
-              "name": "objectUtils",
-              "description": "Object property manipulation helpers"
-            },
-            {
-              "type": "Object",
-              "name": "helpers",
-              "description": "Common internal helper functions"
-            },
-            {
-              "type": "Object",
-              "name": "shared",
-              "description": "Shared utilities used across other modules"
-            }
-          ]
+          "namespace": "InternalUtilities",
+          "property": "typeChecking",
+          "type": "Object",
+          "description": "Type checking and validation utilities"
+        },
+        {
+          "namespace": "InternalUtilities",
+          "property": "objectUtils",
+          "type": "Object",
+          "description": "Object property manipulation helpers"
+        },
+        {
+          "namespace": "InternalUtilities",
+          "property": "helpers",
+          "type": "Object",
+          "description": "Common internal helper functions"
+        },
+        {
+          "namespace": "InternalUtilities",
+          "property": "shared",
+          "type": "Object",
+          "description": "Shared utilities used across other modules"
         }
       ],
       "examples": [
@@ -574,38 +1049,73 @@
           "code": "import { is, assign } from 'xajs/internal'\n// Type checking\nif (is.string(value)) {\n// Handle string type\n}\n// Safe object assignment\nconst merged = assign({}, source, {\nnewProp: 'value'\n})\n"
         }
       ],
-      "see": []
+      "exports": [
+        "assign",
+        "hasOwnProp",
+        "is"
+      ],
+      "related": [
+        "."
+      ],
+      "see": [],
+      "namespaces": {
+        "InternalUtilities": {
+          "name": "InternalUtilities",
+          "properties": {
+            "typeChecking": {
+              "type": "Object",
+              "name": "typeChecking",
+              "description": "Type checking and validation utilities"
+            },
+            "objectUtils": {
+              "type": "Object",
+              "name": "objectUtils",
+              "description": "Object property manipulation helpers"
+            },
+            "helpers": {
+              "type": "Object",
+              "name": "helpers",
+              "description": "Common internal helper functions"
+            },
+            "shared": {
+              "type": "Object",
+              "name": "shared",
+              "description": "Shared utilities used across other modules"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "lang/index.js",
     "info": {
-      "description": "Language Enhancement Module Advanced language utilities for string manipulation and code generation.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "Advanced language utilities for string manipulation and code generation.",
+      "features": [
         {
-          "title": "LanguageUtilities",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "string",
-              "description": "String manipulation and transformation"
-            },
-            {
-              "type": "Object",
-              "name": "language",
-              "description": "Enhanced JavaScript language features"
-            },
-            {
-              "type": "Object",
-              "name": "generation",
-              "description": "Code generation utilities"
-            },
-            {
-              "type": "Object",
-              "name": "dsl",
-              "description": "DSL support tools"
-            }
-          ]
+          "namespace": "LanguageUtilities",
+          "property": "string",
+          "type": "Object",
+          "description": "String manipulation and transformation"
+        },
+        {
+          "namespace": "LanguageUtilities",
+          "property": "language",
+          "type": "Object",
+          "description": "Enhanced JavaScript language features"
+        },
+        {
+          "namespace": "LanguageUtilities",
+          "property": "generation",
+          "type": "Object",
+          "description": "Code generation utilities"
+        },
+        {
+          "namespace": "LanguageUtilities",
+          "property": "dsl",
+          "type": "Object",
+          "description": "DSL support tools"
         }
       ],
       "examples": [
@@ -614,43 +1124,77 @@
           "code": "import { MagicString } from 'xajs/lang'\n// Create a magic string for code manipulation\nconst code = new MagicString('function hello() { return \"world\" }')\n// Manipulate the code\ncode\n.update(8, 13, 'greet')\n.append('hello()')\nconsole.log(code.toString())\n// Output: function greet() { return \"world\" }hello()\n"
         }
       ],
-      "see": []
+      "exports": [
+        "MagicString"
+      ],
+      "related": [
+        "."
+      ],
+      "see": [],
+      "namespaces": {
+        "LanguageUtilities": {
+          "name": "LanguageUtilities",
+          "properties": {
+            "string": {
+              "type": "Object",
+              "name": "string",
+              "description": "String manipulation and transformation"
+            },
+            "language": {
+              "type": "Object",
+              "name": "language",
+              "description": "Enhanced JavaScript language features"
+            },
+            "generation": {
+              "type": "Object",
+              "name": "generation",
+              "description": "Code generation utilities"
+            },
+            "dsl": {
+              "type": "Object",
+              "name": "dsl",
+              "description": "DSL support tools"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "mobile/index.js",
     "info": {
-      "description": "Mobile Development Module Comprehensive utilities for mobile web development and device detection.",
-      "namespaces": [
+      "name": "index.js",
+      "description": "Comprehensive utilities for mobile web development and device detection.",
+      "features": [
         {
-          "title": "MobileUtilities",
-          "properties": [
-            {
-              "type": "Object",
-              "name": "userAgent",
-              "description": "User agent parsing and detection"
-            },
-            {
-              "type": "Object",
-              "name": "events",
-              "description": "Mobile-specific event handling"
-            },
-            {
-              "type": "Object",
-              "name": "touch",
-              "description": "Touch and gesture support"
-            },
-            {
-              "type": "Object",
-              "name": "device",
-              "description": "Device capability detection"
-            },
-            {
-              "type": "Object",
-              "name": "responsive",
-              "description": "Responsive design helpers"
-            }
-          ]
+          "namespace": "MobileUtilities",
+          "property": "userAgent",
+          "type": "Object",
+          "description": "User agent parsing and detection"
+        },
+        {
+          "namespace": "MobileUtilities",
+          "property": "events",
+          "type": "Object",
+          "description": "Mobile-specific event handling"
+        },
+        {
+          "namespace": "MobileUtilities",
+          "property": "touch",
+          "type": "Object",
+          "description": "Touch and gesture support"
+        },
+        {
+          "namespace": "MobileUtilities",
+          "property": "device",
+          "type": "Object",
+          "description": "Device capability detection"
+        },
+        {
+          "namespace": "MobileUtilities",
+          "property": "responsive",
+          "type": "Object",
+          "description": "Responsive design helpers"
         }
       ],
       "examples": [
@@ -659,35 +1203,97 @@
           "code": "import { ua } from 'xajs/mobile'\n// Detect device and platform\nconst userAgent = ua.parse(navigator.userAgent)\nif (userAgent.isIOS) {\n// iOS specific handling\n} else if (userAgent.isAndroid) {\n// Android specific handling\n}\n"
         }
       ],
-      "see": []
+      "exports": [],
+      "related": [],
+      "see": [],
+      "namespaces": {
+        "MobileUtilities": {
+          "name": "MobileUtilities",
+          "properties": {
+            "userAgent": {
+              "type": "Object",
+              "name": "userAgent",
+              "description": "User agent parsing and detection"
+            },
+            "events": {
+              "type": "Object",
+              "name": "events",
+              "description": "Mobile-specific event handling"
+            },
+            "touch": {
+              "type": "Object",
+              "name": "touch",
+              "description": "Touch and gesture support"
+            },
+            "device": {
+              "type": "Object",
+              "name": "device",
+              "description": "Device capability detection"
+            },
+            "responsive": {
+              "type": "Object",
+              "name": "responsive",
+              "description": "Responsive design helpers"
+            }
+          }
+        }
+      }
     }
   },
   {
     "path": "mobile/ua/index.js",
     "info": {
-      "description": "User Agent Parser Module - Comprehensive user agent parsing - Browser and version detection - Operating system identification - Device type recognition - Engine and rendering capabilities detection",
-      "namespaces": [],
+      "name": "index.js",
+      "description": "",
+      "features": [
+        "User Agent Analysis",
+        "Comprehensive user agent parsing",
+        "Browser and version detection",
+        "Operating system identification",
+        "Device type recognition",
+        "Engine and rendering capabilities detection"
+      ],
       "examples": [
         {
           "caption": "",
           "code": "import { UserAgent } from 'xajs/mobile/ua'\nconst ua = new UserAgent(navigator.userAgent)\nconsole.log({\nbrowser: ua.getBrowser(),\nos: ua.getOS(),\ndevice: ua.getDevice(),\nengine: ua.getEngine()\n})\n"
         }
       ],
-      "see": []
+      "exports": [
+        "BaseParser",
+        "BrowserParser",
+        "DeviceParser",
+        "EngineParser",
+        "OSParser",
+        "UserAgent"
+      ],
+      "related": [],
+      "see": [],
+      "namespaces": {}
     }
   },
   {
     "path": "mobile/ua/parsers/index.js",
     "info": {
-      "description": "User Agent Parsers Collection - Modular parser architecture - Extensible parsing rules - High accuracy detection - Customizable parsing strategies",
-      "namespaces": [],
+      "name": "index.js",
+      "description": "",
+      "features": [
+        "UA Parsers",
+        "Modular parser architecture",
+        "Extensible parsing rules",
+        "High accuracy detection",
+        "Customizable parsing strategies"
+      ],
       "examples": [
         {
           "caption": "",
           "code": "import { BrowserParser, OSParser } from 'xajs/mobile/ua/parsers'\nconst browserInfo = new BrowserParser().parse(userAgent)\nconst osInfo = new OSParser().parse(userAgent)\nconsole.log({\nbrowser: browserInfo.name,\nversion: browserInfo.version,\nos: osInfo.name,\nplatform: osInfo.platform\n})\n"
         }
       ],
-      "see": []
+      "exports": [],
+      "related": [],
+      "see": [],
+      "namespaces": {}
     }
   }
 ]

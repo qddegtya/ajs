@@ -1,30 +1,30 @@
 {
-  "description": "Internal Utilities Module Core internal utilities and helper functions used across the library.",
-  "namespaces": [
+  "name": "index.js",
+  "description": "Core internal utilities and helper functions used across the library.",
+  "features": [
     {
-      "title": "InternalUtilities",
-      "properties": [
-        {
-          "type": "Object",
-          "name": "typeChecking",
-          "description": "Type checking and validation utilities"
-        },
-        {
-          "type": "Object",
-          "name": "objectUtils",
-          "description": "Object property manipulation helpers"
-        },
-        {
-          "type": "Object",
-          "name": "helpers",
-          "description": "Common internal helper functions"
-        },
-        {
-          "type": "Object",
-          "name": "shared",
-          "description": "Shared utilities used across other modules"
-        }
-      ]
+      "namespace": "InternalUtilities",
+      "property": "typeChecking",
+      "type": "Object",
+      "description": "Type checking and validation utilities"
+    },
+    {
+      "namespace": "InternalUtilities",
+      "property": "objectUtils",
+      "type": "Object",
+      "description": "Object property manipulation helpers"
+    },
+    {
+      "namespace": "InternalUtilities",
+      "property": "helpers",
+      "type": "Object",
+      "description": "Common internal helper functions"
+    },
+    {
+      "namespace": "InternalUtilities",
+      "property": "shared",
+      "type": "Object",
+      "description": "Shared utilities used across other modules"
     }
   ],
   "examples": [
@@ -33,5 +33,40 @@
       "code": "import { is, assign } from 'xajs/internal'\n// Type checking\nif (is.string(value)) {\n// Handle string type\n}\n// Safe object assignment\nconst merged = assign({}, source, {\nnewProp: 'value'\n})\n"
     }
   ],
-  "see": []
+  "exports": [
+    "assign",
+    "hasOwnProp",
+    "is"
+  ],
+  "related": [
+    "."
+  ],
+  "see": [],
+  "namespaces": {
+    "InternalUtilities": {
+      "name": "InternalUtilities",
+      "properties": {
+        "typeChecking": {
+          "type": "Object",
+          "name": "typeChecking",
+          "description": "Type checking and validation utilities"
+        },
+        "objectUtils": {
+          "type": "Object",
+          "name": "objectUtils",
+          "description": "Object property manipulation helpers"
+        },
+        "helpers": {
+          "type": "Object",
+          "name": "helpers",
+          "description": "Common internal helper functions"
+        },
+        "shared": {
+          "type": "Object",
+          "name": "shared",
+          "description": "Shared utilities used across other modules"
+        }
+      }
+    }
+  }
 }

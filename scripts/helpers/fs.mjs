@@ -44,6 +44,30 @@ export async function writeJson(filePath, data) {
 }
 
 // 目录操作
+export async function mkdir(dirPath, options = { recursive: true }) {
+  try {
+    logger.debug(`Creating directory: ${dirPath}`);
+    await fs.mkdir(dirPath, options);
+  } catch (error) {
+    if (error.code !== 'EEXIST') {
+      logger.error(`Failed to create directory: ${dirPath}`, error);
+      throw error;
+    }
+  }
+}
+
+export async function rm(path, options = { recursive: true, force: true }) {
+  try {
+    logger.debug(`Removing path: ${path}`);
+    await fs.rm(path, options);
+  } catch (error) {
+    if (error.code !== 'ENOENT') {
+      logger.error(`Failed to remove path: ${path}`, error);
+      throw error;
+    }
+  }
+}
+
 export async function ensureDir(dirPath) {
   try {
     await fs.access(dirPath);
