@@ -1,116 +1,152 @@
 {
   "name": "index.js",
-  "description": "A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.",
+  "description": "A modern, high-performance JavaScript utility library that combines functional programming with reactive patterns. Features include a lightweight class system, virtual DOM, pub/sub patterns, and comprehensive mobile device detection.",
   "features": [
     {
-      "namespace": "CoreUtilities",
-      "property": "classSystem",
+      "namespace": "Core",
+      "property": "base",
       "type": "Object",
-      "description": "Powerful class system with inheritance and mixins"
+      "description": "Lightweight class system with inheritance and mixins"
     },
     {
-      "namespace": "CoreUtilities",
+      "namespace": "Core",
       "property": "decorators",
       "type": "Object",
-      "description": "Flexible decorators for enhancing classes and methods"
+      "description": "Method decorators including deprecation and mixin support"
     },
     {
-      "namespace": "CoreUtilities",
-      "property": "promises",
+      "namespace": "Core",
+      "property": "Deferred",
       "type": "Object",
-      "description": "Promise utilities and deferred execution"
+      "description": "Enhanced Promise with resolve/reject control"
     },
     {
-      "namespace": "CoreUtilities",
-      "property": "types",
+      "namespace": "DOM",
+      "property": "h",
+      "type": "Function",
+      "description": "Hyperscript function for virtual DOM creation"
+    },
+    {
+      "namespace": "DOM",
+      "property": "tags",
       "type": "Object",
-      "description": "Type checking and object manipulation"
+      "description": "Helper functions for common HTML elements"
     },
     {
-      "namespace": "DOMManipulation",
-      "property": "vdom",
+      "namespace": "DOM",
+      "property": "E",
       "type": "Object",
-      "description": "Lightweight virtual DOM implementation"
+      "description": "Event management with delegation and one-time binding"
     },
     {
-      "namespace": "DOMManipulation",
-      "property": "events",
+      "namespace": "DOM",
+      "property": "UrlParser",
+      "type": "Class",
+      "description": "Advanced URL parsing and manipulation"
+    },
+    {
+      "namespace": "Functional",
+      "property": "intercepter",
       "type": "Object",
-      "description": "Event handling and delegation"
+      "description": "Function interception with before/after hooks"
     },
     {
-      "namespace": "DOMManipulation",
-      "property": "touch",
+      "namespace": "Functional",
+      "property": "tryNext",
       "type": "Object",
-      "description": "Mobile-optimized touch events"
+      "description": "Chain-based error handling with fallbacks"
     },
     {
-      "namespace": "DOMManipulation",
-      "property": "url",
+      "namespace": "Functional",
+      "property": "PS",
       "type": "Object",
-      "description": "URL parsing and manipulation"
+      "description": "Pub/sub system with namespacing"
     },
     {
-      "namespace": "FunctionalProgramming",
-      "property": "composition",
-      "type": "Object",
-      "description": "Function composition and currying"
-    },
-    {
-      "namespace": "FunctionalProgramming",
+      "namespace": "Functional",
       "property": "di",
       "type": "Object",
-      "description": "Dependency injection system"
+      "description": "Dependency injection with decorators"
     },
     {
-      "namespace": "FunctionalProgramming",
-      "property": "pubsub",
+      "namespace": "Future",
+      "property": "TR",
       "type": "Object",
-      "description": "Pub/Sub event system"
+      "description": "Reactive state management with dependency tracking"
     },
     {
-      "namespace": "FunctionalProgramming",
-      "property": "promiseUtils",
-      "type": "Object",
-      "description": "Promise-based utilities"
+      "namespace": "Future",
+      "property": "atom",
+      "type": "Function",
+      "description": "Atomic state container with key identification"
     },
     {
-      "namespace": "LanguageExtensions",
-      "property": "string",
-      "type": "Object",
-      "description": "Enhanced string manipulation"
+      "namespace": "Future",
+      "property": "selector",
+      "type": "Function",
+      "description": "Derived state computation with caching"
     },
     {
-      "namespace": "LanguageExtensions",
-      "property": "array",
+      "namespace": "Future",
+      "property": "eff",
       "type": "Object",
-      "description": "Advanced array operations"
+      "description": "Effect system with automatic cleanup"
     },
     {
-      "namespace": "LanguageExtensions",
-      "property": "object",
-      "type": "Object",
-      "description": "Object transformation utilities"
+      "namespace": "Mobile",
+      "property": "UserAgent",
+      "type": "Class",
+      "description": "Advanced device and browser detection"
     },
     {
-      "namespace": "LanguageExtensions",
-      "property": "typeConversion",
+      "namespace": "Mobile",
+      "property": "device",
       "type": "Object",
-      "description": "Type conversion helpers"
+      "description": "Device type and vendor detection"
+    },
+    {
+      "namespace": "Mobile",
+      "property": "browser",
+      "type": "Object",
+      "description": "Browser and version identification"
+    },
+    {
+      "namespace": "Lang",
+      "property": "MagicString",
+      "type": "Class",
+      "description": "Immutable string operations with chaining"
+    },
+    {
+      "namespace": "Internal",
+      "property": "is",
+      "type": "Object",
+      "description": "Type checking utilities (isArray, isObject, etc.)"
+    },
+    {
+      "namespace": "Internal",
+      "property": "assign",
+      "type": "Function",
+      "description": "Safe object assignment with deep copy"
+    },
+    {
+      "namespace": "Internal",
+      "property": "hasOwnProp",
+      "type": "Function",
+      "description": "Safe property existence check"
     }
   ],
   "examples": [
     {
-      "caption": "Class System",
-      "code": "import { Class } from 'xajs/core';\nconst MyClass = Class({\n$extends: ParentClass,\n$mixins: [SomeMixin],\n$ctor() {\nthis.name = 'example';\n}\n});\n"
+      "caption": "Class System and Events",
+      "code": "import { core, dom } from 'xajs'\nconst Component = core.base.Class({\n$extends: BaseComponent,\n$static: {\ndefaultConfig: { theme: 'light' }\n},\n$ctor(config) {\nthis.$super()\nthis.config = { ...this.constructor.defaultConfig, ...config }\nthis.handler = dom.E.delegate('.menu a', {\nclick: (e, target) => {\ne.preventDefault()\nthis.navigate(target.getAttribute('href'))\n}\n})\n}\n})\n"
     },
     {
-      "caption": "DOM Manipulation",
-      "code": "import { h } from 'xajs/dom';\nconst vnode = h('div', { className: 'container' }, [\nh('h1', null, 'Hello AJS!'),\nh('button', { onClick: () => alert('Clicked!') }, 'Click Me')\n]);\n"
+      "caption": "Reactive State Management",
+      "code": "import { future, functional } from 'xajs'\n// Create atomic state\nconst todoAtom = future.TR.atom({\nkey: 'todoAtom',\ndefault: { items: [], filter: 'all' }\n})\n// Create derived state\nconst filteredTodos = future.TR.selector({\nkey: 'filteredTodos',\nget: ({ get }) => {\nconst state = get(todoAtom)\nreturn state.items.filter(item =>\nstate.filter === 'all' ? true :\nstate.filter === 'completed' ? item.completed :\n!item.completed\n)\n}\n})\n// Create pub/sub communication\nconst { Puber, Suber } = functional.PS\nconst todoService = new Puber('todos')\nconst todoView = new Suber('view')\ntodoView.rss(todoService, [{\nmsg: 'todos:updated',\nhandler: todos => filteredTodos.observe(renderTodos)\n}])\n"
     },
     {
-      "caption": "Functional Programming",
-      "code": "import { helper } from 'xajs/functional';\nconst { tryNext } = helper;\nconst result = await tryNext([\nasync () => await primaryAPI(),\nasync () => await fallbackAPI()\n]);\n"
+      "caption": "Mobile and DOM Utilities",
+      "code": "import { mobile, dom } from 'xajs'\n// Device detection\nconst ua = new mobile.UserAgent(navigator.userAgent)\nif (ua.isMobile()) {\nif (ua.isOS('iOS')) {\nenableIOSFeatures()\n}\n}\n// DOM manipulation\nconst { div, nav, a } = dom.tags\nconst menu = div({ className: 'menu' }, [\nnav(null, [\na({ href: '#home' }, 'Home'),\na({ href: '#about' }, 'About')\n])\n])\n// URL parsing\nconst url = new dom.UrlParser(location.href)\nconsole.log(url.query.page)\n"
     }
   ],
   "exports": [
@@ -128,103 +164,148 @@
   ],
   "see": [],
   "namespaces": {
-    "CoreUtilities": {
-      "name": "CoreUtilities",
+    "Core": {
+      "name": "Core",
       "properties": {
-        "classSystem": {
+        "base": {
           "type": "Object",
-          "name": "classSystem",
-          "description": "Powerful class system with inheritance and mixins"
+          "name": "base",
+          "description": "Lightweight class system with inheritance and mixins"
         },
         "decorators": {
           "type": "Object",
           "name": "decorators",
-          "description": "Flexible decorators for enhancing classes and methods"
+          "description": "Method decorators including deprecation and mixin support"
         },
-        "promises": {
+        "Deferred": {
           "type": "Object",
-          "name": "promises",
-          "description": "Promise utilities and deferred execution"
-        },
-        "types": {
-          "type": "Object",
-          "name": "types",
-          "description": "Type checking and object manipulation"
+          "name": "Deferred",
+          "description": "Enhanced Promise with resolve/reject control"
         }
       }
     },
-    "DOMManipulation": {
-      "name": "DOMManipulation",
+    "DOM": {
+      "name": "DOM",
       "properties": {
-        "vdom": {
-          "type": "Object",
-          "name": "vdom",
-          "description": "Lightweight virtual DOM implementation"
+        "h": {
+          "type": "Function",
+          "name": "h",
+          "description": "Hyperscript function for virtual DOM creation"
         },
-        "events": {
+        "tags": {
           "type": "Object",
-          "name": "events",
-          "description": "Event handling and delegation"
+          "name": "tags",
+          "description": "Helper functions for common HTML elements"
         },
-        "touch": {
+        "E": {
           "type": "Object",
-          "name": "touch",
-          "description": "Mobile-optimized touch events"
+          "name": "E",
+          "description": "Event management with delegation and one-time binding"
         },
-        "url": {
-          "type": "Object",
-          "name": "url",
-          "description": "URL parsing and manipulation"
+        "UrlParser": {
+          "type": "Class",
+          "name": "UrlParser",
+          "description": "Advanced URL parsing and manipulation"
         }
       }
     },
-    "FunctionalProgramming": {
-      "name": "FunctionalProgramming",
+    "Functional": {
+      "name": "Functional",
       "properties": {
-        "composition": {
+        "intercepter": {
           "type": "Object",
-          "name": "composition",
-          "description": "Function composition and currying"
+          "name": "intercepter",
+          "description": "Function interception with before/after hooks"
+        },
+        "tryNext": {
+          "type": "Object",
+          "name": "tryNext",
+          "description": "Chain-based error handling with fallbacks"
+        },
+        "PS": {
+          "type": "Object",
+          "name": "PS",
+          "description": "Pub/sub system with namespacing"
         },
         "di": {
           "type": "Object",
           "name": "di",
-          "description": "Dependency injection system"
-        },
-        "pubsub": {
-          "type": "Object",
-          "name": "pubsub",
-          "description": "Pub/Sub event system"
-        },
-        "promiseUtils": {
-          "type": "Object",
-          "name": "promiseUtils",
-          "description": "Promise-based utilities"
+          "description": "Dependency injection with decorators"
         }
       }
     },
-    "LanguageExtensions": {
-      "name": "LanguageExtensions",
+    "Future": {
+      "name": "Future",
       "properties": {
-        "string": {
+        "TR": {
           "type": "Object",
-          "name": "string",
-          "description": "Enhanced string manipulation"
+          "name": "TR",
+          "description": "Reactive state management with dependency tracking"
         },
-        "array": {
-          "type": "Object",
-          "name": "array",
-          "description": "Advanced array operations"
+        "atom": {
+          "type": "Function",
+          "name": "atom",
+          "description": "Atomic state container with key identification"
         },
-        "object": {
-          "type": "Object",
-          "name": "object",
-          "description": "Object transformation utilities"
+        "selector": {
+          "type": "Function",
+          "name": "selector",
+          "description": "Derived state computation with caching"
         },
-        "typeConversion": {
+        "eff": {
           "type": "Object",
-          "name": "typeConversion",
-          "description": "Type conversion helpers"
+          "name": "eff",
+          "description": "Effect system with automatic cleanup"
+        }
+      }
+    },
+    "Mobile": {
+      "name": "Mobile",
+      "properties": {
+        "UserAgent": {
+          "type": "Class",
+          "name": "UserAgent",
+          "description": "Advanced device and browser detection"
+        },
+        "device": {
+          "type": "Object",
+          "name": "device",
+          "description": "Device type and vendor detection"
+        },
+        "browser": {
+          "type": "Object",
+          "name": "browser",
+          "description": "Browser and version identification"
+        }
+      }
+    },
+    "Lang": {
+      "name": "Lang",
+      "properties": {
+        "MagicString": {
+          "type": "Class",
+          "name": "MagicString",
+          "description": "Immutable string operations with chaining"
+        }
+      }
+    },
+    "Internal": {
+      "name": "Internal",
+      "properties": {
+        "is": {
+          "type": "Object",
+          "name": "is",
+          "description": "Type checking utilities (isArray, isObject, etc.)"
+        },
+        "assign": {
+          "type": "Function",
+          "name": "assign",
+          "description": "Safe object assignment with deep copy"
+        },
+        "hasOwnProp": {
+          "type": "Function",
+          "name": "hasOwnProp",
+          "description": "Safe property existence check"
         }
       }
     }

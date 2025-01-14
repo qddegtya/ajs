@@ -1,36 +1,44 @@
 {
   "name": "index.js",
-  "description": "Advanced language utilities for string manipulation and code generation.",
+  "description": "Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.",
   "features": [
     {
-      "namespace": "LanguageUtilities",
-      "property": "string",
-      "type": "Object",
-      "description": "String manipulation and transformation"
+      "namespace": "StringUtilities",
+      "property": "MagicString",
+      "type": "Class",
+      "description": "Immutable string wrapper with chainable operations"
     },
     {
-      "namespace": "LanguageUtilities",
-      "property": "language",
-      "type": "Object",
-      "description": "Enhanced JavaScript language features"
+      "namespace": "StringUtilities",
+      "property": "capitalize",
+      "type": "Function",
+      "description": "First character capitalization"
     },
     {
-      "namespace": "LanguageUtilities",
-      "property": "generation",
-      "type": "Object",
-      "description": "Code generation utilities"
+      "namespace": "StringUtilities",
+      "property": "trim",
+      "type": "Function",
+      "description": "Whitespace removal with custom characters"
     },
     {
-      "namespace": "LanguageUtilities",
-      "property": "dsl",
-      "type": "Object",
-      "description": "DSL support tools"
+      "namespace": "StringUtilities",
+      "property": "replace",
+      "type": "Function",
+      "description": "Pattern replacement with function support"
     }
   ],
   "examples": [
     {
-      "caption": "",
-      "code": "import { MagicString } from 'xajs/lang'\n// Create a magic string for code manipulation\nconst code = new MagicString('function hello() { return \"world\" }')\n// Manipulate the code\ncode\n.update(8, 13, 'greet')\n.append('hello()')\nconsole.log(code.toString())\n// Output: function greet() { return \"world\" }hello()\n"
+      "caption": "Basic String Operations",
+      "code": "import { MagicString } from 'xajs/lang'\nconst str = MagicString('  hello world  ')\n// Chain multiple operations\nconst result = str\n.trim()\n.capitalize()\n.replace(/world/, 'AJS')\nconsole.log(result)  // 'Hello AJS'\nconsole.log(str)     // Original string unchanged\n"
+    },
+    {
+      "caption": "Advanced Pattern Matching",
+      "code": "import { MagicString } from 'xajs/lang'\nconst text = MagicString('user.name.first')\n// Replace with callback\nconst result = text.replace(/\\w+/g, (match, index) => {\nif (index === 0) return match\nreturn match.toUpperCase()\n})\nconsole.log(result)  // 'user.NAME.FIRST'\n"
+    },
+    {
+      "caption": "String Transformation",
+      "code": "import { MagicString } from 'xajs/lang'\nconst template = MagicString('Hello, ${name}!')\n// Interpolate values\nconst greeting = template.replace(/\\${(\\w+)}/g, (_, key) => ({\nname: 'AJS User'\n}[key] || ''))\nconsole.log(greeting)  // 'Hello, AJS User!'\n"
     }
   ],
   "exports": [
@@ -41,28 +49,28 @@
   ],
   "see": [],
   "namespaces": {
-    "LanguageUtilities": {
-      "name": "LanguageUtilities",
+    "StringUtilities": {
+      "name": "StringUtilities",
       "properties": {
-        "string": {
-          "type": "Object",
-          "name": "string",
-          "description": "String manipulation and transformation"
+        "MagicString": {
+          "type": "Class",
+          "name": "MagicString",
+          "description": "Immutable string wrapper with chainable operations"
         },
-        "language": {
-          "type": "Object",
-          "name": "language",
-          "description": "Enhanced JavaScript language features"
+        "capitalize": {
+          "type": "Function",
+          "name": "capitalize",
+          "description": "First character capitalization"
         },
-        "generation": {
-          "type": "Object",
-          "name": "generation",
-          "description": "Code generation utilities"
+        "trim": {
+          "type": "Function",
+          "name": "trim",
+          "description": "Whitespace removal with custom characters"
         },
-        "dsl": {
-          "type": "Object",
-          "name": "dsl",
-          "description": "DSL support tools"
+        "replace": {
+          "type": "Function",
+          "name": "replace",
+          "description": "Pattern replacement with function support"
         }
       }
     }

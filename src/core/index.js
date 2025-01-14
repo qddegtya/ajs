@@ -2,54 +2,112 @@
  * Core module providing fundamental building blocks for AJS
  * 
  * @module core
- * @description Provides the foundational building blocks of AJS, including a powerful class system,
- * deferred promises, and decorators for enhancing classes and methods.
+ * @description Provides the foundational architecture of AJS, featuring a 
+ * lightweight class system with inheritance and mixins, basic decorators, 
+ * and a promise-based deferred implementation.
  * 
  * @namespace ClassSystem
- * @property {Object} inheritance - Advanced class inheritance with $extends and $mixins support
- * @property {Object} constructor - Constructor lifecycle management with $ctor
- * @property {Object} methods - Method overriding and super calls
- * @property {Object} static - Static and instance method support
+ * @property {Function} Class - Base class factory with $extends, $ctor, and $static support
+ * @property {Function} $ctor - Constructor lifecycle hook for initialization
+ * @property {Function} $extends - Inheritance support with super calls and static inheritance
+ * @property {Function} $static - Static member definition with inheritance
+ * @property {Function} $mixins - Mixin composition support for code reuse
  * 
  * @namespace Decorators
- * @property {Object} functions - Function and class decorators
- * @property {Object} builtin - Built-in decorators like @mixin and @deprecate
- * @property {Object} factory - Custom decorator factory support
- * @property {Object} properties - Method and property decorators
+ * @property {Function} mixin - Class decorator for mixin application
+ * @property {Function} deprecate - Method/property deprecation decorator with custom messages
  * 
  * @namespace Deferred
- * @property {Object} promise - Promise-like interface with resolve/reject
- * @property {Object} progress - Progress tracking with notify
- * @property {Object} chain - Chainable then/catch/finally
- * @property {Object} cancel - Cancellation support
+ * @property {Function} Deferred - Promise wrapper with resolve/reject control
+ * @property {Function} done - Final promise chain handler with error propagation
+ * @property {Function} isDone - Promise state check for completion status
  * 
- * @example <caption>Class System with Inheritance</caption>
+ * @example <caption>Class Definition with Static Members</caption>
  * import { base } from 'xajs/core'
  * 
- * const MyClass = base.Class({
- *   $extends: ParentClass,
- *   $mixins: [SomeMixin],
+ * const MyComponent = base.Class({
+ *   $extends: BaseComponent,
  *   
- *   $ctor() {
- *     this.name = 'example'
+ *   // Static properties and methods
+ *   $static: {
+ *     defaultConfig: {
+ *       theme: 'light'
+ *     },
+ *     create(config) {
+ *       return new this({ ...this.defaultConfig, ...config })
+ *     }
  *   },
  *   
- *   method() {
- *     // Method implementation
+ *   // Constructor
+ *   $ctor(config) {
+ *     this.$super() // Call parent constructor
+ *     this.config = config
+ *     this.state = { count: 0 }
+ *   },
+ *   
+ *   // Instance methods
+ *   increment() {
+ *     this.state.count++
+ *     this.emit('change', this.state.count)
  *   }
  * })
  * 
- * @example <caption>Using Decorators</caption>
+ * @example <caption>Mixin and Deprecation</caption>
  * import { decorators } from 'xajs/core'
  * 
- * @decorators.mixin
- * class Enhanced {
- *   enhancedMethod() {
- *     // Enhanced functionality
+ * // Define a mixin
+ * const LoggerMixin = {
+ *   log(msg) {
+ *     console.log(`[${this.constructor.name}] ${msg}`)
  *   }
  * }
  * 
- * @see {@link https://ajs.dev/docs/core Core Module Documentation}
+ * // Apply mixin and deprecate old methods
+ * @decorators.mixin(LoggerMixin)
+ * class MyService {
+ *   @decorators.deprecate('Use newMethod() instead', { since: '2.0.0' })
+ *   oldMethod() {
+ *     return this.newMethod()
+ *   }
+ *   
+ *   newMethod() {
+ *     this.log('Operation started')
+ *     return this.processData()
+ *   }
+ * }
+ * 
+ * @example <caption>Async Operations with Deferred</caption>
+ * import { base } from 'xajs/core'
+ * 
+ * class DataLoader {
+ *   async loadData(retryCount = 3) {
+ *     const deferred = new base.Deferred()
+ *     
+ *     try {
+ *       // Attempt to load data with retry
+ *       for (let i = 0; i < retryCount; i++) {
+ *         try {
+ *           const response = await fetch('/api/data')
+ *           if (!response.ok) throw new Error('API Error')
+ *           const data = await response.json()
+ *           return deferred.resolve(data)
+ *         } catch (err) {
+ *           if (i === retryCount - 1) throw err
+ *           await new Promise(r => setTimeout(r, 1000 * (i + 1)))
+ *         }
+ *       }
+ *     } catch (err) {
+ *       deferred.reject(err)
+ *     }
+ *     
+ *     return deferred
+ *       .done() // Ensures unhandled rejections are thrown
+ *   }
+ *   
+ *   isDataLoaded() {
+ *     return this.loadData.isDone()
+ *   }
+ * }
  */
 
 import Class from './class'

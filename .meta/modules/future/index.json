@@ -1,42 +1,62 @@
 {
   "name": "index.js",
-  "description": "Experimental and cutting-edge features for next-generation JavaScript development.",
+  "description": "Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management.",
   "features": [
     {
-      "namespace": "ExperimentalFeatures",
-      "property": "templates",
-      "type": "Object",
-      "description": "Template rendering engine with reactive updates"
+      "namespace": "ReactiveSystem",
+      "property": "TR",
+      "type": "Function",
+      "description": "Reactive value creation with dependency tracking"
     },
     {
-      "namespace": "ExperimentalFeatures",
-      "property": "effects",
-      "type": "Object",
-      "description": "Advanced effect system for side-effect management"
+      "namespace": "ReactiveSystem",
+      "property": "atom",
+      "type": "Function",
+      "description": "Atomic state container with key identification"
     },
     {
-      "namespace": "ExperimentalFeatures",
-      "property": "reactive",
-      "type": "Object",
-      "description": "Reactive programming utilities and patterns"
+      "namespace": "ReactiveSystem",
+      "property": "selector",
+      "type": "Function",
+      "description": "Derived state computation with caching"
     },
     {
-      "namespace": "ExperimentalFeatures",
-      "property": "async",
-      "type": "Object",
-      "description": "Next-generation async patterns and control"
+      "namespace": "ReactiveSystem",
+      "property": "compute",
+      "type": "Function",
+      "description": "Multi-source computation with auto-cleanup"
     },
     {
-      "namespace": "ExperimentalFeatures",
-      "property": "experimental",
-      "type": "Object",
-      "description": "Cutting-edge JavaScript features exploration"
+      "namespace": "TemplateEngine",
+      "property": "trp",
+      "type": "Function",
+      "description": "Reactive template engine with fine-grained updates"
+    },
+    {
+      "namespace": "TemplateEngine",
+      "property": "tft",
+      "type": "Function",
+      "description": "Template function transformer"
+    },
+    {
+      "namespace": "TemplateEngine",
+      "property": "eff",
+      "type": "Function",
+      "description": "Effect system with automatic cleanup"
     }
   ],
   "examples": [
     {
-      "caption": "",
-      "code": "import { trp, ae } from 'xajs/future'\n// Create a template with reactive properties\nconst template = trp`\n<div>\n<h1>${state.title}</h1>\n<p>${state.content}</p>\n</div>\n`\n// Use advanced effects\nae.effect(() => {\n// Side effects automatically tracked and cleaned up\nconst subscription = api.subscribe(data => {\nstate.update(data)\n})\nreturn () => subscription.unsubscribe()\n})\n"
+      "caption": "Reactive State Management",
+      "code": "import { TR } from 'xajs/future'\nconst { atom, selector, compute } = TR\n// Create atomic states\nconst count1 = TR(1)\nconst count2 = TR(2)\n// Create computed value\nconst sum = compute((a, b) => a + b)(count1, count2)\n// Create derived computation\nconst doubled = compute(s => s * 2)(sum)\n// Observe changes\nsum.observe(val => console.log('Sum:', val))     // 3\ndoubled.observe(val => console.log('Double:', val)) // 6\n// Update source values\ncount1(v => v + 1) // Sum: 4, Double: 8\ncount2(6)          // Sum: 8, Double: 16\n// Cleanup\nsum.dispose()\ndoubled.dispose()\n"
+    },
+    {
+      "caption": "Advanced State with Atoms",
+      "code": "import { TR } from 'xajs/future'\nconst { atom, selector } = TR\n// Create base atom\nconst todoAtom = atom({\nkey: 'todoAtom',\ndefault: {\nitems: [],\nfilter: 'all'\n}\n})\n// Create derived selectors\nconst filteredTodos = selector({\nkey: 'filteredTodos',\nget: ({ get }) => {\nconst state = get(todoAtom)\nswitch (state.filter) {\ncase 'completed':\nreturn state.items.filter(item => item.completed)\ncase 'active':\nreturn state.items.filter(item => !item.completed)\ndefault:\nreturn state.items\n}\n}\n})\nconst todoStats = selector({\nkey: 'todoStats',\nget: ({ get }) => {\nconst items = get(todoAtom).items\nreturn {\ntotal: items.length,\ncompleted: items.filter(item => item.completed).length,\nactive: items.filter(item => !item.completed).length\n}\n}\n})\n// Use selectors\nfilteredTodos.observe(todos => {\nrenderTodoList(todos)\n})\ntodoStats.observe(stats => {\nupdateStatusBar(stats)\n})\n"
+    },
+    {
+      "caption": "Effect System with Cleanup",
+      "code": "import { eff } from 'xajs/future'\n// Create reactive effect\nconst cleanup = eff.effect(() => {\nconst subscription = api.subscribe(data => {\nprocessData(data)\n})\n// Effect cleanup\nreturn () => {\nsubscription.unsubscribe()\n}\n})\n// Reactive template with automatic updates\nconst template = eff.template`\n<div class=\"user-card\">\n<h2>${() => user.name}</h2>\n<p>${() => user.bio}</p>\n<div class=\"stats\">\n${() => user.stats.map(stat => `\n<div class=\"stat\">\n<strong>${stat.label}</strong>\n<span>${stat.value}</span>\n</div>\n`).join('')}\n</div>\n</div>\n`\n// Cleanup when done\ncleanup()\n"
     }
   ],
   "exports": [
@@ -49,33 +69,48 @@
   ],
   "see": [],
   "namespaces": {
-    "ExperimentalFeatures": {
-      "name": "ExperimentalFeatures",
+    "ReactiveSystem": {
+      "name": "ReactiveSystem",
       "properties": {
-        "templates": {
-          "type": "Object",
-          "name": "templates",
-          "description": "Template rendering engine with reactive updates"
+        "TR": {
+          "type": "Function",
+          "name": "TR",
+          "description": "Reactive value creation with dependency tracking"
         },
-        "effects": {
-          "type": "Object",
-          "name": "effects",
-          "description": "Advanced effect system for side-effect management"
+        "atom": {
+          "type": "Function",
+          "name": "atom",
+          "description": "Atomic state container with key identification"
         },
-        "reactive": {
-          "type": "Object",
-          "name": "reactive",
-          "description": "Reactive programming utilities and patterns"
+        "selector": {
+          "type": "Function",
+          "name": "selector",
+          "description": "Derived state computation with caching"
         },
-        "async": {
-          "type": "Object",
-          "name": "async",
-          "description": "Next-generation async patterns and control"
+        "compute": {
+          "type": "Function",
+          "name": "compute",
+          "description": "Multi-source computation with auto-cleanup"
+        }
+      }
+    },
+    "TemplateEngine": {
+      "name": "TemplateEngine",
+      "properties": {
+        "trp": {
+          "type": "Function",
+          "name": "trp",
+          "description": "Reactive template engine with fine-grained updates"
         },
-        "experimental": {
-          "type": "Object",
-          "name": "experimental",
-          "description": "Cutting-edge JavaScript features exploration"
+        "tft": {
+          "type": "Function",
+          "name": "tft",
+          "description": "Template function transformer"
+        },
+        "eff": {
+          "type": "Function",
+          "name": "eff",
+          "description": "Effect system with automatic cleanup"
         }
       }
     }

@@ -2,66 +2,129 @@
  * Functional programming utilities and patterns
  * 
  * @module functional
- * @description Provides a comprehensive set of functional programming utilities including
- * function composition, currying, dependency injection, pub/sub system, and promise utilities.
+ * @description High-performance functional programming utilities focusing on 
+ * function interception, promise-based operations, and dependency injection.
+ * Features include function composition, lazy evaluation, pub/sub patterns,
+ * and robust error handling.
  * 
  * @namespace FunctionComposition
- * @property {Object} interceptors - Advanced interceptors for function composition
- * @property {Object} async - Support for async function composition
- * @property {Object} errorHandling - Error handling in composition chains
- * @property {Object} middleware - Middleware pattern support
+ * @property {Object} intercepter - Function interception with before/after hooks
+ * @property {Object} tryNext - Chain-based error handling with fallbacks
+ * @property {Object} promisify - Convert callback-style functions to promises
+ * @property {Object} sleep - Promise-based delay utilities
+ * 
+ * @namespace AsyncUtilities
+ * @property {Object} PLazy - Lazy promise evaluation with caching
+ * @property {Object} PS - Simple pub/sub event system with namespacing
+ * @property {Object} retry - Automatic retry with exponential backoff
  * 
  * @namespace DependencyInjection
- * @property {Object} decorators - Decorator-based DI system
- * @property {Object} resolution - Automatic dependency resolution
- * @property {Object} circular - Circular dependency detection
- * @property {Object} scoping - Scoped container support
+ * @property {Object} provide - Class-based dependency provider
+ * @property {Object} inject - Dependency injection decorator
  * 
- * @namespace EventSystem
- * @property {Object} pubsub - Pub/Sub pattern implementation
- * @property {Object} priority - Event prioritization
- * @property {Object} async - Async event handling
- * @property {Object} cancellation - Event cancellation
- * 
- * @namespace PromiseUtilities
- * @property {Object} lazy - Promise-based lazy evaluation
- * @property {Object} interception - Promise chain interception
- * @property {Object} fallback - Fallback chain with tryNext
- * @property {Object} timeout - Timeout and retry support
- * 
- * @example <caption>Function Composition</caption>
+ * @example <caption>Function Interception (Sync & Async)</caption>
  * import { helper } from 'xajs/functional'
  * 
- * const { intercepter } = helper
- * const enhance = intercepter.compose([
- *   addLogging,
- *   addValidation,
- *   addCaching
+ * // Synchronous interception
+ * const loggedFetch = helper.intercepter(fetch)
+ *   .before(url => {
+ *     console.log(`Fetching: ${url}`)
+ *   })
+ *   .after((url, response) => {
+ *     console.log(`Completed: ${url} (${response.status})`)
+ *   })
+ *   .$runner
+ * 
+ * // Async interception
+ * const cachedFetch = helper.intercepter(fetch)
+ *   .before(async url => {
+ *     const cached = await cache.get(url)
+ *     if (cached) return cached
+ *   })
+ *   .after(async (url, response) => {
+ *     await cache.set(url, response.clone())
+ *   })
+ *   .$asyncRunner
+ * 
+ * @example <caption>Error Handling with tryNext</caption>
+ * import { helper } from 'xajs/functional'
+ * 
+ * const { tryNext, sleep } = helper
+ * 
+ * // Chain of fallback strategies
+ * const getData = tryNext([
+ *   // Primary strategy: API call
+ *   async () => {
+ *     const response = await fetch('/api/data')
+ *     if (!response.ok) throw new Error('API failed')
+ *     return response.json()
+ *   },
+ *   // Fallback: Local cache
+ *   async () => {
+ *     const cached = await localStorage.getItem('api_data')
+ *     if (!cached) throw new Error('Cache miss')
+ *     return JSON.parse(cached)
+ *   },
+ *   // Last resort: Default data
+ *   () => ({ status: 'offline', data: [] })
  * ])
+ * 
+ * @example <caption>Pub/Sub System</caption>
+ * import { helper } from 'xajs/functional'
+ * 
+ * const { PS: { Puber, Suber } } = helper
+ * 
+ * // Create publisher and subscriber
+ * class DataService extends Puber {
+ *   constructor() {
+ *     super('data-service', {})
+ *   }
+ *   
+ *   async fetchData() {
+ *     const data = await fetch('/api/data')
+ *     this.pub('data:updated', await data.json())
+ *   }
+ * }
+ * 
+ * class DataView extends Suber {
+ *   constructor(service) {
+ *     super('data-view', {})
+ *     this.rss(service, [
+ *       {
+ *         msg: 'data:updated',
+ *         handler: this.onDataUpdate.bind(this)
+ *       }
+ *     ])
+ *   }
+ *   
+ *   onDataUpdate(data) {
+ *     this.render(data)
+ *   }
+ * }
  * 
  * @example <caption>Dependency Injection</caption>
  * import { helper } from 'xajs/functional'
  * 
  * const { di } = helper
  * 
- * @di.provide('config')
- * class Config {
- *   getApiUrl() { return 'https://api.example.com' }
+ * // Define services with dependencies
+ * @di.provide('logger')
+ * class Logger {
+ *   log(msg) { console.log(msg) }
  * }
  * 
- * @example <caption>Pub/Sub Pattern</caption>
- * import { helper } from 'xajs/functional'
- * 
- * const { PS } = helper
- * const events = new PS()
- * 
- * events.on('userUpdate', user => {
- *   console.log('User updated:', user)
- * })
- * 
- * events.emit('userUpdate', { id: 1, name: 'John' })
- * 
- * @see {@link https://ajs.dev/docs/functional Functional Module Documentation}
+ * @di.provide('api')
+ * @di.inject(['logger'])
+ * class ApiService {
+ *   constructor(logger) {
+ *     this.logger = logger
+ *   }
+ *   
+ *   async fetch(url) {
+ *     this.logger.log(`Fetching: ${url}`)
+ *     return fetch(url).then(r => r.json())
+ *   }
+ * }
  */
 
 import intercepter from './intercepter'

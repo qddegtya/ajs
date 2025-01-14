@@ -1,116 +1,78 @@
 {
   "name": "index.js",
-  "description": "Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities.",
+  "description": "High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling.",
   "features": [
     {
       "namespace": "FunctionComposition",
-      "property": "interceptors",
+      "property": "intercepter",
       "type": "Object",
-      "description": "Advanced interceptors for function composition"
+      "description": "Function interception with before/after hooks"
     },
     {
       "namespace": "FunctionComposition",
-      "property": "async",
+      "property": "tryNext",
       "type": "Object",
-      "description": "Support for async function composition"
+      "description": "Chain-based error handling with fallbacks"
     },
     {
       "namespace": "FunctionComposition",
-      "property": "errorHandling",
+      "property": "promisify",
       "type": "Object",
-      "description": "Error handling in composition chains"
+      "description": "Convert callback-style functions to promises"
     },
     {
       "namespace": "FunctionComposition",
-      "property": "middleware",
+      "property": "sleep",
       "type": "Object",
-      "description": "Middleware pattern support"
+      "description": "Promise-based delay utilities"
+    },
+    {
+      "namespace": "AsyncUtilities",
+      "property": "PLazy",
+      "type": "Object",
+      "description": "Lazy promise evaluation with caching"
+    },
+    {
+      "namespace": "AsyncUtilities",
+      "property": "PS",
+      "type": "Object",
+      "description": "Simple pub/sub event system with namespacing"
+    },
+    {
+      "namespace": "AsyncUtilities",
+      "property": "retry",
+      "type": "Object",
+      "description": "Automatic retry with exponential backoff"
     },
     {
       "namespace": "DependencyInjection",
-      "property": "decorators",
+      "property": "provide",
       "type": "Object",
-      "description": "Decorator-based DI system"
+      "description": "Class-based dependency provider"
     },
     {
       "namespace": "DependencyInjection",
-      "property": "resolution",
+      "property": "inject",
       "type": "Object",
-      "description": "Automatic dependency resolution"
-    },
-    {
-      "namespace": "DependencyInjection",
-      "property": "circular",
-      "type": "Object",
-      "description": "Circular dependency detection"
-    },
-    {
-      "namespace": "DependencyInjection",
-      "property": "scoping",
-      "type": "Object",
-      "description": "Scoped container support"
-    },
-    {
-      "namespace": "EventSystem",
-      "property": "pubsub",
-      "type": "Object",
-      "description": "Pub/Sub pattern implementation"
-    },
-    {
-      "namespace": "EventSystem",
-      "property": "priority",
-      "type": "Object",
-      "description": "Event prioritization"
-    },
-    {
-      "namespace": "EventSystem",
-      "property": "async",
-      "type": "Object",
-      "description": "Async event handling"
-    },
-    {
-      "namespace": "EventSystem",
-      "property": "cancellation",
-      "type": "Object",
-      "description": "Event cancellation"
-    },
-    {
-      "namespace": "PromiseUtilities",
-      "property": "lazy",
-      "type": "Object",
-      "description": "Promise-based lazy evaluation"
-    },
-    {
-      "namespace": "PromiseUtilities",
-      "property": "interception",
-      "type": "Object",
-      "description": "Promise chain interception"
-    },
-    {
-      "namespace": "PromiseUtilities",
-      "property": "fallback",
-      "type": "Object",
-      "description": "Fallback chain with tryNext"
-    },
-    {
-      "namespace": "PromiseUtilities",
-      "property": "timeout",
-      "type": "Object",
-      "description": "Timeout and retry support"
+      "description": "Dependency injection decorator"
     }
   ],
   "examples": [
     {
-      "caption": "Function Composition",
-      "code": "import { helper } from 'xajs/functional'\nconst { intercepter } = helper\nconst enhance = intercepter.compose([\naddLogging,\naddValidation,\naddCaching\n])\n"
+      "caption": "Function Interception (Sync & Async)",
+      "code": "import { helper } from 'xajs/functional'\n// Synchronous interception\nconst loggedFetch = helper.intercepter(fetch)\n.before(url => {\nconsole.log(`Fetching: ${url}`)\n})\n.after((url, response) => {\nconsole.log(`Completed: ${url} (${response.status})`)\n})\n.$runner\n// Async interception\nconst cachedFetch = helper.intercepter(fetch)\n.before(async url => {\nconst cached = await cache.get(url)\nif (cached) return cached\n})\n.after(async (url, response) => {\nawait cache.set(url, response.clone())\n})\n.$asyncRunner\n"
+    },
+    {
+      "caption": "Error Handling with tryNext",
+      "code": "import { helper } from 'xajs/functional'\nconst { tryNext, sleep } = helper\n// Chain of fallback strategies\nconst getData = tryNext([\n// Primary strategy: API call\nasync () => {\nconst response = await fetch('/api/data')\nif (!response.ok) throw new Error('API failed')\nreturn response.json()\n},\n// Fallback: Local cache\nasync () => {\nconst cached = await localStorage.getItem('api_data')\nif (!cached) throw new Error('Cache miss')\nreturn JSON.parse(cached)\n},\n// Last resort: Default data\n() => ({ status: 'offline', data: [] })\n])\n"
+    },
+    {
+      "caption": "Pub/Sub System",
+      "code": "import { helper } from 'xajs/functional'\nconst { PS: { Puber, Suber } } = helper\n// Create publisher and subscriber\nclass DataService extends Puber {\nconstructor() {\nsuper('data-service', {})\n}\nasync fetchData() {\nconst data = await fetch('/api/data')\nthis.pub('data:updated', await data.json())\n}\n}\nclass DataView extends Suber {\nconstructor(service) {\nsuper('data-view', {})\nthis.rss(service, [\n{\nmsg: 'data:updated',\nhandler: this.onDataUpdate.bind(this)\n}\n])\n}\nonDataUpdate(data) {\nthis.render(data)\n}\n}\n"
     },
     {
       "caption": "Dependency Injection",
-      "code": "import { helper } from 'xajs/functional'\nconst { di } = helper\nclass Config {\ngetApiUrl() { return 'https://api.example.com' }\n}\n"
-    },
-    {
-      "caption": "Pub/Sub Pattern",
-      "code": "import { helper } from 'xajs/functional'\nconst { PS } = helper\nconst events = new PS()\nevents.on('userUpdate', user => {\nconsole.log('User updated:', user)\n})\nevents.emit('userUpdate', { id: 1, name: 'John' })\n"
+      "code": "import { helper } from 'xajs/functional'\nconst { di } = helper\n// Define services with dependencies\nclass Logger {\nlog(msg) { console.log(msg) }\n}\nclass ApiService {\nconstructor(logger) {\nthis.logger = logger\n}\nasync fetch(url) {\nthis.logger.log(`Fetching: ${url}`)\nreturn fetch(url).then(r => r.json())\n}\n}\n"
     }
   ],
   "exports": [
@@ -119,110 +81,65 @@
   "related": [
     "."
   ],
-  "see": [
-    {
-      "url": "https://ajs.dev/docs/functional",
-      "text": "Functional Module Documentation"
-    }
-  ],
+  "see": [],
   "namespaces": {
     "FunctionComposition": {
       "name": "FunctionComposition",
       "properties": {
-        "interceptors": {
+        "intercepter": {
           "type": "Object",
-          "name": "interceptors",
-          "description": "Advanced interceptors for function composition"
+          "name": "intercepter",
+          "description": "Function interception with before/after hooks"
         },
-        "async": {
+        "tryNext": {
           "type": "Object",
-          "name": "async",
-          "description": "Support for async function composition"
+          "name": "tryNext",
+          "description": "Chain-based error handling with fallbacks"
         },
-        "errorHandling": {
+        "promisify": {
           "type": "Object",
-          "name": "errorHandling",
-          "description": "Error handling in composition chains"
+          "name": "promisify",
+          "description": "Convert callback-style functions to promises"
         },
-        "middleware": {
+        "sleep": {
           "type": "Object",
-          "name": "middleware",
-          "description": "Middleware pattern support"
+          "name": "sleep",
+          "description": "Promise-based delay utilities"
+        }
+      }
+    },
+    "AsyncUtilities": {
+      "name": "AsyncUtilities",
+      "properties": {
+        "PLazy": {
+          "type": "Object",
+          "name": "PLazy",
+          "description": "Lazy promise evaluation with caching"
+        },
+        "PS": {
+          "type": "Object",
+          "name": "PS",
+          "description": "Simple pub/sub event system with namespacing"
+        },
+        "retry": {
+          "type": "Object",
+          "name": "retry",
+          "description": "Automatic retry with exponential backoff"
         }
       }
     },
     "DependencyInjection": {
       "name": "DependencyInjection",
       "properties": {
-        "decorators": {
+        "provide": {
           "type": "Object",
-          "name": "decorators",
-          "description": "Decorator-based DI system"
+          "name": "provide",
+          "description": "Class-based dependency provider"
         },
-        "resolution": {
+        "inject": {
           "type": "Object",
-          "name": "resolution",
-          "description": "Automatic dependency resolution"
-        },
-        "circular": {
-          "type": "Object",
-          "name": "circular",
-          "description": "Circular dependency detection"
-        },
-        "scoping": {
-          "type": "Object",
-          "name": "scoping",
-          "description": "Scoped container support"
-        }
-      }
-    },
-    "EventSystem": {
-      "name": "EventSystem",
-      "properties": {
-        "pubsub": {
-          "type": "Object",
-          "name": "pubsub",
-          "description": "Pub/Sub pattern implementation"
-        },
-        "priority": {
-          "type": "Object",
-          "name": "priority",
-          "description": "Event prioritization"
-        },
-        "async": {
-          "type": "Object",
-          "name": "async",
-          "description": "Async event handling"
-        },
-        "cancellation": {
-          "type": "Object",
-          "name": "cancellation",
-          "description": "Event cancellation"
-        }
-      }
-    },
-    "PromiseUtilities": {
-      "name": "PromiseUtilities",
-      "properties": {
-        "lazy": {
-          "type": "Object",
-          "name": "lazy",
-          "description": "Promise-based lazy evaluation"
-        },
-        "interception": {
-          "type": "Object",
-          "name": "interception",
-          "description": "Promise chain interception"
-        },
-        "fallback": {
-          "type": "Object",
-          "name": "fallback",
-          "description": "Fallback chain with tryNext"
-        },
-        "timeout": {
-          "type": "Object",
-          "name": "timeout",
-          "description": "Timeout and retry support"
+          "name": "inject",
+          "description": "Dependency injection decorator"
         }
       }
     }

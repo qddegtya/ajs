@@ -1,88 +1,56 @@
 {
   "name": "index.js",
-  "description": "Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.",
+  "description": "Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.",
   "features": [
     {
       "namespace": "ClassSystem",
-      "property": "inheritance",
-      "type": "Object",
-      "description": "Advanced class inheritance with $extends and $mixins support"
-    },
-    {
-      "namespace": "ClassSystem",
-      "property": "constructor",
-      "type": "Object",
-      "description": "Constructor lifecycle management with $ctor"
-    },
-    {
-      "namespace": "ClassSystem",
-      "property": "methods",
-      "type": "Object",
-      "description": "Method overriding and super calls"
-    },
-    {
-      "namespace": "ClassSystem",
-      "property": "static",
-      "type": "Object",
-      "description": "Static and instance method support"
+      "property": "Class",
+      "type": "Function",
+      "description": "Base class factory with $extends, $ctor, and $static support"
     },
     {
       "namespace": "Decorators",
-      "property": "functions",
-      "type": "Object",
-      "description": "Function and class decorators"
+      "property": "mixin",
+      "type": "Function",
+      "description": "Class decorator for mixin application"
     },
     {
       "namespace": "Decorators",
-      "property": "builtin",
-      "type": "Object",
-      "description": "Built-in decorators like @mixin and @deprecate"
-    },
-    {
-      "namespace": "Decorators",
-      "property": "factory",
-      "type": "Object",
-      "description": "Custom decorator factory support"
-    },
-    {
-      "namespace": "Decorators",
-      "property": "properties",
-      "type": "Object",
-      "description": "Method and property decorators"
+      "property": "deprecate",
+      "type": "Function",
+      "description": "Method/property deprecation decorator with custom messages"
     },
     {
       "namespace": "Deferred",
-      "property": "promise",
-      "type": "Object",
-      "description": "Promise-like interface with resolve/reject"
+      "property": "Deferred",
+      "type": "Function",
+      "description": "Promise wrapper with resolve/reject control"
     },
     {
       "namespace": "Deferred",
-      "property": "progress",
-      "type": "Object",
-      "description": "Progress tracking with notify"
+      "property": "done",
+      "type": "Function",
+      "description": "Final promise chain handler with error propagation"
     },
     {
       "namespace": "Deferred",
-      "property": "chain",
-      "type": "Object",
-      "description": "Chainable then/catch/finally"
-    },
-    {
-      "namespace": "Deferred",
-      "property": "cancel",
-      "type": "Object",
-      "description": "Cancellation support"
+      "property": "isDone",
+      "type": "Function",
+      "description": "Promise state check for completion status"
     }
   ],
   "examples": [
     {
-      "caption": "Class System with Inheritance",
-      "code": "import { base } from 'xajs/core'\nconst MyClass = base.Class({\n$extends: ParentClass,\n$mixins: [SomeMixin],\n$ctor() {\nthis.name = 'example'\n},\nmethod() {\n// Method implementation\n}\n})\n"
+      "caption": "Class Definition with Static Members",
+      "code": "import { base } from 'xajs/core'\nconst MyComponent = base.Class({\n$extends: BaseComponent,\n// Static properties and methods\n$static: {\ndefaultConfig: {\ntheme: 'light'\n},\ncreate(config) {\nreturn new this({ ...this.defaultConfig, ...config })\n}\n},\n// Constructor\n$ctor(config) {\nthis.$super() // Call parent constructor\nthis.config = config\nthis.state = { count: 0 }\n},\n// Instance methods\nincrement() {\nthis.state.count++\nthis.emit('change', this.state.count)\n}\n})\n"
     },
     {
-      "caption": "Using Decorators",
-      "code": "import { decorators } from 'xajs/core'\nclass Enhanced {\nenhancedMethod() {\n// Enhanced functionality\n}\n}\n"
+      "caption": "Mixin and Deprecation",
+      "code": "import { decorators } from 'xajs/core'\n// Define a mixin\nconst LoggerMixin = {\nlog(msg) {\nconsole.log(`[${this.constructor.name}] ${msg}`)\n}\n}\n// Apply mixin and deprecate old methods\nclass MyService {\noldMethod() {\nreturn this.newMethod()\n}\nnewMethod() {\nthis.log('Operation started')\nreturn this.processData()\n}\n}\n"
+    },
+    {
+      "caption": "Async Operations with Deferred",
+      "code": "import { base } from 'xajs/core'\nclass DataLoader {\nasync loadData(retryCount = 3) {\nconst deferred = new base.Deferred()\ntry {\n// Attempt to load data with retry\nfor (let i = 0; i < retryCount; i++) {\ntry {\nconst response = await fetch('/api/data')\nif (!response.ok) throw new Error('API Error')\nconst data = await response.json()\nreturn deferred.resolve(data)\n} catch (err) {\nif (i === retryCount - 1) throw err\nawait new Promise(r => setTimeout(r, 1000 * (i + 1)))\n}\n}\n} catch (err) {\ndeferred.reject(err)\n}\nreturn deferred\n.done() // Ensures unhandled rejections are thrown\n}\nisDataLoaded() {\nreturn this.loadData.isDone()\n}\n}\n"
     }
   ],
   "exports": [
@@ -92,85 +60,50 @@
   "related": [
     "."
   ],
-  "see": [
-    {
-      "url": "https://ajs.dev/docs/core",
-      "text": "Core Module Documentation"
-    }
-  ],
+  "see": [],
   "namespaces": {
     "ClassSystem": {
       "name": "ClassSystem",
       "properties": {
-        "inheritance": {
-          "type": "Object",
-          "name": "inheritance",
-          "description": "Advanced class inheritance with $extends and $mixins support"
-        },
-        "constructor": {
-          "type": "Object",
-          "name": "constructor",
-          "description": "Constructor lifecycle management with $ctor"
-        },
-        "methods": {
-          "type": "Object",
-          "name": "methods",
-          "description": "Method overriding and super calls"
-        },
-        "static": {
-          "type": "Object",
-          "name": "static",
-          "description": "Static and instance method support"
+        "Class": {
+          "type": "Function",
+          "name": "Class",
+          "description": "Base class factory with $extends, $ctor, and $static support"
         }
       }
     },
     "Decorators": {
       "name": "Decorators",
       "properties": {
-        "functions": {
-          "type": "Object",
-          "name": "functions",
-          "description": "Function and class decorators"
+        "mixin": {
+          "type": "Function",
+          "name": "mixin",
+          "description": "Class decorator for mixin application"
         },
-        "builtin": {
-          "type": "Object",
-          "name": "builtin",
-          "description": "Built-in decorators like @mixin and @deprecate"
-        },
-        "factory": {
-          "type": "Object",
-          "name": "factory",
-          "description": "Custom decorator factory support"
-        },
-        "properties": {
-          "type": "Object",
-          "name": "properties",
-          "description": "Method and property decorators"
+        "deprecate": {
+          "type": "Function",
+          "name": "deprecate",
+          "description": "Method/property deprecation decorator with custom messages"
         }
       }
     },
     "Deferred": {
       "name": "Deferred",
       "properties": {
-        "promise": {
-          "type": "Object",
-          "name": "promise",
-          "description": "Promise-like interface with resolve/reject"
+        "Deferred": {
+          "type": "Function",
+          "name": "Deferred",
+          "description": "Promise wrapper with resolve/reject control"
         },
-        "progress": {
-          "type": "Object",
-          "name": "progress",
-          "description": "Progress tracking with notify"
+        "done": {
+          "type": "Function",
+          "name": "done",
+          "description": "Final promise chain handler with error propagation"
         },
-        "chain": {
-          "type": "Object",
-          "name": "chain",
-          "description": "Chainable then/catch/finally"
-        },
-        "cancel": {
-          "type": "Object",
-          "name": "cancel",
-          "description": "Cancellation support"
+        "isDone": {
+          "type": "Function",
+          "name": "isDone",
+          "description": "Promise state check for completion status"
         }
       }
     }

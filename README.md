@@ -10,22 +10,28 @@ A thoughtfully crafted JavaScript utility library that combines classical utilit
 ## ✨ Features
 
 <!--FEATURES_START-->
-- CoreUtilities.classSystem: Powerful class system with inheritance and mixins
-- CoreUtilities.decorators: Flexible decorators for enhancing classes and methods
-- CoreUtilities.promises: Promise utilities and deferred execution
-- CoreUtilities.types: Type checking and object manipulation
-- DOMManipulation.vdom: Lightweight virtual DOM implementation
-- DOMManipulation.events: Event handling and delegation
-- DOMManipulation.touch: Mobile-optimized touch events
-- DOMManipulation.url: URL parsing and manipulation
-- FunctionalProgramming.composition: Function composition and currying
-- FunctionalProgramming.di: Dependency injection system
-- FunctionalProgramming.pubsub: Pub/Sub event system
-- FunctionalProgramming.promiseUtils: Promise-based utilities
-- LanguageExtensions.string: Enhanced string manipulation
-- LanguageExtensions.array: Advanced array operations
-- LanguageExtensions.object: Object transformation utilities
-- LanguageExtensions.typeConversion: Type conversion helpers
+- Core.base: Lightweight class system with inheritance and mixins
+- Core.decorators: Method decorators including deprecation and mixin support
+- Core.Deferred: Enhanced Promise with resolve/reject control
+- DOM.h: Hyperscript function for virtual DOM creation
+- DOM.tags: Helper functions for common HTML elements
+- DOM.E: Event management with delegation and one-time binding
+- DOM.UrlParser: Advanced URL parsing and manipulation
+- Functional.intercepter: Function interception with before/after hooks
+- Functional.tryNext: Chain-based error handling with fallbacks
+- Functional.PS: Pub/sub system with namespacing
+- Functional.di: Dependency injection with decorators
+- Future.TR: Reactive state management with dependency tracking
+- Future.atom: Atomic state container with key identification
+- Future.selector: Derived state computation with caching
+- Future.eff: Effect system with automatic cleanup
+- Mobile.UserAgent: Advanced device and browser detection
+- Mobile.device: Device type and vendor detection
+- Mobile.browser: Browser and version identification
+- Lang.MagicString: Immutable string operations with chaining
+- Internal.is: Type checking utilities (isArray, isObject, etc.)
+- Internal.assign: Safe object assignment with deep copy
+- Internal.hasOwnProp: Safe property existence check
 - Available exports: core, dom, fp, functional, future, internal, lang, mobile
 <!--FEATURES_END-->
 
@@ -34,38 +40,82 @@ A thoughtfully crafted JavaScript utility library that combines classical utilit
 <!--QUICK_START_START-->
 ## Quick Start
 
-### Class System
+### Class System and Events
 
 ```javascript
-import { Class } from 'xajs/core';
-const MyClass = Class({
-  $extends: ParentClass,
-  $mixins: [SomeMixin],
-  $ctor() {
-    this.name = 'example';
+import { core, dom } from 'xajs';
+const Component = core.base.Class({
+  $extends: BaseComponent,
+  $static: {
+    defaultConfig: { theme: 'light' }
+  },
+  $ctor(config) {
+    this.$super();
+    this.config = { ...this.constructor.defaultConfig, ...config };
+    this.handler = dom.E.delegate('.menu a', {
+      click: (e, target) => {
+        e.preventDefault();
+        this.navigate(target.getAttribute('href'));
+      }
+    });
   }
 });
 ```
 
-### DOM Manipulation
+### Reactive State Management
 
 ```javascript
-import { h } from 'xajs/dom';
-const vnode = h('div', { className: 'container' }, [
-  h('h1', null, 'Hello AJS!'),
-  h('button', { onClick: () => alert('Clicked!') }, 'Click Me')
+import { future, functional } from 'xajs';
+// Create atomic state
+const todoAtom = future.TR.atom({
+  key: 'todoAtom',
+  default: { items: [], filter: 'all' }
+});
+// Create derived state
+const filteredTodos = future.TR.selector({
+  key: 'filteredTodos',
+  get: ({ get }) => {
+    const state = get(todoAtom);
+    return state.items.filter(item =>
+      state.filter === 'all'
+        ? true
+        : state.filter === 'completed'
+          ? item.completed
+          : !item.completed
+    );
+  }
+});
+// Create pub/sub communication
+const { Puber, Suber } = functional.PS;
+const todoService = new Puber('todos');
+const todoView = new Suber('view');
+todoView.rss(todoService, [
+  {
+    msg: 'todos:updated',
+    handler: todos => filteredTodos.observe(renderTodos)
+  }
 ]);
 ```
 
-### Functional Programming
+### Mobile and DOM Utilities
 
 ```javascript
-import { helper } from 'xajs/functional';
-const { tryNext } = helper;
-const result = await tryNext([
-  async () => await primaryAPI(),
-  async () => await fallbackAPI()
+import { mobile, dom } from 'xajs';
+// Device detection
+const ua = new mobile.UserAgent(navigator.userAgent);
+if (ua.isMobile()) {
+  if (ua.isOS('iOS')) {
+    enableIOSFeatures();
+  }
+}
+// DOM manipulation
+const { div, nav, a } = dom.tags;
+const menu = div({ className: 'menu' }, [
+  nav(null, [a({ href: '#home' }, 'Home'), a({ href: '#about' }, 'About')])
 ]);
+// URL parsing
+const url = new dom.UrlParser(location.href);
+console.log(url.query.page);
 ```
 <!--QUICK_START_END-->
 
@@ -76,170 +126,367 @@ const result = await tryNext([
 
   | Module | Description | Import Path |
   |---------|-------------|-------------|
-  | core | Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods. | `xajs/core` |
-  | dom | Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices. | `xajs/dom` |
-  | fp | Core functional programming utilities focusing on pure function composition and immutable data handling. | `xajs/fp` |
-  | functional | Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities. | `xajs/functional` |
-  | future | Experimental and cutting-edge features for next-generation JavaScript development. | `xajs/future` |
-  | lang | Advanced language utilities for string manipulation and code generation. | `xajs/lang` |
-  | mobile | Comprehensive utilities for mobile web development and device detection. | `xajs/mobile` |
+  | core | Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation. | `xajs/core` |
+  | dom | High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention. | `xajs/dom` |
+  | fp | Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety. | `xajs/fp` |
+  | functional | High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling. | `xajs/functional` |
+  | future | Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management. | `xajs/future` |
+  | lang | Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation. | `xajs/lang` |
+  | mobile | Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices. | `xajs/mobile` |
 
 ### core
 
-  Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.
+  Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.
 
 ### Features
 
-- ClassSystem.inheritance: Advanced class inheritance with $extends and $mixins support
-- ClassSystem.constructor: Constructor lifecycle management with $ctor
-- ClassSystem.methods: Method overriding and super calls
-- ClassSystem.static: Static and instance method support
-- Decorators.functions: Function and class decorators
-- Decorators.builtin: Built-in decorators like @mixin and @deprecate
-- Decorators.factory: Custom decorator factory support
-- Decorators.properties: Method and property decorators
-- Deferred.promise: Promise-like interface with resolve/reject
-- Deferred.progress: Progress tracking with notify
-- Deferred.chain: Chainable then/catch/finally
-- Deferred.cancel: Cancellation support
+- ClassSystem.Class: Base class factory with $extends, $ctor, and $static support
+- Decorators.mixin: Class decorator for mixin application
+- Decorators.deprecate: Method/property deprecation decorator with custom messages
+- Deferred.Deferred: Promise wrapper with resolve/reject control
+- Deferred.done: Final promise chain handler with error propagation
+- Deferred.isDone: Promise state check for completion status
 - Available exports: base, decorators
 
 ### Examples
 
-**Class System with Inheritance**
+**Class Definition with Static Members**
 
 ```javascript
 import { base } from 'xajs/core';
-const MyClass = base.Class({
-  $extends: ParentClass,
-  $mixins: [SomeMixin],
-  $ctor() {
-    this.name = 'example';
+const MyComponent = base.Class({
+  $extends: BaseComponent,
+  // Static properties and methods
+  $static: {
+    defaultConfig: {
+      theme: 'light'
+    },
+    create(config) {
+      return new this({ ...this.defaultConfig, ...config });
+    }
   },
-  method() {
-    // Method implementation
+  // Constructor
+  $ctor(config) {
+    this.$super(); // Call parent constructor
+    this.config = config;
+    this.state = { count: 0 };
+  },
+  // Instance methods
+  increment() {
+    this.state.count++;
+    this.emit('change', this.state.count);
   }
 });
 ```
 
-**Using Decorators**
+**Mixin and Deprecation**
 
 ```javascript
 import { decorators } from 'xajs/core';
-class Enhanced {
-  enhancedMethod() {
-    // Enhanced functionality
+// Define a mixin
+const LoggerMixin = {
+  log(msg) {
+    console.log(`[${this.constructor.name}] ${msg}`);
+  }
+};
+// Apply mixin and deprecate old methods
+class MyService {
+  oldMethod() {
+    return this.newMethod();
+  }
+  newMethod() {
+    this.log('Operation started');
+    return this.processData();
+  }
+}
+```
+
+**Async Operations with Deferred**
+
+```javascript
+import { base } from 'xajs/core';
+class DataLoader {
+  async loadData(retryCount = 3) {
+    const deferred = new base.Deferred();
+    try {
+      // Attempt to load data with retry
+      for (let i = 0; i < retryCount; i++) {
+        try {
+          const response = await fetch('/api/data');
+          if (!response.ok) throw new Error('API Error');
+          const data = await response.json();
+          return deferred.resolve(data);
+        } catch (err) {
+          if (i === retryCount - 1) throw err;
+          await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+        }
+      }
+    } catch (err) {
+      deferred.reject(err);
+    }
+    return deferred.done(); // Ensures unhandled rejections are thrown
+  }
+  isDataLoaded() {
+    return this.loadData.isDone();
   }
 }
 ```
 
 ### dom
 
-  Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.
+  High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.
 
 ### Features
 
-- VirtualDOM.implementation: Lightweight virtual DOM implementation
-- VirtualDOM.diff: Efficient diff and patch algorithm
-- VirtualDOM.lifecycle: Component lifecycle management
-- VirtualDOM.events: Event delegation support
-- EventHandling.management: Advanced event management
-- EventHandling.delegation: Event delegation and bubbling
-- EventHandling.touch: Mobile touch event optimization
-- EventHandling.lifecycle: Event once and off support
-- URLParsing.parser: Robust URL parsing and manipulation
-- URLParsing.query: Query string handling
-- URLParsing.path: Path normalization
-- URLParsing.params: URL parameter extraction
+- VirtualDOM.h: Hyperscript function for creating virtual DOM elements
+- VirtualDOM.tags: Helper functions for common HTML elements
+- VirtualDOM.diff: Optimized diff algorithm with key tracking
+- VirtualDOM.lifecycle: Component lifecycle with hooks
+- EventHandling.E: .delegate - Event delegation with filters
+- EventHandling.touch: Mobile touch event normalization
+- URLParsing.UrlParser: Advanced URL parsing and manipulation
+- URLParsing.query: Query string handling with arrays
+- URLParsing.path: Path normalization and resolution
 - Available exports: E, UrlParser, h, tags
 
 ### Examples
 
-**Virtual DOM Creation**
+**Virtual DOM with Tags Helpers**
 
 ```javascript
-import { h } from 'xajs/dom';
+import { h, tags } from 'xajs/dom';
+// Using h function directly
 const vnode = h('div', { className: 'container' }, [
-  h('h1', null, 'Hello AJS!'),
-  h('p', null, 'Welcome to the future of JavaScript.')
+  h('header', { key: 'header' }, [h('h1', null, 'Welcome')])
+]);
+// Using tags helpers (more concise)
+const { div, header, h1, nav, a } = tags;
+const menu = div({ className: 'container' }, [
+  header({ key: 'header' }, [
+    h1(null, 'Welcome'),
+    nav({ className: 'menu' }, [
+      a({ href: '#home' }, 'Home'),
+      a({ href: '#about' }, 'About')
+    ])
+  ])
 ]);
 ```
 
-**Event Handling**
+**Advanced Event Handling**
 
 ```javascript
 import { E } from 'xajs/dom';
-E.on(element, 'click', event => {
-  console.log('Clicked:', event.target);
+// One-time event handling
+E.once('window.load', () => {
+  console.log('App loaded');
 });
-E.once(element, 'load', event => {
-  console.log('Loaded once');
+// Event sequence handling
+E.once(
+  'window.mouseover',
+  'window.click',
+  e => {
+    console.log('Mouse over then clicked');
+  },
+  { capture: true }
+);
+// Efficient event delegation
+const handler = E.delegate('.menu a', {
+  click: (e, target) => {
+    e.preventDefault();
+    const href = target.getAttribute('href');
+    router.navigate(href);
+  },
+  touchstart: (e, target) => {
+    target.classList.add('active');
+  },
+  touchend: (e, target) => {
+    target.classList.remove('active');
+  }
+});
+// Automatic cleanup
+E.cleanup(() => {
+  handler.destroy();
 });
 ```
 
-**URL Parsing**
+**URL Parsing and Manipulation**
 
 ```javascript
 import { UrlParser } from 'xajs/dom';
-const parser = new UrlParser('https://example.com/path?query=value');
+// Create parser instance
+const parser = new UrlParser(
+  'https://example.com/path?q=search&tags[]=js&tags[]=dom'
+);
+// Basic URL parts
+console.log(parser.protocol); // 'https:'
+console.log(parser.hostname); // 'example.com'
 console.log(parser.pathname); // '/path'
-console.log(parser.query); // { query: 'value' }
+// Advanced query handling
+const query = parser.query;
+console.log(query.q); // 'search'
+console.log(query.tags); // ['js', 'dom']
+// URL manipulation
+parser.pathname = '/new-path';
+parser.addQuery('page', '2');
+console.log(parser.toString());
+// 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'
 ```
 
 ### fp
 
-  Core functional programming utilities focusing on pure function composition and immutable data handling.
+  Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety.
 
 ### Features
 
-- FunctionalCore.composition: Pure function composition utilities
-- FunctionalCore.pointfree: Point-free programming support
-- FunctionalCore.currying: Function currying and partial application
-- FunctionalCore.immutable: Immutable data handling patterns
+- FunctionalCore.composition: Function composition with type checking
+- FunctionalCore.pointfree: Point-free programming utilities
+- FunctionalCore.currying: Advanced function currying
+- FunctionalCore.immutable: Immutable data structures
 - Available exports: compose, composeAsync
-
-### Examples
-
-```javascript
-import { compose } from 'xajs/fp';
-// Create a pipeline of pure functions
-const pipeline = compose(uppercase, trim, normalize);
-// Apply the transformation
-const result = pipeline('  hello world  ');
-```
-
-### functional
-
-  Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities.
-
-### Features
-
-- FunctionComposition.interceptors: Advanced interceptors for function composition
-- FunctionComposition.async: Support for async function composition
-- FunctionComposition.errorHandling: Error handling in composition chains
-- FunctionComposition.middleware: Middleware pattern support
-- DependencyInjection.decorators: Decorator-based DI system
-- DependencyInjection.resolution: Automatic dependency resolution
-- DependencyInjection.circular: Circular dependency detection
-- DependencyInjection.scoping: Scoped container support
-- EventSystem.pubsub: Pub/Sub pattern implementation
-- EventSystem.priority: Event prioritization
-- EventSystem.async: Async event handling
-- EventSystem.cancellation: Event cancellation
-- PromiseUtilities.lazy: Promise-based lazy evaluation
-- PromiseUtilities.interception: Promise chain interception
-- PromiseUtilities.fallback: Fallback chain with tryNext
-- PromiseUtilities.timeout: Timeout and retry support
-- Available exports: helper
 
 ### Examples
 
 **Function Composition**
 
 ```javascript
+import { compose, composeAsync } from 'xajs/fp';
+// Synchronous composition
+const enhance = compose(addTimestamp, validate, normalize);
+// With type checking
+const result = enhance({ name: 'example' });
+// Async composition with error handling
+const pipeline = composeAsync(
+  async data => {
+    const validated = await validate(data);
+    if (!validated.success) {
+      throw new ValidationError(validated.errors);
+    }
+    return validated.data;
+  },
+  async record => {
+    const normalized = await normalize(record);
+    return {
+      ...normalized,
+      timestamp: Date.now()
+    };
+  }
+);
+```
+
+**Point-free Programming**
+
+```javascript
+import { pipe, curry } from 'xajs/fp';
+// Create a point-free data transformation
+const processUser = pipe(
+  prop('user'),
+  when(hasRole('admin'), addAdminFlag),
+  over(lensProp('permissions'), map(normalize)),
+  assoc('lastAccess', Date.now())
+);
+// Apply the transformation
+const result = processUser(response);
+```
+
+### functional
+
+  High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling.
+
+### Features
+
+- FunctionComposition.intercepter: Function interception with before/after hooks
+- FunctionComposition.tryNext: Chain-based error handling with fallbacks
+- FunctionComposition.promisify: Convert callback-style functions to promises
+- FunctionComposition.sleep: Promise-based delay utilities
+- AsyncUtilities.PLazy: Lazy promise evaluation with caching
+- AsyncUtilities.PS: Simple pub/sub event system with namespacing
+- AsyncUtilities.retry: Automatic retry with exponential backoff
+- DependencyInjection.provide: Class-based dependency provider
+- DependencyInjection.inject: Dependency injection decorator
+- Available exports: helper
+
+### Examples
+
+**Function Interception (Sync & Async)**
+
+```javascript
 import { helper } from 'xajs/functional';
-const { intercepter } = helper;
-const enhance = intercepter.compose([addLogging, addValidation, addCaching]);
+// Synchronous interception
+const loggedFetch = helper
+  .intercepter(fetch)
+  .before(url => {
+    console.log(`Fetching: ${url}`);
+  })
+  .after((url, response) => {
+    console.log(`Completed: ${url} (${response.status})`);
+  }).$runner;
+// Async interception
+const cachedFetch = helper
+  .intercepter(fetch)
+  .before(async url => {
+    const cached = await cache.get(url);
+    if (cached) return cached;
+  })
+  .after(async (url, response) => {
+    await cache.set(url, response.clone());
+  }).$asyncRunner;
+```
+
+**Error Handling with tryNext**
+
+```javascript
+import { helper } from 'xajs/functional';
+const { tryNext, sleep } = helper;
+// Chain of fallback strategies
+const getData = tryNext([
+  // Primary strategy: API call
+  async () => {
+    const response = await fetch('/api/data');
+    if (!response.ok) throw new Error('API failed');
+    return response.json();
+  },
+  // Fallback: Local cache
+  async () => {
+    const cached = await localStorage.getItem('api_data');
+    if (!cached) throw new Error('Cache miss');
+    return JSON.parse(cached);
+  },
+  // Last resort: Default data
+  () => ({ status: 'offline', data: [] })
+]);
+```
+
+**Pub/Sub System**
+
+```javascript
+import { helper } from 'xajs/functional';
+const {
+  PS: { Puber, Suber }
+} = helper;
+// Create publisher and subscriber
+class DataService extends Puber {
+  constructor() {
+    super('data-service', {});
+  }
+  async fetchData() {
+    const data = await fetch('/api/data');
+    this.pub('data:updated', await data.json());
+  }
+}
+class DataView extends Suber {
+  constructor(service) {
+    super('data-view', {});
+    this.rss(service, [
+      {
+        msg: 'data:updated',
+        handler: this.onDataUpdate.bind(this)
+      }
+    ]);
+  }
+  onDataUpdate(data) {
+    this.render(data);
+  }
+}
 ```
 
 **Dependency Injection**
@@ -247,131 +494,398 @@ const enhance = intercepter.compose([addLogging, addValidation, addCaching]);
 ```javascript
 import { helper } from 'xajs/functional';
 const { di } = helper;
-class Config {
-  getApiUrl() {
-    return 'https://api.example.com';
+// Define services with dependencies
+class Logger {
+  log(msg) {
+    console.log(msg);
+  }
+}
+class ApiService {
+  constructor(logger) {
+    this.logger = logger;
+  }
+  async fetch(url) {
+    this.logger.log(`Fetching: ${url}`);
+    return fetch(url).then(r => r.json());
   }
 }
 ```
 
-**Pub/Sub Pattern**
-
-```javascript
-import { helper } from 'xajs/functional';
-const { PS } = helper;
-const events = new PS();
-events.on('userUpdate', user => {
-  console.log('User updated:', user);
-});
-events.emit('userUpdate', { id: 1, name: 'John' });
-```
-
 ### future
 
-  Experimental and cutting-edge features for next-generation JavaScript development.
+  Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management.
 
 ### Features
 
-- ExperimentalFeatures.templates: Template rendering engine with reactive updates
-- ExperimentalFeatures.effects: Advanced effect system for side-effect management
-- ExperimentalFeatures.reactive: Reactive programming utilities and patterns
-- ExperimentalFeatures.async: Next-generation async patterns and control
-- ExperimentalFeatures.experimental: Cutting-edge JavaScript features exploration
+- ReactiveSystem.TR: Reactive value creation with dependency tracking
+- ReactiveSystem.atom: Atomic state container with key identification
+- ReactiveSystem.selector: Derived state computation with caching
+- ReactiveSystem.compute: Multi-source computation with auto-cleanup
+- TemplateEngine.trp: Reactive template engine with fine-grained updates
+- TemplateEngine.tft: Template function transformer
+- TemplateEngine.eff: Effect system with automatic cleanup
 - Available exports: TR, eff, tpl
 
 ### Examples
 
+**Reactive State Management**
+
 ```javascript
-import { trp, ae } from 'xajs/future';
-// Create a template with reactive properties
-const template = trp`
-<div>
-<h1>${state.title}</h1>
-<p>${state.content}</p>
+import { TR } from 'xajs/future';
+const { atom, selector, compute } = TR;
+// Create atomic states
+const count1 = TR(1);
+const count2 = TR(2);
+// Create computed value
+const sum = compute((a, b) => a + b)(count1, count2);
+// Create derived computation
+const doubled = compute(s => s * 2)(sum);
+// Observe changes
+sum.observe(val => console.log('Sum:', val)); // 3
+doubled.observe(val => console.log('Double:', val)); // 6
+// Update source values
+count1(v => v + 1); // Sum: 4, Double: 8
+count2(6); // Sum: 8, Double: 16
+// Cleanup
+sum.dispose();
+doubled.dispose();
+```
+
+**Advanced State with Atoms**
+
+```javascript
+import { TR } from 'xajs/future';
+const { atom, selector } = TR;
+// Create base atom
+const todoAtom = atom({
+  key: 'todoAtom',
+  default: {
+    items: [],
+    filter: 'all'
+  }
+});
+// Create derived selectors
+const filteredTodos = selector({
+  key: 'filteredTodos',
+  get: ({ get }) => {
+    const state = get(todoAtom);
+    switch (state.filter) {
+      case 'completed':
+        return state.items.filter(item => item.completed);
+      case 'active':
+        return state.items.filter(item => !item.completed);
+      default:
+        return state.items;
+    }
+  }
+});
+const todoStats = selector({
+  key: 'todoStats',
+  get: ({ get }) => {
+    const items = get(todoAtom).items;
+    return {
+      total: items.length,
+      completed: items.filter(item => item.completed).length,
+      active: items.filter(item => !item.completed).length
+    };
+  }
+});
+// Use selectors
+filteredTodos.observe(todos => {
+  renderTodoList(todos);
+});
+todoStats.observe(stats => {
+  updateStatusBar(stats);
+});
+```
+
+**Effect System with Cleanup**
+
+```javascript
+import { eff } from 'xajs/future';
+// Create reactive effect
+const cleanup = eff.effect(() => {
+  const subscription = api.subscribe(data => {
+    processData(data);
+  });
+  // Effect cleanup
+  return () => {
+    subscription.unsubscribe();
+  };
+});
+// Reactive template with automatic updates
+const template = eff.template`
+<div class="user-card">
+<h2>${() => user.name}</h2>
+<p>${() => user.bio}</p>
+<div class="stats">
+${() =>
+  user.stats
+    .map(
+      stat => `
+<div class="stat">
+<strong>${stat.label}</strong>
+<span>${stat.value}</span>
+</div>
+`
+    )
+    .join('')}
+</div>
 </div>
 `;
-// Use advanced effects
-ae.effect(() => {
-  // Side effects automatically tracked and cleaned up
-  const subscription = api.subscribe(data => {
-    state.update(data);
-  });
-  return () => subscription.unsubscribe();
-});
+// Cleanup when done
+cleanup();
 ```
 
 ### internal
 
-  Core internal utilities and helper functions used across the library.
+  Core internal utilities providing type checking, object manipulation, and shared helper functions. Features comprehensive type detection and safe object operations with performance optimization.
 
 ### Features
 
-- InternalUtilities.typeChecking: Type checking and validation utilities
-- InternalUtilities.objectUtils: Object property manipulation helpers
-- InternalUtilities.helpers: Common internal helper functions
-- InternalUtilities.shared: Shared utilities used across other modules
+- TypeChecking.is: .isBoolean - Boolean type check
+- ObjectUtilities.assign: Safe object assignment with deep copy
+- ObjectUtilities.hasOwnProp: Safe property existence check
 - Available exports: assign, hasOwnProp, is
 
 ### Examples
 
+**Type Checking**
+
+```javascript
+import { is } from 'xajs/internal';
+// Array checks
+console.log(is.isArray([1, 2, 3])); // true
+console.log(is.isArray({})); // false
+// Object checks
+console.log(is.isObject({})); // true
+console.log(is.isObject([])); // false
+// Function checks
+console.log(is.isFunction(() => {})); // true
+console.log(is.isFunction(async () => {})); // true
+console.log(is.isFunction(function* () {})); // true
+// Boolean checks
+console.log(is.isBoolean(true)); // true
+console.log(is.isBoolean(1)); // false
+```
+
+**Safe Object Operations**
+
+```javascript
+import { assign, hasOwnProp } from 'xajs/internal';
+// Safe object assignment
+const base = { a: 1, b: { c: 2 } };
+const extension = { b: { d: 3 }, e: 4 };
+const result = assign({}, base, extension);
+console.log(result);
+// {
+//   a: 1,
+//   b: { c: 2, d: 3 },
+//   e: 4
+// }
+// Safe property checks
+if (hasOwnProp(result, 'b')) {
+  console.log('Property exists:', result.b);
+}
+```
+
+**Type-Safe Operations**
+
 ```javascript
 import { is, assign } from 'xajs/internal';
-// Type checking
-if (is.string(value)) {
-  // Handle string type
+function safeUpdate(target, source) {
+  // Type validation
+  if (!is.isObject(target) || !is.isObject(source)) {
+    throw new TypeError('Both arguments must be objects');
+  }
+  // Safe assignment with type checking
+  const result = assign({}, target);
+  for (const key in source) {
+    if (hasOwnProp(source, key)) {
+      const value = source[key];
+      // Type-specific handling
+      if (is.isArray(value)) {
+        result[key] = [...value];
+      } else if (is.isObject(value)) {
+        result[key] = safeUpdate({}, value);
+      } else {
+        result[key] = value;
+      }
+    }
+  }
+  return result;
 }
-// Safe object assignment
-const merged = assign({}, source, {
-  newProp: 'value'
-});
 ```
 
 ### lang
 
-  Advanced language utilities for string manipulation and code generation.
+  Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.
 
 ### Features
 
-- LanguageUtilities.string: String manipulation and transformation
-- LanguageUtilities.language: Enhanced JavaScript language features
-- LanguageUtilities.generation: Code generation utilities
-- LanguageUtilities.dsl: DSL support tools
+- StringUtilities.MagicString: Immutable string wrapper with chainable operations
+- StringUtilities.capitalize: First character capitalization
+- StringUtilities.trim: Whitespace removal with custom characters
+- StringUtilities.replace: Pattern replacement with function support
 - Available exports: MagicString
 
 ### Examples
 
+**Basic String Operations**
+
 ```javascript
 import { MagicString } from 'xajs/lang';
-// Create a magic string for code manipulation
-const code = new MagicString('function hello() { return "world" }');
-// Manipulate the code
-code.update(8, 13, 'greet').append('hello()');
-console.log(code.toString());
-// Output: function greet() { return "world" }hello()
+const str = MagicString('  hello world  ');
+// Chain multiple operations
+const result = str.trim().capitalize().replace(/world/, 'AJS');
+console.log(result); // 'Hello AJS'
+console.log(str); // Original string unchanged
+```
+
+**Advanced Pattern Matching**
+
+```javascript
+import { MagicString } from 'xajs/lang';
+const text = MagicString('user.name.first');
+// Replace with callback
+const result = text.replace(/\w+/g, (match, index) => {
+  if (index === 0) return match;
+  return match.toUpperCase();
+});
+console.log(result); // 'user.NAME.FIRST'
+```
+
+**String Transformation**
+
+```javascript
+import { MagicString } from 'xajs/lang';
+const template = MagicString('Hello, ${name}!');
+// Interpolate values
+const greeting = template.replace(
+  /\${(\w+)}/g,
+  (_, key) =>
+    ({
+      name: 'AJS User'
+    })[key] || ''
+);
+console.log(greeting); // 'Hello, AJS User!'
 ```
 
 ### mobile
 
-  Comprehensive utilities for mobile web development and device detection.
+  Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices.
 
 ### Features
 
-- MobileUtilities.userAgent: User agent parsing and detection
-- MobileUtilities.events: Mobile-specific event handling
-- MobileUtilities.touch: Touch and gesture support
-- MobileUtilities.device: Device capability detection
-- MobileUtilities.responsive: Responsive design helpers
+- MobileUtilities.ua: User agent parsing system with priority-based parsers
+- MobileUtilities.device: Device type and vendor detection with fallbacks
+- MobileUtilities.browser: Browser and version identification with feature detection
+- MobileUtilities.engine: Rendering engine detection and capability analysis
 
 ### Examples
 
+**Device Detection and Feature Support**
+
 ```javascript
-import { ua } from 'xajs/mobile';
-// Detect device and platform
-const userAgent = ua.parse(navigator.userAgent);
-if (userAgent.isIOS) {
-  // iOS specific handling
-} else if (userAgent.isAndroid) {
-  // Android specific handling
+import { UserAgent } from 'xajs/mobile';
+// Initialize with current user agent
+const ua = new UserAgent(navigator.userAgent);
+// Comprehensive device check
+if (ua.isMobile()) {
+  // Mobile-specific optimizations
+  if (ua.isOS('iOS')) {
+    // iOS specific features
+    if (parseFloat(ua.getResult().os.version) >= 14.5) {
+      enableModernIOSFeatures();
+    } else {
+      enableLegacyIOSSupport();
+    }
+  } else if (ua.isOS('Android')) {
+    const version = parseFloat(ua.getResult().os.version);
+    if (version >= 10) {
+      enableModernAndroidFeatures();
+    } else {
+      enableLegacyAndroidSupport();
+    }
+  }
+} else if (ua.isTablet()) {
+  // Tablet optimizations
+  const { device } = ua.getResult();
+  if (device.vendor === 'Apple' && device.model === 'iPad') {
+    enableIPadFeatures();
+  }
+} else if (ua.isDesktop()) {
+  // Desktop optimizations
+  enableDesktopFeatures();
+}
+```
+
+**Browser and Engine Detection**
+
+```javascript
+import { UserAgent } from 'xajs/mobile';
+const ua = new UserAgent(navigator.userAgent);
+const { browser, engine } = ua.getResult();
+// Comprehensive browser checks
+if (ua.isBrowser('Chrome')) {
+  const version = parseFloat(browser.version);
+  if (version >= 90) {
+    // Modern Chrome features
+    enableProgressiveFeatures();
+  } else if (version >= 80) {
+    // Legacy but stable Chrome features
+    enableBasicFeatures();
+  } else {
+    // Very old Chrome
+    showBrowserUpdateNotice();
+  }
+} else if (ua.isBrowser('Safari')) {
+  if (parseFloat(browser.version) >= 14) {
+    if (engine.name === 'Webkit') {
+      // Modern Safari + Webkit
+      enableWebkitOptimizations();
+    }
+  } else {
+    // Legacy Safari support
+    enableLegacySafariSupport();
+  }
+}
+```
+
+**Edge Cases and Unknown Devices**
+
+```javascript
+import { UserAgent } from 'xajs/mobile';
+function detectDevice(userAgent = '') {
+  const ua = new UserAgent(userAgent);
+  const result = ua.getResult();
+  // Handle empty or invalid UA strings
+  if (!userAgent) {
+    return {
+      type: 'unknown',
+      capabilities: getDefaultCapabilities()
+    };
+  }
+  // Handle unknown browsers
+  if (!result.browser.name) {
+    // Fallback to engine detection
+    if (result.engine.name) {
+      return {
+        type: 'generic',
+        engine: result.engine.name,
+        capabilities: detectEngineCapabilities(result.engine)
+      };
+    }
+  }
+  // Handle unknown devices
+  if (!result.device.type) {
+    // Fallback to screen size detection
+    return {
+      type: detectDeviceTypeFromScreen(),
+      capabilities: detectCapabilitiesFromScreen()
+    };
+  }
+  return result;
 }
 ```
 <!--MODULES_END-->

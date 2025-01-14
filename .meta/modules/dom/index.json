@@ -1,92 +1,74 @@
 {
   "name": "index.js",
-  "description": "Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.",
+  "description": "High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.",
   "features": [
     {
       "namespace": "VirtualDOM",
-      "property": "implementation",
+      "property": "h",
+      "type": "Function",
+      "description": "Hyperscript function for creating virtual DOM elements"
+    },
+    {
+      "namespace": "VirtualDOM",
+      "property": "tags",
       "type": "Object",
-      "description": "Lightweight virtual DOM implementation"
+      "description": "Helper functions for common HTML elements"
     },
     {
       "namespace": "VirtualDOM",
       "property": "diff",
       "type": "Object",
-      "description": "Efficient diff and patch algorithm"
+      "description": "Optimized diff algorithm with key tracking"
     },
     {
       "namespace": "VirtualDOM",
       "property": "lifecycle",
       "type": "Object",
-      "description": "Component lifecycle management"
-    },
-    {
-      "namespace": "VirtualDOM",
-      "property": "events",
-      "type": "Object",
-      "description": "Event delegation support"
+      "description": "Component lifecycle with hooks"
     },
     {
       "namespace": "EventHandling",
-      "property": "management",
-      "type": "Object",
-      "description": "Advanced event management"
-    },
-    {
-      "namespace": "EventHandling",
-      "property": "delegation",
-      "type": "Object",
-      "description": "Event delegation and bubbling"
+      "property": "E",
+      "type": "Function",
+      "description": ".delegate - Event delegation with filters"
     },
     {
       "namespace": "EventHandling",
       "property": "touch",
       "type": "Object",
-      "description": "Mobile touch event optimization"
-    },
-    {
-      "namespace": "EventHandling",
-      "property": "lifecycle",
-      "type": "Object",
-      "description": "Event once and off support"
+      "description": "Mobile touch event normalization"
     },
     {
       "namespace": "URLParsing",
-      "property": "parser",
-      "type": "Object",
-      "description": "Robust URL parsing and manipulation"
+      "property": "UrlParser",
+      "type": "Class",
+      "description": "Advanced URL parsing and manipulation"
     },
     {
       "namespace": "URLParsing",
       "property": "query",
       "type": "Object",
-      "description": "Query string handling"
+      "description": "Query string handling with arrays"
     },
     {
       "namespace": "URLParsing",
       "property": "path",
       "type": "Object",
-      "description": "Path normalization"
-    },
-    {
-      "namespace": "URLParsing",
-      "property": "params",
-      "type": "Object",
-      "description": "URL parameter extraction"
+      "description": "Path normalization and resolution"
     }
   ],
   "examples": [
     {
-      "caption": "Virtual DOM Creation",
-      "code": "import { h } from 'xajs/dom'\nconst vnode = h('div', { className: 'container' }, [\nh('h1', null, 'Hello AJS!'),\nh('p', null, 'Welcome to the future of JavaScript.')\n])\n"
+      "caption": "Virtual DOM with Tags Helpers",
+      "code": "import { h, tags } from 'xajs/dom'\n// Using h function directly\nconst vnode = h('div', { className: 'container' }, [\nh('header', { key: 'header' }, [\nh('h1', null, 'Welcome')\n])\n])\n// Using tags helpers (more concise)\nconst { div, header, h1, nav, a } = tags\nconst menu = div({ className: 'container' }, [\nheader({ key: 'header' }, [\nh1(null, 'Welcome'),\nnav({ className: 'menu' }, [\na({ href: '#home' }, 'Home'),\na({ href: '#about' }, 'About')\n])\n])\n])\n"
     },
     {
-      "caption": "Event Handling",
-      "code": "import { E } from 'xajs/dom'\nE.on(element, 'click', event => {\nconsole.log('Clicked:', event.target)\n})\nE.once(element, 'load', event => {\nconsole.log('Loaded once')\n})\n"
+      "caption": "Advanced Event Handling",
+      "code": "import { E } from 'xajs/dom'\n// One-time event handling\nE.once('window.load', () => {\nconsole.log('App loaded')\n})\n// Event sequence handling\nE.once(\n'window.mouseover',\n'window.click',\n(e) => {\nconsole.log('Mouse over then clicked')\n},\n{ capture: true }\n)\n// Efficient event delegation\nconst handler = E.delegate('.menu a', {\nclick: (e, target) => {\ne.preventDefault()\nconst href = target.getAttribute('href')\nrouter.navigate(href)\n},\ntouchstart: (e, target) => {\ntarget.classList.add('active')\n},\ntouchend: (e, target) => {\ntarget.classList.remove('active')\n}\n})\n// Automatic cleanup\nE.cleanup(() => {\nhandler.destroy()\n})\n"
     },
     {
-      "caption": "URL Parsing",
-      "code": "import { UrlParser } from 'xajs/dom'\nconst parser = new UrlParser('https://example.com/path?query=value')\nconsole.log(parser.pathname) // '/path'\nconsole.log(parser.query)    // { query: 'value' }\n"
+      "caption": "URL Parsing and Manipulation",
+      "code": "import { UrlParser } from 'xajs/dom'\n// Create parser instance\nconst parser = new UrlParser('https://example.com/path?q=search&tags[]=js&tags[]=dom')\n// Basic URL parts\nconsole.log(parser.protocol)  // 'https:'\nconsole.log(parser.hostname)  // 'example.com'\nconsole.log(parser.pathname)  // '/path'\n// Advanced query handling\nconst query = parser.query\nconsole.log(query.q)         // 'search'\nconsole.log(query.tags)      // ['js', 'dom']\n// URL manipulation\nparser.pathname = '/new-path'\nparser.addQuery('page', '2')\nconsole.log(parser.toString())\n// 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'\n"
     }
   ],
   "exports": [
@@ -98,85 +80,65 @@
   "related": [
     "."
   ],
-  "see": [
-    {
-      "url": "https://ajs.dev/docs/dom",
-      "text": "DOM Module Documentation"
-    }
-  ],
+  "see": [],
   "namespaces": {
     "VirtualDOM": {
       "name": "VirtualDOM",
       "properties": {
-        "implementation": {
+        "h": {
+          "type": "Function",
+          "name": "h",
+          "description": "Hyperscript function for creating virtual DOM elements"
+        },
+        "tags": {
           "type": "Object",
-          "name": "implementation",
-          "description": "Lightweight virtual DOM implementation"
+          "name": "tags",
+          "description": "Helper functions for common HTML elements"
         },
         "diff": {
           "type": "Object",
           "name": "diff",
-          "description": "Efficient diff and patch algorithm"
+          "description": "Optimized diff algorithm with key tracking"
         },
         "lifecycle": {
           "type": "Object",
           "name": "lifecycle",
-          "description": "Component lifecycle management"
-        },
-        "events": {
-          "type": "Object",
-          "name": "events",
-          "description": "Event delegation support"
+          "description": "Component lifecycle with hooks"
         }
       }
     },
     "EventHandling": {
       "name": "EventHandling",
       "properties": {
-        "management": {
-          "type": "Object",
-          "name": "management",
-          "description": "Advanced event management"
-        },
-        "delegation": {
-          "type": "Object",
-          "name": "delegation",
-          "description": "Event delegation and bubbling"
+        "E": {
+          "type": "Function",
+          "name": "E",
+          "description": ".delegate - Event delegation with filters"
         },
         "touch": {
           "type": "Object",
           "name": "touch",
-          "description": "Mobile touch event optimization"
-        },
-        "lifecycle": {
-          "type": "Object",
-          "name": "lifecycle",
-          "description": "Event once and off support"
+          "description": "Mobile touch event normalization"
         }
       }
     },
     "URLParsing": {
       "name": "URLParsing",
       "properties": {
-        "parser": {
-          "type": "Object",
-          "name": "parser",
-          "description": "Robust URL parsing and manipulation"
+        "UrlParser": {
+          "type": "Class",
+          "name": "UrlParser",
+          "description": "Advanced URL parsing and manipulation"
         },
         "query": {
           "type": "Object",
           "name": "query",
-          "description": "Query string handling"
+          "description": "Query string handling with arrays"
         },
         "path": {
           "type": "Object",
           "name": "path",
-          "description": "Path normalization"
-        },
-        "params": {
-          "type": "Object",
-          "name": "params",
-          "description": "URL parameter extraction"
+          "description": "Path normalization and resolution"
         }
       }
     }

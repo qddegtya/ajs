@@ -2,54 +2,112 @@
  * DOM manipulation and event handling utilities
  * 
  * @module dom
- * @description Provides a lightweight virtual DOM implementation and utilities for DOM manipulation
- * and event handling, with special optimizations for mobile devices.
+ * @description High-performance DOM manipulation with virtual DOM support,
+ * optimized event delegation, and unified touch event handling. Features include
+ * efficient diffing, batched updates, mobile-first event optimization, and
+ * memory leak prevention.
  * 
  * @namespace VirtualDOM
- * @property {Object} implementation - Lightweight virtual DOM implementation
- * @property {Object} diff - Efficient diff and patch algorithm
- * @property {Object} lifecycle - Component lifecycle management
- * @property {Object} events - Event delegation support
+ * @property {Function} h - Hyperscript function for creating virtual DOM elements
+ * @property {Object} tags - Helper functions for common HTML elements
+ * @property {Object} diff - Optimized diff algorithm with key tracking
+ * @property {Object} lifecycle - Component lifecycle with hooks
  * 
  * @namespace EventHandling
- * @property {Object} management - Advanced event management
- * @property {Object} delegation - Event delegation and bubbling
- * @property {Object} touch - Mobile touch event optimization
- * @property {Object} lifecycle - Event once and off support
+ * @property {Object} E - Unified event management system
+ * @property {Function} E.once - One-time event binding with cleanup
+ * @property {Function} E.delegate - Event delegation with filters
+ * @property {Object} touch - Mobile touch event normalization
  * 
  * @namespace URLParsing
- * @property {Object} parser - Robust URL parsing and manipulation
- * @property {Object} query - Query string handling
- * @property {Object} path - Path normalization
- * @property {Object} params - URL parameter extraction
+ * @property {Class} UrlParser - Advanced URL parsing and manipulation
+ * @property {Object} query - Query string handling with arrays
+ * @property {Object} path - Path normalization and resolution
  * 
- * @example <caption>Virtual DOM Creation</caption>
- * import { h } from 'xajs/dom'
+ * @example <caption>Virtual DOM with Tags Helpers</caption>
+ * import { h, tags } from 'xajs/dom'
  * 
+ * // Using h function directly
  * const vnode = h('div', { className: 'container' }, [
- *   h('h1', null, 'Hello AJS!'),
- *   h('p', null, 'Welcome to the future of JavaScript.')
+ *   h('header', { key: 'header' }, [
+ *     h('h1', null, 'Welcome')
+ *   ])
  * ])
  * 
- * @example <caption>Event Handling</caption>
+ * // Using tags helpers (more concise)
+ * const { div, header, h1, nav, a } = tags
+ * 
+ * const menu = div({ className: 'container' }, [
+ *   header({ key: 'header' }, [
+ *     h1(null, 'Welcome'),
+ *     nav({ className: 'menu' }, [
+ *       a({ href: '#home' }, 'Home'),
+ *       a({ href: '#about' }, 'About')
+ *     ])
+ *   ])
+ * ])
+ * 
+ * @example <caption>Advanced Event Handling</caption>
  * import { E } from 'xajs/dom'
  * 
- * E.on(element, 'click', event => {
- *   console.log('Clicked:', event.target)
+ * // One-time event handling
+ * E.once('window.load', () => {
+ *   console.log('App loaded')
  * })
  * 
- * E.once(element, 'load', event => {
- *   console.log('Loaded once')
+ * // Event sequence handling
+ * E.once(
+ *   'window.mouseover',
+ *   'window.click',
+ *   (e) => {
+ *     console.log('Mouse over then clicked')
+ *   },
+ *   { capture: true }
+ * )
+ * 
+ * // Efficient event delegation
+ * const handler = E.delegate('.menu a', {
+ *   click: (e, target) => {
+ *     e.preventDefault()
+ *     const href = target.getAttribute('href')
+ *     router.navigate(href)
+ *   },
+ *   
+ *   touchstart: (e, target) => {
+ *     target.classList.add('active')
+ *   },
+ *   
+ *   touchend: (e, target) => {
+ *     target.classList.remove('active')
+ *   }
  * })
  * 
- * @example <caption>URL Parsing</caption>
+ * // Automatic cleanup
+ * E.cleanup(() => {
+ *   handler.destroy()
+ * })
+ * 
+ * @example <caption>URL Parsing and Manipulation</caption>
  * import { UrlParser } from 'xajs/dom'
  * 
- * const parser = new UrlParser('https://example.com/path?query=value')
- * console.log(parser.pathname) // '/path'
- * console.log(parser.query)    // { query: 'value' }
+ * // Create parser instance
+ * const parser = new UrlParser('https://example.com/path?q=search&tags[]=js&tags[]=dom')
  * 
- * @see {@link https://ajs.dev/docs/dom DOM Module Documentation}
+ * // Basic URL parts
+ * console.log(parser.protocol)  // 'https:'
+ * console.log(parser.hostname)  // 'example.com'
+ * console.log(parser.pathname)  // '/path'
+ * 
+ * // Advanced query handling
+ * const query = parser.query
+ * console.log(query.q)         // 'search'
+ * console.log(query.tags)      // ['js', 'dom']
+ * 
+ * // URL manipulation
+ * parser.pathname = '/new-path'
+ * parser.addQuery('page', '2')
+ * console.log(parser.toString())
+ * // 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'
  */
 
 import * as E from './E'
