@@ -1,5 +1,5 @@
 /**
- * AJS - A thoughtfully crafted JavaScript utility library
+ * AJS - 🚀 A modern JavaScript utility library with minimal footprint and high flexibility ⚡
  * 
  * @module ajs
  * @description A modern, high-performance JavaScript utility library that combines 
