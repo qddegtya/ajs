@@ -1,6 +1,6 @@
 {
   "name": "xajs",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.",
   "main": "./dist/ajs.cjs.js",
   "module": "./dist/ajs.es.js",
