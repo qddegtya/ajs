@@ -18,12 +18,6 @@
       "require": "./dist/core/core.cjs.js",
       "default": "./dist/core/core.cjs.js"
     },
-    "./mobile": {
-      "browser": "./dist/mobile/mobile.umd.js",
-      "import": "./dist/mobile/mobile.es.js",
-      "require": "./dist/mobile/mobile.cjs.js",
-      "default": "./dist/mobile/mobile.cjs.js"
-    },
     "./dom": {
       "browser": "./dist/dom/dom.umd.js",
       "import": "./dist/dom/dom.es.js",
@@ -42,23 +36,29 @@
       "require": "./dist/functional/functional.cjs.js",
       "default": "./dist/functional/functional.cjs.js"
     },
-    "./internal": {
-      "browser": "./dist/internal/internal.umd.js",
-      "import": "./dist/internal/internal.es.js",
-      "require": "./dist/internal/internal.cjs.js",
-      "default": "./dist/internal/internal.cjs.js"
-    },
     "./future": {
       "browser": "./dist/future/future.umd.js",
       "import": "./dist/future/future.es.js",
       "require": "./dist/future/future.cjs.js",
       "default": "./dist/future/future.cjs.js"
     },
+    "./internal": {
+      "browser": "./dist/internal/internal.umd.js",
+      "import": "./dist/internal/internal.es.js",
+      "require": "./dist/internal/internal.cjs.js",
+      "default": "./dist/internal/internal.cjs.js"
+    },
     "./lang": {
       "browser": "./dist/lang/lang.umd.js",
       "import": "./dist/lang/lang.es.js",
       "require": "./dist/lang/lang.cjs.js",
       "default": "./dist/lang/lang.cjs.js"
+    },
+    "./mobile": {
+      "browser": "./dist/mobile/mobile.umd.js",
+      "import": "./dist/mobile/mobile.es.js",
+      "require": "./dist/mobile/mobile.cjs.js",
+      "default": "./dist/mobile/mobile.cjs.js"
     }
   },
   "engines": {
@@ -85,7 +85,8 @@
     "prepare": "husky install",
     "prepublishOnly": "npm run verify",
     "prepack": "npm run build",
-    "postinstall": "node -e \"try { require('./scripts/postinstall.js') } catch(e) {}\""
+    "postinstall": "node -e \"try { require('./scripts/postinstall.js') } catch(e) {}\"",
+    "update-exports": "node scripts/update-package-exports.mjs"
   },
   "keywords": [
     "ajs",

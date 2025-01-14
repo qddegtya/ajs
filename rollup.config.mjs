@@ -2,6 +2,9 @@ import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import fs from 'fs';
+import moduleConfig from './config/modules.config.mjs';
+
+const { modules } = moduleConfig;
 
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 const { version: LIB_VERSION, description: LIB_DESCRIPTION } = pkg;
@@ -60,16 +63,6 @@ const mainConfig = {
 };
 
 // 子模块配置
-const modules = [
-  'core',
-  'mobile',
-  'dom',
-  'fp',
-  'functional',
-  'internal',
-  'future',
-  'lang'
-];
 
 const moduleConfigs = modules.map(mod => ({
   input: `./src/${mod}/index.js`,
