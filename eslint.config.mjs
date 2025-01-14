@@ -3,6 +3,15 @@ import js from '@eslint/js'
 import babelParser from '@babel/eslint-parser'
 
 export default [
+  // 全局忽略配置
+  {
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'coverage/**',
+      'rollup.config.mjs'
+    ]
+  },
   // 基础配置
   {
     files: ['src/**/*.js'],
@@ -33,12 +42,6 @@ export default [
       'linebreak-style': ['error', 'unix'],
       'semi': ['error', 'never'],
     },
-    ignores: [
-      'node_modules/**',
-      'dist/**',
-      'coverage/**',
-      'rollup.config.mjs'
-    ]
   },
 
   // 测试文件的特殊配置
