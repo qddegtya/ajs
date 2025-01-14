@@ -109,6 +109,7 @@ async function updateReadme() {
     readmeContent = replaceContent(readmeContent, PLACEHOLDERS.QUICK_START, quickStart);
     readmeContent = replaceContent(readmeContent, PLACEHOLDERS.FEATURES, features);
     readmeContent = replaceContent(readmeContent, PLACEHOLDERS.MODULES, modules);
+    readmeContent = replaceContent(readmeContent, PLACEHOLDERS.ABOUT, projectMeta.description);
 
     // 如果没有 ABOUT 占位符，添加它
     if (!readmeContent.includes('<!--ABOUT_START-->')) {

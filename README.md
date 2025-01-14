@@ -4,7 +4,7 @@
 ## About
 
 <!--ABOUT_START-->
-A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.
+🚀 A modern JavaScript utility library with minimal footprint and high flexibility ⚡
 <!--ABOUT_END-->
 
 ## ✨ Features
