@@ -17,12 +17,8 @@ function initializeJSDocInfo() {
 }
 
 function cleanDescription(description) {
-  // 移除重复的模块名称
-  return description.replace(/\b\w+\s+-\s+.*?\s+\1\s+/g, '')
-    // 清理多余的空格
-    .replace(/\s+/g, ' ')
-    // 修复标点符号
-    .replace(/\s*([,.!?])\s*/g, '$1 ')
+  return description
+    .replace(/^\s*[A-Z][^\n.!?]*[.!?]/, '') // Remove leading sentence if it starts with capital and ends with punctuation
     .trim();
 }
 
@@ -31,7 +27,6 @@ function extractFeaturesFromDescription(description) {
   const sentences = description.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
   
   for (const sentence of sentences) {
-    // 如果句子描述了一个功能或特性
     if (sentence.includes('provides') || 
         sentence.includes('supports') || 
         sentence.includes('enables') ||
@@ -78,32 +73,97 @@ function extractNamespaceInfo(comment) {
   return namespaces;
 }
 
-function handleTagLine(line, tag, context) {
-  const { info, currentSection, currentFeature, currentExample, descriptionLines } = context;
-  const content = line.substring(tag.length).trim();
+function parseJSDocComment(comment) {
+  const info = initializeJSDocInfo();
+  const blocks = [];
+  let currentBlock = { type: 'description', content: [] };
 
-  switch (tag) {
-    case '@module':
-      // 不要在描述中添加模块名
-      return { currentSection: 'description', currentFeature, currentExample };
-    case '@description':
-      if (content) descriptionLines.push(content);
-      return { currentSection: 'description', currentFeature, currentExample };
-    case '@feature':
-      if (content) {
-        info.features.push(content);
+  // 首先清理注释标记
+  const cleanedComment = comment.split('\n')
+    .map(line => line.trim().replace(/^\/\*\*|\*\/|\*\s*/, ''))
+    .join('\n');
+
+  // 分析注释块
+  let lines = cleanedComment.split('\n');
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i].trim();
+    
+    if (line.startsWith('@')) {
+      // 保存当前块
+      if (currentBlock.content.length > 0) {
+        blocks.push(currentBlock);
       }
-      return { currentSection: 'feature', currentFeature: null, currentExample };
-    case '@example':
-      const newExample = {
-        caption: content.replace(/<caption>(.*?)<\/caption>/, '$1').trim(),
-        code: ''
-      };
-      info.examples.push(newExample);
-      return { currentSection: 'example', currentFeature, currentExample: newExample };
-    case '@see':
-      if (content) {
-        // 修复 {@link url text} 格式
+      
+      const tagMatch = line.match(/^@(\w+)/);
+      if (tagMatch) {
+        const tag = tagMatch[1];
+        currentBlock = {
+          type: tag,
+          content: [line.substring(tag.length + 1).trim()]
+        };
+        
+        // 特殊处理 @example 块
+        if (tag === 'example') {
+          // 收集所有内容直到下一个块级标签
+          i++;
+          while (i < lines.length) {
+            const nextLine = lines[i].trim();
+            // 只有当遇到新的块级标签时才结束当前块
+            if (nextLine.match(/^@\w+\s/)) {
+              i--;  // 回退一行，让下一次循环处理新标签
+              break;
+            }
+            currentBlock.content.push(nextLine);
+            i++;
+          }
+        }
+      }
+    } else if (line) {
+      currentBlock.content.push(line);
+    }
+    i++;
+  }
+  
+  // 添加最后一个块
+  if (currentBlock.content.length > 0) {
+    blocks.push(currentBlock);
+  }
+
+  // 处理解析后的块
+  for (const block of blocks) {
+    switch (block.type) {
+      case 'description':
+        info.description = block.content.join('\n').trim();
+        break;
+      case 'example':
+        // 提取 caption（如果存在）
+        let caption = '';
+        let code = block.content;
+        
+        // 检查第一行是否包含 caption
+        if (block.content.length > 0) {
+          const firstLine = block.content[0];
+          const captionMatch = firstLine.match(/<caption>(.*?)<\/caption>/);
+          if (captionMatch) {
+            caption = captionMatch[1].trim();
+            // 移除包含 caption 的第一行
+            code = block.content.slice(1);
+          }
+        }
+        
+        info.examples.push({
+          caption,
+          code: code.join('\n').trim()
+        });
+        break;
+      case 'feature':
+        info.features.push(...block.content
+          .filter(line => line.startsWith('-'))
+          .map(line => line.substring(1).trim()));
+        break;
+      case 'see':
+        const content = block.content.join(' ').trim();
         const match = content.match(/{@link\s+([^\s}]+)(?:\s+([^}]+))?}/) ||
                      content.match(/([^\s]+)(?:\s+(.+))?/);
         if (match) {
@@ -112,88 +172,17 @@ function handleTagLine(line, tag, context) {
             text: match[2] || match[1]
           });
         }
-      }
-      return { currentSection: null, currentFeature, currentExample };
-    default:
-      return { currentSection, currentFeature, currentExample };
-  }
-}
-
-function handleContentLine(line, section, context) {
-  const { descriptionLines, currentExample } = context;
-
-  switch (section) {
-    case 'description':
-      descriptionLines.push(line);
-      break;
-    case 'feature':
-      if (line.startsWith('-')) {
-        context.info.features.push(line.substring(1).trim());
-      }
-      break;
-    case 'example':
-      if (!line.startsWith('@') && currentExample) {
-        currentExample.code += line + '\n';
-      }
-      break;
-    default:
-      if (!line.startsWith('@')) {
-        descriptionLines.push(line);
-      }
-  }
-}
-
-function parseJSDocComment(comment) {
-  const info = initializeJSDocInfo();
-  const descriptionLines = [];
-  let context = {
-    info,
-    currentSection: null,
-    currentFeature: null,
-    currentExample: null,
-    descriptionLines
-  };
-
-  // Extract namespaces first
-  info.namespaces = extractNamespaceInfo(comment);
-
-  const lines = comment.split('\n');
-  for (const line of lines) {
-    const trimmedLine = line.trim().replace(/^\*\s*/, '');
-    if (!trimmedLine) continue;
-
-    // Handle tag lines
-    if (trimmedLine.startsWith('@')) {
-      const tagMatch = trimmedLine.match(/^@(\w+)/);
-      if (tagMatch) {
-        const tag = '@' + tagMatch[1];
-        const result = handleTagLine(trimmedLine, tag, context);
-        Object.assign(context, result);
-      }
-    } else if (context.currentSection) {
-      handleContentLine(trimmedLine, context.currentSection, context);
+        break;
     }
   }
 
-  // Process collected description
-  info.description = cleanDescription(descriptionLines.join(' '));
-  
-  // Extract additional features from namespaces
-  Object.entries(info.namespaces).forEach(([namespace, data]) => {
-    Object.entries(data.properties).forEach(([propName, prop]) => {
-      info.features.push({
-        namespace,
-        property: propName,
-        type: prop.type,
-        description: prop.description
-      });
-    });
-  });
+  // 提取命名空间信息
+  info.namespaces = extractNamespaceInfo(comment);
 
   return info;
 }
 
-export function extractModuleInfo(code, moduleName) {
+function extractModuleInfo(code, moduleName) {
   logger.debug(`Extracting module info for: ${moduleName}`);
 
   const ast = parse(code, BABEL_PARSER_CONFIG);
@@ -285,4 +274,4 @@ function handleImportDeclaration(path, info) {
   }
 }
 
-export { parseJSDocComment };
+export { parseJSDocComment, extractModuleInfo };

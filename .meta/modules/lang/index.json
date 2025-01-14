@@ -1,44 +1,19 @@
 {
   "name": "index.js",
-  "description": "Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.",
-  "features": [
-    {
-      "namespace": "StringUtilities",
-      "property": "MagicString",
-      "type": "Class",
-      "description": "Immutable string wrapper with chainable operations"
-    },
-    {
-      "namespace": "StringUtilities",
-      "property": "capitalize",
-      "type": "Function",
-      "description": "First character capitalization"
-    },
-    {
-      "namespace": "StringUtilities",
-      "property": "trim",
-      "type": "Function",
-      "description": "Whitespace removal with custom characters"
-    },
-    {
-      "namespace": "StringUtilities",
-      "property": "replace",
-      "type": "Function",
-      "description": "Pattern replacement with function support"
-    }
-  ],
+  "description": "Advanced string manipulation utilities with immutable operations\nand chainable transformations. Features include case conversion, trimming,\npattern matching, and string interpolation.",
+  "features": [],
   "examples": [
     {
       "caption": "Basic String Operations",
-      "code": "import { MagicString } from 'xajs/lang'\nconst str = MagicString('  hello world  ')\n// Chain multiple operations\nconst result = str\n.trim()\n.capitalize()\n.replace(/world/, 'AJS')\nconsole.log(result)  // 'Hello AJS'\nconsole.log(str)     // Original string unchanged\n"
+      "code": "import { MagicString } from 'xajs/lang'\n\nconst str = MagicString('  hello world  ')\n\n// Chain multiple operations\nconst result = str\n.trim()\n.capitalize()\n.replace(/world/, 'AJS')\n\nconsole.log(result)  // 'Hello AJS'\nconsole.log(str)     // Original string unchanged"
     },
     {
       "caption": "Advanced Pattern Matching",
-      "code": "import { MagicString } from 'xajs/lang'\nconst text = MagicString('user.name.first')\n// Replace with callback\nconst result = text.replace(/\\w+/g, (match, index) => {\nif (index === 0) return match\nreturn match.toUpperCase()\n})\nconsole.log(result)  // 'user.NAME.FIRST'\n"
+      "code": "import { MagicString } from 'xajs/lang'\n\nconst text = MagicString('user.name.first')\n\n// Replace with callback\nconst result = text.replace(/\\w+/g, (match, index) => {\nif (index === 0) return match\nreturn match.toUpperCase()\n})\n\nconsole.log(result)  // 'user.NAME.FIRST'"
     },
     {
       "caption": "String Transformation",
-      "code": "import { MagicString } from 'xajs/lang'\nconst template = MagicString('Hello, ${name}!')\n// Interpolate values\nconst greeting = template.replace(/\\${(\\w+)}/g, (_, key) => ({\nname: 'AJS User'\n}[key] || ''))\nconsole.log(greeting)  // 'Hello, AJS User!'\n"
+      "code": "import { MagicString } from 'xajs/lang'\n\nconst template = MagicString('Hello, ${name}!')\n\n// Interpolate values\nconst greeting = template.replace(/\\${(\\w+)}/g, (_, key) => ({\nname: 'AJS User'\n}[key] || ''))\n\nconsole.log(greeting)  // 'Hello, AJS User!'"
     }
   ],
   "exports": [

@@ -1,8 +1,7 @@
 {
   "name": "index.js",
-  "description": "",
+  "description": "User Agent Parser Module",
   "features": [
-    "User Agent Analysis",
     "Comprehensive user agent parsing",
     "Browser and version detection",
     "Operating system identification",
@@ -12,7 +11,7 @@
   "examples": [
     {
       "caption": "",
-      "code": "import { UserAgent } from 'xajs/mobile/ua'\nconst ua = new UserAgent(navigator.userAgent)\nconsole.log({\nbrowser: ua.getBrowser(),\nos: ua.getOS(),\ndevice: ua.getDevice(),\nengine: ua.getEngine()\n})\n"
+      "code": "import { UserAgent } from 'xajs/mobile/ua'\n\nconst ua = new UserAgent(navigator.userAgent)\n\nconsole.log({\nbrowser: ua.getBrowser(),\nos: ua.getOS(),\ndevice: ua.getDevice(),\nengine: ua.getEngine()\n})"
     }
   ],
   "exports": [

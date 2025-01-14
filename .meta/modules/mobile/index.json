@@ -1,44 +1,19 @@
 {
   "name": "index.js",
-  "description": "Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices.",
-  "features": [
-    {
-      "namespace": "MobileUtilities",
-      "property": "ua",
-      "type": "Object",
-      "description": "User agent parsing system with priority-based parsers"
-    },
-    {
-      "namespace": "MobileUtilities",
-      "property": "device",
-      "type": "Object",
-      "description": "Device type and vendor detection with fallbacks"
-    },
-    {
-      "namespace": "MobileUtilities",
-      "property": "browser",
-      "type": "Object",
-      "description": "Browser and version identification with feature detection"
-    },
-    {
-      "namespace": "MobileUtilities",
-      "property": "engine",
-      "type": "Object",
-      "description": "Rendering engine detection and capability analysis"
-    }
-  ],
+  "description": "Advanced mobile device detection and user agent parsing system.\nFeatures comprehensive device fingerprinting, vendor detection, and detailed\nbrowser capabilities analysis through modular parsers. Includes robust\nhandling of edge cases and unknown devices.",
+  "features": [],
   "examples": [
     {
       "caption": "Device Detection and Feature Support",
-      "code": "import { UserAgent } from 'xajs/mobile'\n// Initialize with current user agent\nconst ua = new UserAgent(navigator.userAgent)\n// Comprehensive device check\nif (ua.isMobile()) {\n// Mobile-specific optimizations\nif (ua.isOS('iOS')) {\n// iOS specific features\nif (parseFloat(ua.getResult().os.version) >= 14.5) {\nenableModernIOSFeatures()\n} else {\nenableLegacyIOSSupport()\n}\n} else if (ua.isOS('Android')) {\nconst version = parseFloat(ua.getResult().os.version)\nif (version >= 10) {\nenableModernAndroidFeatures()\n} else {\nenableLegacyAndroidSupport()\n}\n}\n} else if (ua.isTablet()) {\n// Tablet optimizations\nconst { device } = ua.getResult()\nif (device.vendor === 'Apple' && device.model === 'iPad') {\nenableIPadFeatures()\n}\n} else if (ua.isDesktop()) {\n// Desktop optimizations\nenableDesktopFeatures()\n}\n"
+      "code": "import { UserAgent } from 'xajs/mobile'\n\n// Initialize with current user agent\nconst ua = new UserAgent(navigator.userAgent)\n\n// Comprehensive device check\nif (ua.isMobile()) {\n// Mobile-specific optimizations\nif (ua.isOS('iOS')) {\n// iOS specific features\nif (parseFloat(ua.getResult().os.version) >= 14.5) {\nenableModernIOSFeatures()\n} else {\nenableLegacyIOSSupport()\n}\n} else if (ua.isOS('Android')) {\nconst version = parseFloat(ua.getResult().os.version)\nif (version >= 10) {\nenableModernAndroidFeatures()\n} else {\nenableLegacyAndroidSupport()\n}\n}\n} else if (ua.isTablet()) {\n// Tablet optimizations\nconst { device } = ua.getResult()\nif (device.vendor === 'Apple' && device.model === 'iPad') {\nenableIPadFeatures()\n}\n} else if (ua.isDesktop()) {\n// Desktop optimizations\nenableDesktopFeatures()\n}"
     },
     {
       "caption": "Browser and Engine Detection",
-      "code": "import { UserAgent } from 'xajs/mobile'\nconst ua = new UserAgent(navigator.userAgent)\nconst { browser, engine } = ua.getResult()\n// Comprehensive browser checks\nif (ua.isBrowser('Chrome')) {\nconst version = parseFloat(browser.version)\nif (version >= 90) {\n// Modern Chrome features\nenableProgressiveFeatures()\n} else if (version >= 80) {\n// Legacy but stable Chrome features\nenableBasicFeatures()\n} else {\n// Very old Chrome\nshowBrowserUpdateNotice()\n}\n} else if (ua.isBrowser('Safari')) {\nif (parseFloat(browser.version) >= 14) {\nif (engine.name === 'Webkit') {\n// Modern Safari + Webkit\nenableWebkitOptimizations()\n}\n} else {\n// Legacy Safari support\nenableLegacySafariSupport()\n}\n}\n"
+      "code": "import { UserAgent } from 'xajs/mobile'\n\nconst ua = new UserAgent(navigator.userAgent)\nconst { browser, engine } = ua.getResult()\n\n// Comprehensive browser checks\nif (ua.isBrowser('Chrome')) {\nconst version = parseFloat(browser.version)\nif (version >= 90) {\n// Modern Chrome features\nenableProgressiveFeatures()\n} else if (version >= 80) {\n// Legacy but stable Chrome features\nenableBasicFeatures()\n} else {\n// Very old Chrome\nshowBrowserUpdateNotice()\n}\n} else if (ua.isBrowser('Safari')) {\nif (parseFloat(browser.version) >= 14) {\nif (engine.name === 'Webkit') {\n// Modern Safari + Webkit\nenableWebkitOptimizations()\n}\n} else {\n// Legacy Safari support\nenableLegacySafariSupport()\n}\n}"
     },
     {
       "caption": "Edge Cases and Unknown Devices",
-      "code": "import { UserAgent } from 'xajs/mobile'\nfunction detectDevice(userAgent = '') {\nconst ua = new UserAgent(userAgent)\nconst result = ua.getResult()\n// Handle empty or invalid UA strings\nif (!userAgent) {\nreturn {\ntype: 'unknown',\ncapabilities: getDefaultCapabilities()\n}\n}\n// Handle unknown browsers\nif (!result.browser.name) {\n// Fallback to engine detection\nif (result.engine.name) {\nreturn {\ntype: 'generic',\nengine: result.engine.name,\ncapabilities: detectEngineCapabilities(result.engine)\n}\n}\n}\n// Handle unknown devices\nif (!result.device.type) {\n// Fallback to screen size detection\nreturn {\ntype: detectDeviceTypeFromScreen(),\ncapabilities: detectCapabilitiesFromScreen()\n}\n}\nreturn result\n}\n"
+      "code": "import { UserAgent } from 'xajs/mobile'\n\nfunction detectDevice(userAgent = '') {\nconst ua = new UserAgent(userAgent)\nconst result = ua.getResult()\n\n// Handle empty or invalid UA strings\nif (!userAgent) {\nreturn {\ntype: 'unknown',\ncapabilities: getDefaultCapabilities()\n}\n}\n\n// Handle unknown browsers\nif (!result.browser.name) {\n// Fallback to engine detection\nif (result.engine.name) {\nreturn {\ntype: 'generic',\nengine: result.engine.name,\ncapabilities: detectEngineCapabilities(result.engine)\n}\n}\n}\n\n// Handle unknown devices\nif (!result.device.type) {\n// Fallback to screen size detection\nreturn {\ntype: detectDeviceTypeFromScreen(),\ncapabilities: detectCapabilitiesFromScreen()\n}\n}\n\nreturn result\n}"
     }
   ],
   "exports": [],

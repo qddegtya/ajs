@@ -20,57 +20,20 @@
     "path": "core/index.js",
     "info": {
       "name": "index.js",
-      "description": "Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.",
-      "features": [
-        {
-          "namespace": "ClassSystem",
-          "property": "Class",
-          "type": "Function",
-          "description": "Base class factory with $extends, $ctor, and $static support"
-        },
-        {
-          "namespace": "Decorators",
-          "property": "mixin",
-          "type": "Function",
-          "description": "Class decorator for mixin application"
-        },
-        {
-          "namespace": "Decorators",
-          "property": "deprecate",
-          "type": "Function",
-          "description": "Method/property deprecation decorator with custom messages"
-        },
-        {
-          "namespace": "Deferred",
-          "property": "Deferred",
-          "type": "Function",
-          "description": "Promise wrapper with resolve/reject control"
-        },
-        {
-          "namespace": "Deferred",
-          "property": "done",
-          "type": "Function",
-          "description": "Final promise chain handler with error propagation"
-        },
-        {
-          "namespace": "Deferred",
-          "property": "isDone",
-          "type": "Function",
-          "description": "Promise state check for completion status"
-        }
-      ],
+      "description": "Provides the foundational architecture of AJS, featuring a\nlightweight class system with inheritance and mixins, basic decorators,\nand a promise-based deferred implementation.",
+      "features": [],
       "examples": [
         {
           "caption": "Class Definition with Static Members",
-          "code": "import { base } from 'xajs/core'\nconst MyComponent = base.Class({\n$extends: BaseComponent,\n// Static properties and methods\n$static: {\ndefaultConfig: {\ntheme: 'light'\n},\ncreate(config) {\nreturn new this({ ...this.defaultConfig, ...config })\n}\n},\n// Constructor\n$ctor(config) {\nthis.$super() // Call parent constructor\nthis.config = config\nthis.state = { count: 0 }\n},\n// Instance methods\nincrement() {\nthis.state.count++\nthis.emit('change', this.state.count)\n}\n})\n"
+          "code": "import { base } from 'xajs/core'\n\nconst MyComponent = base.Class({\n$extends: BaseComponent,\n\n// Static properties and methods\n$static: {\ndefaultConfig: {\ntheme: 'light'\n},\ncreate(config) {\nreturn new this({ ...this.defaultConfig, ...config })\n}\n},\n\n// Constructor\n$ctor(config) {\nthis.$super() // Call parent constructor\nthis.config = config\nthis.state = { count: 0 }\n},\n\n// Instance methods\nincrement() {\nthis.state.count++\nthis.emit('change', this.state.count)\n}\n})"
         },
         {
           "caption": "Mixin and Deprecation",
-          "code": "import { decorators } from 'xajs/core'\n// Define a mixin\nconst LoggerMixin = {\nlog(msg) {\nconsole.log(`[${this.constructor.name}] ${msg}`)\n}\n}\n// Apply mixin and deprecate old methods\nclass MyService {\noldMethod() {\nreturn this.newMethod()\n}\nnewMethod() {\nthis.log('Operation started')\nreturn this.processData()\n}\n}\n"
+          "code": "import { decorators } from 'xajs/core'\n\n// Define a mixin\nconst LoggerMixin = {\nlog(msg) {\nconsole.log(`[${this.constructor.name}] ${msg}`)\n}\n}\n\n// Apply mixin and deprecate old methods\n@decorators.mixin(LoggerMixin)\nclass MyService {\n@decorators.deprecate('Use newMethod() instead', { since: '2.0.0' })\noldMethod() {\nreturn this.newMethod()\n}\n\nnewMethod() {\nthis.log('Operation started')\nreturn this.processData()\n}\n}"
         },
         {
           "caption": "Async Operations with Deferred",
-          "code": "import { base } from 'xajs/core'\nclass DataLoader {\nasync loadData(retryCount = 3) {\nconst deferred = new base.Deferred()\ntry {\n// Attempt to load data with retry\nfor (let i = 0; i < retryCount; i++) {\ntry {\nconst response = await fetch('/api/data')\nif (!response.ok) throw new Error('API Error')\nconst data = await response.json()\nreturn deferred.resolve(data)\n} catch (err) {\nif (i === retryCount - 1) throw err\nawait new Promise(r => setTimeout(r, 1000 * (i + 1)))\n}\n}\n} catch (err) {\ndeferred.reject(err)\n}\nreturn deferred\n.done() // Ensures unhandled rejections are thrown\n}\nisDataLoaded() {\nreturn this.loadData.isDone()\n}\n}\n"
+          "code": "import { base } from 'xajs/core'\n\nclass DataLoader {\nasync loadData(retryCount = 3) {\nconst deferred = new base.Deferred()\n\ntry {\n// Attempt to load data with retry\nfor (let i = 0; i < retryCount; i++) {\ntry {\nconst response = await fetch('/api/data')\nif (!response.ok) throw new Error('API Error')\nconst data = await response.json()\nreturn deferred.resolve(data)\n} catch (err) {\nif (i === retryCount - 1) throw err\nawait new Promise(r => setTimeout(r, 1000 * (i + 1)))\n}\n}\n} catch (err) {\ndeferred.reject(err)\n}\n\nreturn deferred\n.done() // Ensures unhandled rejections are thrown\n}\n\nisDataLoaded() {\nreturn this.loadData.isDone()\n}\n}"
         }
       ],
       "exports": [
@@ -134,75 +97,20 @@
     "path": "dom/index.js",
     "info": {
       "name": "index.js",
-      "description": "High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.",
-      "features": [
-        {
-          "namespace": "VirtualDOM",
-          "property": "h",
-          "type": "Function",
-          "description": "Hyperscript function for creating virtual DOM elements"
-        },
-        {
-          "namespace": "VirtualDOM",
-          "property": "tags",
-          "type": "Object",
-          "description": "Helper functions for common HTML elements"
-        },
-        {
-          "namespace": "VirtualDOM",
-          "property": "diff",
-          "type": "Object",
-          "description": "Optimized diff algorithm with key tracking"
-        },
-        {
-          "namespace": "VirtualDOM",
-          "property": "lifecycle",
-          "type": "Object",
-          "description": "Component lifecycle with hooks"
-        },
-        {
-          "namespace": "EventHandling",
-          "property": "E",
-          "type": "Function",
-          "description": ".delegate - Event delegation with filters"
-        },
-        {
-          "namespace": "EventHandling",
-          "property": "touch",
-          "type": "Object",
-          "description": "Mobile touch event normalization"
-        },
-        {
-          "namespace": "URLParsing",
-          "property": "UrlParser",
-          "type": "Class",
-          "description": "Advanced URL parsing and manipulation"
-        },
-        {
-          "namespace": "URLParsing",
-          "property": "query",
-          "type": "Object",
-          "description": "Query string handling with arrays"
-        },
-        {
-          "namespace": "URLParsing",
-          "property": "path",
-          "type": "Object",
-          "description": "Path normalization and resolution"
-        }
-      ],
+      "description": "High-performance DOM manipulation with virtual DOM support,\noptimized event delegation, and unified touch event handling. Features include\nefficient diffing, batched updates, mobile-first event optimization, and\nmemory leak prevention.",
+      "features": [],
       "examples": [
         {
           "caption": "Virtual DOM with Tags Helpers",
-          "code": "import { h, tags } from 'xajs/dom'\n// Using h function directly\nconst vnode = h('div', { className: 'container' }, [\nh('header', { key: 'header' }, [\nh('h1', null, 'Welcome')\n])\n])\n// Using tags helpers (more concise)\nconst { div, header, h1, nav, a } = tags\nconst menu = div({ className: 'container' }, [\nheader({ key: 'header' }, [\nh1(null, 'Welcome'),\nnav({ className: 'menu' }, [\na({ href: '#home' }, 'Home'),\na({ href: '#about' }, 'About')\n])\n])\n])\n"
+          "code": "import { h, tags } from 'xajs/dom'\n\n// Using h function directly\nconst vnode = h('div', { className: 'container' }, [\nh('header', { key: 'header' }, [\nh('h1', null, 'Welcome')\n])\n])\n\n// Using tags helpers (more concise)\nconst { div, header, h1, nav, a } = tags\n\nconst menu = div({ className: 'container' }, [\nheader({ key: 'header' }, [\nh1(null, 'Welcome'),\nnav({ className: 'menu' }, [\na({ href: '#home' }, 'Home'),\na({ href: '#about' }, 'About')\n])\n])\n])"
         },
         {
           "caption": "Advanced Event Handling",
-          "code": "import { E } from 'xajs/dom'\n// One-time event handling\nE.once('window.load', () => {\nconsole.log('App loaded')\n})\n// Event sequence handling\nE.once(\n'window.mouseover',\n'window.click',\n(e) => {\nconsole.log('Mouse over then clicked')\n},\n{ capture: true }\n)\n// Efficient event delegation\nconst handler = E.delegate('.menu a', {\nclick: (e, target) => {\ne.preventDefault()\nconst href = target.getAttribute('href')\nrouter.navigate(href)\n},\ntouchstart: (e, target) => {\ntarget.classList.add('active')\n},\ntouchend: (e, target) => {\ntarget.classList.remove('active')\n}\n})\n// Automatic cleanup\nE.cleanup(() => {\nhandler.destroy()\n})\n"
+          "code": "import { E } from 'xajs/dom'\n\n// One-time event handling\nE.once('window.load', () => {\nconsole.log('App loaded')\n})\n\n// Event sequence handling\nE.once(\n'window.mouseover',\n'window.click',\n(e) => {\nconsole.log('Mouse over then clicked')\n},\n{ capture: true }\n)\n\n// Efficient event delegation\nconst handler = E.delegate('.menu a', {\nclick: (e, target) => {\ne.preventDefault()\nconst href = target.getAttribute('href')\nrouter.navigate(href)\n},\n\ntouchstart: (e, target) => {\ntarget.classList.add('active')\n},\n\ntouchend: (e, target) => {\ntarget.classList.remove('active')\n}\n})\n\n// Automatic cleanup\nE.cleanup(() => {\nhandler.destroy()\n})"
         },
         {
           "caption": "URL Parsing and Manipulation",
-          "code": "import { UrlParser } from 'xajs/dom'\n// Create parser instance\nconst parser = new UrlParser('https://example.com/path?q=search&tags[]=js&tags[]=dom')\n// Basic URL parts\nconsole.log(parser.protocol)  // 'https:'\nconsole.log(parser.hostname)  // 'example.com'\nconsole.log(parser.pathname)  // '/path'\n// Advanced query handling\nconst query = parser.query\nconsole.log(query.q)         // 'search'\nconsole.log(query.tags)      // ['js', 'dom']\n// URL manipulation\nparser.pathname = '/new-path'\nparser.addQuery('page', '2')\nconsole.log(parser.toString())\n// 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'\n"
+          "code": "import { UrlParser } from 'xajs/dom'\n\n// Create parser instance\nconst parser = new UrlParser('https://example.com/path?q=search&tags[]=js&tags[]=dom')\n\n// Basic URL parts\nconsole.log(parser.protocol)  // 'https:'\nconsole.log(parser.hostname)  // 'example.com'\nconsole.log(parser.pathname)  // '/path'\n\n// Advanced query handling\nconst query = parser.query\nconsole.log(query.q)         // 'search'\nconsole.log(query.tags)      // ['js', 'dom']\n\n// URL manipulation\nparser.pathname = '/new-path'\nparser.addQuery('page', '2')\nconsole.log(parser.toString())\n// 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'"
         }
       ],
       "exports": [
@@ -283,41 +191,16 @@
     "path": "fp/index.js",
     "info": {
       "name": "index.js",
-      "description": "Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety.",
-      "features": [
-        {
-          "namespace": "FunctionalCore",
-          "property": "composition",
-          "type": "Object",
-          "description": "Function composition with type checking"
-        },
-        {
-          "namespace": "FunctionalCore",
-          "property": "pointfree",
-          "type": "Object",
-          "description": "Point-free programming utilities"
-        },
-        {
-          "namespace": "FunctionalCore",
-          "property": "currying",
-          "type": "Object",
-          "description": "Advanced function currying"
-        },
-        {
-          "namespace": "FunctionalCore",
-          "property": "immutable",
-          "type": "Object",
-          "description": "Immutable data structures"
-        }
-      ],
+      "description": "Core functional programming utilities focusing on pure function\ncomposition, point-free programming, and immutable data handling. Features\noptimized composition chains with async support and type safety.",
+      "features": [],
       "examples": [
         {
           "caption": "Function Composition",
-          "code": "import { compose, composeAsync } from 'xajs/fp'\n// Synchronous composition\nconst enhance = compose(\naddTimestamp,\nvalidate,\nnormalize\n)\n// With type checking\nconst result = enhance({ name: 'example' })\n// Async composition with error handling\nconst pipeline = composeAsync(\nasync data => {\nconst validated = await validate(data)\nif (!validated.success) {\nthrow new ValidationError(validated.errors)\n}\nreturn validated.data\n},\nasync record => {\nconst normalized = await normalize(record)\nreturn {\n...normalized,\ntimestamp: Date.now()\n}\n}\n)\n"
+          "code": "import { compose, composeAsync } from 'xajs/fp'\n\n// Synchronous composition\nconst enhance = compose(\naddTimestamp,\nvalidate,\nnormalize\n)\n\n// With type checking\nconst result = enhance({ name: 'example' })\n\n// Async composition with error handling\nconst pipeline = composeAsync(\nasync data => {\nconst validated = await validate(data)\nif (!validated.success) {\nthrow new ValidationError(validated.errors)\n}\nreturn validated.data\n},\nasync record => {\nconst normalized = await normalize(record)\nreturn {\n...normalized,\ntimestamp: Date.now()\n}\n}\n)"
         },
         {
           "caption": "Point-free Programming",
-          "code": "import { pipe, curry } from 'xajs/fp'\n// Create a point-free data transformation\nconst processUser = pipe(\nprop('user'),\nwhen(hasRole('admin'), addAdminFlag),\nover(lensProp('permissions'), map(normalize)),\nassoc('lastAccess', Date.now())\n)\n// Apply the transformation\nconst result = processUser(response)\n"
+          "code": "import { pipe, curry } from 'xajs/fp'\n\n// Create a point-free data transformation\nconst processUser = pipe(\nprop('user'),\nwhen(hasRole('admin'), addAdminFlag),\nover(lensProp('permissions'), map(normalize)),\nassoc('lastAccess', Date.now())\n)\n\n// Apply the transformation\nconst result = processUser(response)"
         }
       ],
       "exports": [
@@ -361,79 +244,24 @@
     "path": "functional/index.js",
     "info": {
       "name": "index.js",
-      "description": "High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling.",
-      "features": [
-        {
-          "namespace": "FunctionComposition",
-          "property": "intercepter",
-          "type": "Object",
-          "description": "Function interception with before/after hooks"
-        },
-        {
-          "namespace": "FunctionComposition",
-          "property": "tryNext",
-          "type": "Object",
-          "description": "Chain-based error handling with fallbacks"
-        },
-        {
-          "namespace": "FunctionComposition",
-          "property": "promisify",
-          "type": "Object",
-          "description": "Convert callback-style functions to promises"
-        },
-        {
-          "namespace": "FunctionComposition",
-          "property": "sleep",
-          "type": "Object",
-          "description": "Promise-based delay utilities"
-        },
-        {
-          "namespace": "AsyncUtilities",
-          "property": "PLazy",
-          "type": "Object",
-          "description": "Lazy promise evaluation with caching"
-        },
-        {
-          "namespace": "AsyncUtilities",
-          "property": "PS",
-          "type": "Object",
-          "description": "Simple pub/sub event system with namespacing"
-        },
-        {
-          "namespace": "AsyncUtilities",
-          "property": "retry",
-          "type": "Object",
-          "description": "Automatic retry with exponential backoff"
-        },
-        {
-          "namespace": "DependencyInjection",
-          "property": "provide",
-          "type": "Object",
-          "description": "Class-based dependency provider"
-        },
-        {
-          "namespace": "DependencyInjection",
-          "property": "inject",
-          "type": "Object",
-          "description": "Dependency injection decorator"
-        }
-      ],
+      "description": "High-performance functional programming utilities focusing on\nfunction interception, promise-based operations, and dependency injection.\nFeatures include function composition, lazy evaluation, pub/sub patterns,\nand robust error handling.",
+      "features": [],
       "examples": [
         {
           "caption": "Function Interception (Sync & Async)",
-          "code": "import { helper } from 'xajs/functional'\n// Synchronous interception\nconst loggedFetch = helper.intercepter(fetch)\n.before(url => {\nconsole.log(`Fetching: ${url}`)\n})\n.after((url, response) => {\nconsole.log(`Completed: ${url} (${response.status})`)\n})\n.$runner\n// Async interception\nconst cachedFetch = helper.intercepter(fetch)\n.before(async url => {\nconst cached = await cache.get(url)\nif (cached) return cached\n})\n.after(async (url, response) => {\nawait cache.set(url, response.clone())\n})\n.$asyncRunner\n"
+          "code": "import { helper } from 'xajs/functional'\n\n// Synchronous interception\nconst loggedFetch = helper.intercepter(fetch)\n.before(url => {\nconsole.log(`Fetching: ${url}`)\n})\n.after((url, response) => {\nconsole.log(`Completed: ${url} (${response.status})`)\n})\n.$runner\n\n// Async interception\nconst cachedFetch = helper.intercepter(fetch)\n.before(async url => {\nconst cached = await cache.get(url)\nif (cached) return cached\n})\n.after(async (url, response) => {\nawait cache.set(url, response.clone())\n})\n.$asyncRunner"
         },
         {
           "caption": "Error Handling with tryNext",
-          "code": "import { helper } from 'xajs/functional'\nconst { tryNext, sleep } = helper\n// Chain of fallback strategies\nconst getData = tryNext([\n// Primary strategy: API call\nasync () => {\nconst response = await fetch('/api/data')\nif (!response.ok) throw new Error('API failed')\nreturn response.json()\n},\n// Fallback: Local cache\nasync () => {\nconst cached = await localStorage.getItem('api_data')\nif (!cached) throw new Error('Cache miss')\nreturn JSON.parse(cached)\n},\n// Last resort: Default data\n() => ({ status: 'offline', data: [] })\n])\n"
+          "code": "import { helper } from 'xajs/functional'\n\nconst { tryNext, sleep } = helper\n\n// Chain of fallback strategies\nconst getData = tryNext([\n// Primary strategy: API call\nasync () => {\nconst response = await fetch('/api/data')\nif (!response.ok) throw new Error('API failed')\nreturn response.json()\n},\n// Fallback: Local cache\nasync () => {\nconst cached = await localStorage.getItem('api_data')\nif (!cached) throw new Error('Cache miss')\nreturn JSON.parse(cached)\n},\n// Last resort: Default data\n() => ({ status: 'offline', data: [] })\n])"
         },
         {
           "caption": "Pub/Sub System",
-          "code": "import { helper } from 'xajs/functional'\nconst { PS: { Puber, Suber } } = helper\n// Create publisher and subscriber\nclass DataService extends Puber {\nconstructor() {\nsuper('data-service', {})\n}\nasync fetchData() {\nconst data = await fetch('/api/data')\nthis.pub('data:updated', await data.json())\n}\n}\nclass DataView extends Suber {\nconstructor(service) {\nsuper('data-view', {})\nthis.rss(service, [\n{\nmsg: 'data:updated',\nhandler: this.onDataUpdate.bind(this)\n}\n])\n}\nonDataUpdate(data) {\nthis.render(data)\n}\n}\n"
+          "code": "import { helper } from 'xajs/functional'\n\nconst { PS: { Puber, Suber } } = helper\n\n// Create publisher and subscriber\nclass DataService extends Puber {\nconstructor() {\nsuper('data-service', {})\n}\n\nasync fetchData() {\nconst data = await fetch('/api/data')\nthis.pub('data:updated', await data.json())\n}\n}\n\nclass DataView extends Suber {\nconstructor(service) {\nsuper('data-view', {})\nthis.rss(service, [\n{\nmsg: 'data:updated',\nhandler: this.onDataUpdate.bind(this)\n}\n])\n}\n\nonDataUpdate(data) {\nthis.render(data)\n}\n}"
         },
         {
           "caption": "Dependency Injection",
-          "code": "import { helper } from 'xajs/functional'\nconst { di } = helper\n// Define services with dependencies\nclass Logger {\nlog(msg) { console.log(msg) }\n}\nclass ApiService {\nconstructor(logger) {\nthis.logger = logger\n}\nasync fetch(url) {\nthis.logger.log(`Fetching: ${url}`)\nreturn fetch(url).then(r => r.json())\n}\n}\n"
+          "code": "import { helper } from 'xajs/functional'\n\nconst { di } = helper\n\n// Define services with dependencies\n@di.provide('logger')\nclass Logger {\nlog(msg) { console.log(msg) }\n}\n\n@di.provide('api')\n@di.inject(['logger'])\nclass ApiService {\nconstructor(logger) {\nthis.logger = logger\n}\n\nasync fetch(url) {\nthis.logger.log(`Fetching: ${url}`)\nreturn fetch(url).then(r => r.json())\n}\n}"
         }
       ],
       "exports": [
@@ -511,63 +339,20 @@
     "path": "future/index.js",
     "info": {
       "name": "index.js",
-      "description": "Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management.",
-      "features": [
-        {
-          "namespace": "ReactiveSystem",
-          "property": "TR",
-          "type": "Function",
-          "description": "Reactive value creation with dependency tracking"
-        },
-        {
-          "namespace": "ReactiveSystem",
-          "property": "atom",
-          "type": "Function",
-          "description": "Atomic state container with key identification"
-        },
-        {
-          "namespace": "ReactiveSystem",
-          "property": "selector",
-          "type": "Function",
-          "description": "Derived state computation with caching"
-        },
-        {
-          "namespace": "ReactiveSystem",
-          "property": "compute",
-          "type": "Function",
-          "description": "Multi-source computation with auto-cleanup"
-        },
-        {
-          "namespace": "TemplateEngine",
-          "property": "trp",
-          "type": "Function",
-          "description": "Reactive template engine with fine-grained updates"
-        },
-        {
-          "namespace": "TemplateEngine",
-          "property": "tft",
-          "type": "Function",
-          "description": "Template function transformer"
-        },
-        {
-          "namespace": "TemplateEngine",
-          "property": "eff",
-          "type": "Function",
-          "description": "Effect system with automatic cleanup"
-        }
-      ],
+      "description": "Cutting-edge experimental features exploring next-generation JavaScript\npatterns. Includes reactive templates, advanced effect management, and innovative\nasync patterns. Features fine-grained reactivity, automatic dependency tracking,\nand intelligent resource management.",
+      "features": [],
       "examples": [
         {
           "caption": "Reactive State Management",
-          "code": "import { TR } from 'xajs/future'\nconst { atom, selector, compute } = TR\n// Create atomic states\nconst count1 = TR(1)\nconst count2 = TR(2)\n// Create computed value\nconst sum = compute((a, b) => a + b)(count1, count2)\n// Create derived computation\nconst doubled = compute(s => s * 2)(sum)\n// Observe changes\nsum.observe(val => console.log('Sum:', val))     // 3\ndoubled.observe(val => console.log('Double:', val)) // 6\n// Update source values\ncount1(v => v + 1) // Sum: 4, Double: 8\ncount2(6)          // Sum: 8, Double: 16\n// Cleanup\nsum.dispose()\ndoubled.dispose()\n"
+          "code": "import { TR } from 'xajs/future'\nconst { atom, selector, compute } = TR\n\n// Create atomic states\nconst count1 = TR(1)\nconst count2 = TR(2)\n\n// Create computed value\nconst sum = compute((a, b) => a + b)(count1, count2)\n\n// Create derived computation\nconst doubled = compute(s => s * 2)(sum)\n\n// Observe changes\nsum.observe(val => console.log('Sum:', val))     // 3\ndoubled.observe(val => console.log('Double:', val)) // 6\n\n// Update source values\ncount1(v => v + 1) // Sum: 4, Double: 8\ncount2(6)          // Sum: 8, Double: 16\n\n// Cleanup\nsum.dispose()\ndoubled.dispose()"
         },
         {
           "caption": "Advanced State with Atoms",
-          "code": "import { TR } from 'xajs/future'\nconst { atom, selector } = TR\n// Create base atom\nconst todoAtom = atom({\nkey: 'todoAtom',\ndefault: {\nitems: [],\nfilter: 'all'\n}\n})\n// Create derived selectors\nconst filteredTodos = selector({\nkey: 'filteredTodos',\nget: ({ get }) => {\nconst state = get(todoAtom)\nswitch (state.filter) {\ncase 'completed':\nreturn state.items.filter(item => item.completed)\ncase 'active':\nreturn state.items.filter(item => !item.completed)\ndefault:\nreturn state.items\n}\n}\n})\nconst todoStats = selector({\nkey: 'todoStats',\nget: ({ get }) => {\nconst items = get(todoAtom).items\nreturn {\ntotal: items.length,\ncompleted: items.filter(item => item.completed).length,\nactive: items.filter(item => !item.completed).length\n}\n}\n})\n// Use selectors\nfilteredTodos.observe(todos => {\nrenderTodoList(todos)\n})\ntodoStats.observe(stats => {\nupdateStatusBar(stats)\n})\n"
+          "code": "import { TR } from 'xajs/future'\nconst { atom, selector } = TR\n\n// Create base atom\nconst todoAtom = atom({\nkey: 'todoAtom',\ndefault: {\nitems: [],\nfilter: 'all'\n}\n})\n\n// Create derived selectors\nconst filteredTodos = selector({\nkey: 'filteredTodos',\nget: ({ get }) => {\nconst state = get(todoAtom)\nswitch (state.filter) {\ncase 'completed':\nreturn state.items.filter(item => item.completed)\ncase 'active':\nreturn state.items.filter(item => !item.completed)\ndefault:\nreturn state.items\n}\n}\n})\n\nconst todoStats = selector({\nkey: 'todoStats',\nget: ({ get }) => {\nconst items = get(todoAtom).items\nreturn {\ntotal: items.length,\ncompleted: items.filter(item => item.completed).length,\nactive: items.filter(item => !item.completed).length\n}\n}\n})\n\n// Use selectors\nfilteredTodos.observe(todos => {\nrenderTodoList(todos)\n})\n\ntodoStats.observe(stats => {\nupdateStatusBar(stats)\n})"
         },
         {
           "caption": "Effect System with Cleanup",
-          "code": "import { eff } from 'xajs/future'\n// Create reactive effect\nconst cleanup = eff.effect(() => {\nconst subscription = api.subscribe(data => {\nprocessData(data)\n})\n// Effect cleanup\nreturn () => {\nsubscription.unsubscribe()\n}\n})\n// Reactive template with automatic updates\nconst template = eff.template`\n<div class=\"user-card\">\n<h2>${() => user.name}</h2>\n<p>${() => user.bio}</p>\n<div class=\"stats\">\n${() => user.stats.map(stat => `\n<div class=\"stat\">\n<strong>${stat.label}</strong>\n<span>${stat.value}</span>\n</div>\n`).join('')}\n</div>\n</div>\n`\n// Cleanup when done\ncleanup()\n"
+          "code": "import { eff } from 'xajs/future'\n\n// Create reactive effect\nconst cleanup = eff.effect(() => {\nconst subscription = api.subscribe(data => {\nprocessData(data)\n})\n\n// Effect cleanup\nreturn () => {\nsubscription.unsubscribe()\n}\n})\n\n// Reactive template with automatic updates\nconst template = eff.template`\n<div class=\"user-card\">\n<h2>${() => user.name}</h2>\n<p>${() => user.bio}</p>\n<div class=\"stats\">\n${() => user.stats.map(stat => `\n<div class=\"stat\">\n<strong>${stat.label}</strong>\n<span>${stat.value}</span>\n</div>\n`).join('')}\n</div>\n</div>\n`\n\n// Cleanup when done\ncleanup()"
         }
       ],
       "exports": [
@@ -632,153 +417,20 @@
     "path": "index.js",
     "info": {
       "name": "index.js",
-      "description": "A modern, high-performance JavaScript utility library that combines functional programming with reactive patterns. Features include a lightweight class system, virtual DOM, pub/sub patterns, and comprehensive mobile device detection.",
-      "features": [
-        {
-          "namespace": "Core",
-          "property": "base",
-          "type": "Object",
-          "description": "Lightweight class system with inheritance and mixins"
-        },
-        {
-          "namespace": "Core",
-          "property": "decorators",
-          "type": "Object",
-          "description": "Method decorators including deprecation and mixin support"
-        },
-        {
-          "namespace": "Core",
-          "property": "Deferred",
-          "type": "Object",
-          "description": "Enhanced Promise with resolve/reject control"
-        },
-        {
-          "namespace": "DOM",
-          "property": "h",
-          "type": "Function",
-          "description": "Hyperscript function for virtual DOM creation"
-        },
-        {
-          "namespace": "DOM",
-          "property": "tags",
-          "type": "Object",
-          "description": "Helper functions for common HTML elements"
-        },
-        {
-          "namespace": "DOM",
-          "property": "E",
-          "type": "Object",
-          "description": "Event management with delegation and one-time binding"
-        },
-        {
-          "namespace": "DOM",
-          "property": "UrlParser",
-          "type": "Class",
-          "description": "Advanced URL parsing and manipulation"
-        },
-        {
-          "namespace": "Functional",
-          "property": "intercepter",
-          "type": "Object",
-          "description": "Function interception with before/after hooks"
-        },
-        {
-          "namespace": "Functional",
-          "property": "tryNext",
-          "type": "Object",
-          "description": "Chain-based error handling with fallbacks"
-        },
-        {
-          "namespace": "Functional",
-          "property": "PS",
-          "type": "Object",
-          "description": "Pub/sub system with namespacing"
-        },
-        {
-          "namespace": "Functional",
-          "property": "di",
-          "type": "Object",
-          "description": "Dependency injection with decorators"
-        },
-        {
-          "namespace": "Future",
-          "property": "TR",
-          "type": "Object",
-          "description": "Reactive state management with dependency tracking"
-        },
-        {
-          "namespace": "Future",
-          "property": "atom",
-          "type": "Function",
-          "description": "Atomic state container with key identification"
-        },
-        {
-          "namespace": "Future",
-          "property": "selector",
-          "type": "Function",
-          "description": "Derived state computation with caching"
-        },
-        {
-          "namespace": "Future",
-          "property": "eff",
-          "type": "Object",
-          "description": "Effect system with automatic cleanup"
-        },
-        {
-          "namespace": "Mobile",
-          "property": "UserAgent",
-          "type": "Class",
-          "description": "Advanced device and browser detection"
-        },
-        {
-          "namespace": "Mobile",
-          "property": "device",
-          "type": "Object",
-          "description": "Device type and vendor detection"
-        },
-        {
-          "namespace": "Mobile",
-          "property": "browser",
-          "type": "Object",
-          "description": "Browser and version identification"
-        },
-        {
-          "namespace": "Lang",
-          "property": "MagicString",
-          "type": "Class",
-          "description": "Immutable string operations with chaining"
-        },
-        {
-          "namespace": "Internal",
-          "property": "is",
-          "type": "Object",
-          "description": "Type checking utilities (isArray, isObject, etc.)"
-        },
-        {
-          "namespace": "Internal",
-          "property": "assign",
-          "type": "Function",
-          "description": "Safe object assignment with deep copy"
-        },
-        {
-          "namespace": "Internal",
-          "property": "hasOwnProp",
-          "type": "Function",
-          "description": "Safe property existence check"
-        }
-      ],
+      "description": "A modern, high-performance JavaScript utility library that combines\nfunctional programming with reactive patterns. Features include a lightweight class\nsystem, virtual DOM, pub/sub patterns, and comprehensive mobile device detection.",
+      "features": [],
       "examples": [
         {
           "caption": "Class System and Events",
-          "code": "import { core, dom } from 'xajs'\nconst Component = core.base.Class({\n$extends: BaseComponent,\n$static: {\ndefaultConfig: { theme: 'light' }\n},\n$ctor(config) {\nthis.$super()\nthis.config = { ...this.constructor.defaultConfig, ...config }\nthis.handler = dom.E.delegate('.menu a', {\nclick: (e, target) => {\ne.preventDefault()\nthis.navigate(target.getAttribute('href'))\n}\n})\n}\n})\n"
+          "code": "import { core, dom } from 'xajs'\n\nconst Component = core.base.Class({\n$extends: BaseComponent,\n\n$static: {\ndefaultConfig: { theme: 'light' }\n},\n\n$ctor(config) {\nthis.$super()\nthis.config = { ...this.constructor.defaultConfig, ...config }\nthis.handler = dom.E.delegate('.menu a', {\nclick: (e, target) => {\ne.preventDefault()\nthis.navigate(target.getAttribute('href'))\n}\n})\n}\n})"
         },
         {
           "caption": "Reactive State Management",
-          "code": "import { future, functional } from 'xajs'\n// Create atomic state\nconst todoAtom = future.TR.atom({\nkey: 'todoAtom',\ndefault: { items: [], filter: 'all' }\n})\n// Create derived state\nconst filteredTodos = future.TR.selector({\nkey: 'filteredTodos',\nget: ({ get }) => {\nconst state = get(todoAtom)\nreturn state.items.filter(item =>\nstate.filter === 'all' ? true :\nstate.filter === 'completed' ? item.completed :\n!item.completed\n)\n}\n})\n// Create pub/sub communication\nconst { Puber, Suber } = functional.PS\nconst todoService = new Puber('todos')\nconst todoView = new Suber('view')\ntodoView.rss(todoService, [{\nmsg: 'todos:updated',\nhandler: todos => filteredTodos.observe(renderTodos)\n}])\n"
+          "code": "import { future, functional } from 'xajs'\n\n// Create atomic state\nconst todoAtom = future.TR.atom({\nkey: 'todoAtom',\ndefault: { items: [], filter: 'all' }\n})\n\n// Create derived state\nconst filteredTodos = future.TR.selector({\nkey: 'filteredTodos',\nget: ({ get }) => {\nconst state = get(todoAtom)\nreturn state.items.filter(item =>\nstate.filter === 'all' ? true :\nstate.filter === 'completed' ? item.completed :\n!item.completed\n)\n}\n})\n\n// Create pub/sub communication\nconst { Puber, Suber } = functional.PS\nconst todoService = new Puber('todos')\nconst todoView = new Suber('view')\n\ntodoView.rss(todoService, [{\nmsg: 'todos:updated',\nhandler: todos => filteredTodos.observe(renderTodos)\n}])"
         },
         {
           "caption": "Mobile and DOM Utilities",
-          "code": "import { mobile, dom } from 'xajs'\n// Device detection\nconst ua = new mobile.UserAgent(navigator.userAgent)\nif (ua.isMobile()) {\nif (ua.isOS('iOS')) {\nenableIOSFeatures()\n}\n}\n// DOM manipulation\nconst { div, nav, a } = dom.tags\nconst menu = div({ className: 'menu' }, [\nnav(null, [\na({ href: '#home' }, 'Home'),\na({ href: '#about' }, 'About')\n])\n])\n// URL parsing\nconst url = new dom.UrlParser(location.href)\nconsole.log(url.query.page)\n"
+          "code": "import { mobile, dom } from 'xajs'\n\n// Device detection\nconst ua = new mobile.UserAgent(navigator.userAgent)\nif (ua.isMobile()) {\nif (ua.isOS('iOS')) {\nenableIOSFeatures()\n}\n}\n\n// DOM manipulation\nconst { div, nav, a } = dom.tags\nconst menu = div({ className: 'menu' }, [\nnav(null, [\na({ href: '#home' }, 'Home'),\na({ href: '#about' }, 'About')\n])\n])\n\n// URL parsing\nconst url = new dom.UrlParser(location.href)\nconsole.log(url.query.page)"
         }
       ],
       "exports": [
@@ -948,39 +600,20 @@
     "path": "internal/index.js",
     "info": {
       "name": "index.js",
-      "description": "Core internal utilities providing type checking, object manipulation, and shared helper functions. Features comprehensive type detection and safe object operations with performance optimization.",
-      "features": [
-        {
-          "namespace": "TypeChecking",
-          "property": "is",
-          "type": "Function",
-          "description": ".isBoolean - Boolean type check"
-        },
-        {
-          "namespace": "ObjectUtilities",
-          "property": "assign",
-          "type": "Function",
-          "description": "Safe object assignment with deep copy"
-        },
-        {
-          "namespace": "ObjectUtilities",
-          "property": "hasOwnProp",
-          "type": "Function",
-          "description": "Safe property existence check"
-        }
-      ],
+      "description": "Core internal utilities providing type checking, object manipulation,\nand shared helper functions. Features comprehensive type detection and safe\nobject operations with performance optimization.",
+      "features": [],
       "examples": [
         {
           "caption": "Type Checking",
-          "code": "import { is } from 'xajs/internal'\n// Array checks\nconsole.log(is.isArray([1, 2, 3]))  // true\nconsole.log(is.isArray({}))         // false\n// Object checks\nconsole.log(is.isObject({}))        // true\nconsole.log(is.isObject([]))        // false\n// Function checks\nconsole.log(is.isFunction(() => {}))            // true\nconsole.log(is.isFunction(async () => {}))      // true\nconsole.log(is.isFunction(function* () {}))     // true\n// Boolean checks\nconsole.log(is.isBoolean(true))     // true\nconsole.log(is.isBoolean(1))        // false\n"
+          "code": "import { is } from 'xajs/internal'\n\n// Array checks\nconsole.log(is.isArray([1, 2, 3]))  // true\nconsole.log(is.isArray({}))         // false\n\n// Object checks\nconsole.log(is.isObject({}))        // true\nconsole.log(is.isObject([]))        // false\n\n// Function checks\nconsole.log(is.isFunction(() => {}))            // true\nconsole.log(is.isFunction(async () => {}))      // true\nconsole.log(is.isFunction(function* () {}))     // true\n\n// Boolean checks\nconsole.log(is.isBoolean(true))     // true\nconsole.log(is.isBoolean(1))        // false"
         },
         {
           "caption": "Safe Object Operations",
-          "code": "import { assign, hasOwnProp } from 'xajs/internal'\n// Safe object assignment\nconst base = { a: 1, b: { c: 2 } }\nconst extension = { b: { d: 3 }, e: 4 }\nconst result = assign({}, base, extension)\nconsole.log(result)\n// {\n//   a: 1,\n//   b: { c: 2, d: 3 },\n//   e: 4\n// }\n// Safe property checks\nif (hasOwnProp(result, 'b')) {\nconsole.log('Property exists:', result.b)\n}\n"
+          "code": "import { assign, hasOwnProp } from 'xajs/internal'\n\n// Safe object assignment\nconst base = { a: 1, b: { c: 2 } }\nconst extension = { b: { d: 3 }, e: 4 }\n\nconst result = assign({}, base, extension)\nconsole.log(result)\n// {\n//   a: 1,\n//   b: { c: 2, d: 3 },\n//   e: 4\n// }\n\n// Safe property checks\nif (hasOwnProp(result, 'b')) {\nconsole.log('Property exists:', result.b)\n}"
         },
         {
           "caption": "Type-Safe Operations",
-          "code": "import { is, assign } from 'xajs/internal'\nfunction safeUpdate(target, source) {\n// Type validation\nif (!is.isObject(target) || !is.isObject(source)) {\nthrow new TypeError('Both arguments must be objects')\n}\n// Safe assignment with type checking\nconst result = assign({}, target)\nfor (const key in source) {\nif (hasOwnProp(source, key)) {\nconst value = source[key]\n// Type-specific handling\nif (is.isArray(value)) {\nresult[key] = [...value]\n} else if (is.isObject(value)) {\nresult[key] = safeUpdate({}, value)\n} else {\nresult[key] = value\n}\n}\n}\nreturn result\n}\n"
+          "code": "import { is, assign } from 'xajs/internal'\n\nfunction safeUpdate(target, source) {\n// Type validation\nif (!is.isObject(target) || !is.isObject(source)) {\nthrow new TypeError('Both arguments must be objects')\n}\n\n// Safe assignment with type checking\nconst result = assign({}, target)\n\nfor (const key in source) {\nif (hasOwnProp(source, key)) {\nconst value = source[key]\n\n// Type-specific handling\nif (is.isArray(value)) {\nresult[key] = [...value]\n} else if (is.isObject(value)) {\nresult[key] = safeUpdate({}, value)\n} else {\nresult[key] = value\n}\n}\n}\n\nreturn result\n}"
         }
       ],
       "exports": [
@@ -1025,45 +658,20 @@
     "path": "lang/index.js",
     "info": {
       "name": "index.js",
-      "description": "Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.",
-      "features": [
-        {
-          "namespace": "StringUtilities",
-          "property": "MagicString",
-          "type": "Class",
-          "description": "Immutable string wrapper with chainable operations"
-        },
-        {
-          "namespace": "StringUtilities",
-          "property": "capitalize",
-          "type": "Function",
-          "description": "First character capitalization"
-        },
-        {
-          "namespace": "StringUtilities",
-          "property": "trim",
-          "type": "Function",
-          "description": "Whitespace removal with custom characters"
-        },
-        {
-          "namespace": "StringUtilities",
-          "property": "replace",
-          "type": "Function",
-          "description": "Pattern replacement with function support"
-        }
-      ],
+      "description": "Advanced string manipulation utilities with immutable operations\nand chainable transformations. Features include case conversion, trimming,\npattern matching, and string interpolation.",
+      "features": [],
       "examples": [
         {
           "caption": "Basic String Operations",
-          "code": "import { MagicString } from 'xajs/lang'\nconst str = MagicString('  hello world  ')\n// Chain multiple operations\nconst result = str\n.trim()\n.capitalize()\n.replace(/world/, 'AJS')\nconsole.log(result)  // 'Hello AJS'\nconsole.log(str)     // Original string unchanged\n"
+          "code": "import { MagicString } from 'xajs/lang'\n\nconst str = MagicString('  hello world  ')\n\n// Chain multiple operations\nconst result = str\n.trim()\n.capitalize()\n.replace(/world/, 'AJS')\n\nconsole.log(result)  // 'Hello AJS'\nconsole.log(str)     // Original string unchanged"
         },
         {
           "caption": "Advanced Pattern Matching",
-          "code": "import { MagicString } from 'xajs/lang'\nconst text = MagicString('user.name.first')\n// Replace with callback\nconst result = text.replace(/\\w+/g, (match, index) => {\nif (index === 0) return match\nreturn match.toUpperCase()\n})\nconsole.log(result)  // 'user.NAME.FIRST'\n"
+          "code": "import { MagicString } from 'xajs/lang'\n\nconst text = MagicString('user.name.first')\n\n// Replace with callback\nconst result = text.replace(/\\w+/g, (match, index) => {\nif (index === 0) return match\nreturn match.toUpperCase()\n})\n\nconsole.log(result)  // 'user.NAME.FIRST'"
         },
         {
           "caption": "String Transformation",
-          "code": "import { MagicString } from 'xajs/lang'\nconst template = MagicString('Hello, ${name}!')\n// Interpolate values\nconst greeting = template.replace(/\\${(\\w+)}/g, (_, key) => ({\nname: 'AJS User'\n}[key] || ''))\nconsole.log(greeting)  // 'Hello, AJS User!'\n"
+          "code": "import { MagicString } from 'xajs/lang'\n\nconst template = MagicString('Hello, ${name}!')\n\n// Interpolate values\nconst greeting = template.replace(/\\${(\\w+)}/g, (_, key) => ({\nname: 'AJS User'\n}[key] || ''))\n\nconsole.log(greeting)  // 'Hello, AJS User!'"
         }
       ],
       "exports": [
@@ -1106,45 +714,20 @@
     "path": "mobile/index.js",
     "info": {
       "name": "index.js",
-      "description": "Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices.",
-      "features": [
-        {
-          "namespace": "MobileUtilities",
-          "property": "ua",
-          "type": "Object",
-          "description": "User agent parsing system with priority-based parsers"
-        },
-        {
-          "namespace": "MobileUtilities",
-          "property": "device",
-          "type": "Object",
-          "description": "Device type and vendor detection with fallbacks"
-        },
-        {
-          "namespace": "MobileUtilities",
-          "property": "browser",
-          "type": "Object",
-          "description": "Browser and version identification with feature detection"
-        },
-        {
-          "namespace": "MobileUtilities",
-          "property": "engine",
-          "type": "Object",
-          "description": "Rendering engine detection and capability analysis"
-        }
-      ],
+      "description": "Advanced mobile device detection and user agent parsing system.\nFeatures comprehensive device fingerprinting, vendor detection, and detailed\nbrowser capabilities analysis through modular parsers. Includes robust\nhandling of edge cases and unknown devices.",
+      "features": [],
       "examples": [
         {
           "caption": "Device Detection and Feature Support",
-          "code": "import { UserAgent } from 'xajs/mobile'\n// Initialize with current user agent\nconst ua = new UserAgent(navigator.userAgent)\n// Comprehensive device check\nif (ua.isMobile()) {\n// Mobile-specific optimizations\nif (ua.isOS('iOS')) {\n// iOS specific features\nif (parseFloat(ua.getResult().os.version) >= 14.5) {\nenableModernIOSFeatures()\n} else {\nenableLegacyIOSSupport()\n}\n} else if (ua.isOS('Android')) {\nconst version = parseFloat(ua.getResult().os.version)\nif (version >= 10) {\nenableModernAndroidFeatures()\n} else {\nenableLegacyAndroidSupport()\n}\n}\n} else if (ua.isTablet()) {\n// Tablet optimizations\nconst { device } = ua.getResult()\nif (device.vendor === 'Apple' && device.model === 'iPad') {\nenableIPadFeatures()\n}\n} else if (ua.isDesktop()) {\n// Desktop optimizations\nenableDesktopFeatures()\n}\n"
+          "code": "import { UserAgent } from 'xajs/mobile'\n\n// Initialize with current user agent\nconst ua = new UserAgent(navigator.userAgent)\n\n// Comprehensive device check\nif (ua.isMobile()) {\n// Mobile-specific optimizations\nif (ua.isOS('iOS')) {\n// iOS specific features\nif (parseFloat(ua.getResult().os.version) >= 14.5) {\nenableModernIOSFeatures()\n} else {\nenableLegacyIOSSupport()\n}\n} else if (ua.isOS('Android')) {\nconst version = parseFloat(ua.getResult().os.version)\nif (version >= 10) {\nenableModernAndroidFeatures()\n} else {\nenableLegacyAndroidSupport()\n}\n}\n} else if (ua.isTablet()) {\n// Tablet optimizations\nconst { device } = ua.getResult()\nif (device.vendor === 'Apple' && device.model === 'iPad') {\nenableIPadFeatures()\n}\n} else if (ua.isDesktop()) {\n// Desktop optimizations\nenableDesktopFeatures()\n}"
         },
         {
           "caption": "Browser and Engine Detection",
-          "code": "import { UserAgent } from 'xajs/mobile'\nconst ua = new UserAgent(navigator.userAgent)\nconst { browser, engine } = ua.getResult()\n// Comprehensive browser checks\nif (ua.isBrowser('Chrome')) {\nconst version = parseFloat(browser.version)\nif (version >= 90) {\n// Modern Chrome features\nenableProgressiveFeatures()\n} else if (version >= 80) {\n// Legacy but stable Chrome features\nenableBasicFeatures()\n} else {\n// Very old Chrome\nshowBrowserUpdateNotice()\n}\n} else if (ua.isBrowser('Safari')) {\nif (parseFloat(browser.version) >= 14) {\nif (engine.name === 'Webkit') {\n// Modern Safari + Webkit\nenableWebkitOptimizations()\n}\n} else {\n// Legacy Safari support\nenableLegacySafariSupport()\n}\n}\n"
+          "code": "import { UserAgent } from 'xajs/mobile'\n\nconst ua = new UserAgent(navigator.userAgent)\nconst { browser, engine } = ua.getResult()\n\n// Comprehensive browser checks\nif (ua.isBrowser('Chrome')) {\nconst version = parseFloat(browser.version)\nif (version >= 90) {\n// Modern Chrome features\nenableProgressiveFeatures()\n} else if (version >= 80) {\n// Legacy but stable Chrome features\nenableBasicFeatures()\n} else {\n// Very old Chrome\nshowBrowserUpdateNotice()\n}\n} else if (ua.isBrowser('Safari')) {\nif (parseFloat(browser.version) >= 14) {\nif (engine.name === 'Webkit') {\n// Modern Safari + Webkit\nenableWebkitOptimizations()\n}\n} else {\n// Legacy Safari support\nenableLegacySafariSupport()\n}\n}"
         },
         {
           "caption": "Edge Cases and Unknown Devices",
-          "code": "import { UserAgent } from 'xajs/mobile'\nfunction detectDevice(userAgent = '') {\nconst ua = new UserAgent(userAgent)\nconst result = ua.getResult()\n// Handle empty or invalid UA strings\nif (!userAgent) {\nreturn {\ntype: 'unknown',\ncapabilities: getDefaultCapabilities()\n}\n}\n// Handle unknown browsers\nif (!result.browser.name) {\n// Fallback to engine detection\nif (result.engine.name) {\nreturn {\ntype: 'generic',\nengine: result.engine.name,\ncapabilities: detectEngineCapabilities(result.engine)\n}\n}\n}\n// Handle unknown devices\nif (!result.device.type) {\n// Fallback to screen size detection\nreturn {\ntype: detectDeviceTypeFromScreen(),\ncapabilities: detectCapabilitiesFromScreen()\n}\n}\nreturn result\n}\n"
+          "code": "import { UserAgent } from 'xajs/mobile'\n\nfunction detectDevice(userAgent = '') {\nconst ua = new UserAgent(userAgent)\nconst result = ua.getResult()\n\n// Handle empty or invalid UA strings\nif (!userAgent) {\nreturn {\ntype: 'unknown',\ncapabilities: getDefaultCapabilities()\n}\n}\n\n// Handle unknown browsers\nif (!result.browser.name) {\n// Fallback to engine detection\nif (result.engine.name) {\nreturn {\ntype: 'generic',\nengine: result.engine.name,\ncapabilities: detectEngineCapabilities(result.engine)\n}\n}\n}\n\n// Handle unknown devices\nif (!result.device.type) {\n// Fallback to screen size detection\nreturn {\ntype: detectDeviceTypeFromScreen(),\ncapabilities: detectCapabilitiesFromScreen()\n}\n}\n\nreturn result\n}"
         }
       ],
       "exports": [],
@@ -1183,9 +766,8 @@
     "path": "mobile/ua/index.js",
     "info": {
       "name": "index.js",
-      "description": "",
+      "description": "User Agent Parser Module",
       "features": [
-        "User Agent Analysis",
         "Comprehensive user agent parsing",
         "Browser and version detection",
         "Operating system identification",
@@ -1195,7 +777,7 @@
       "examples": [
         {
           "caption": "",
-          "code": "import { UserAgent } from 'xajs/mobile/ua'\nconst ua = new UserAgent(navigator.userAgent)\nconsole.log({\nbrowser: ua.getBrowser(),\nos: ua.getOS(),\ndevice: ua.getDevice(),\nengine: ua.getEngine()\n})\n"
+          "code": "import { UserAgent } from 'xajs/mobile/ua'\n\nconst ua = new UserAgent(navigator.userAgent)\n\nconsole.log({\nbrowser: ua.getBrowser(),\nos: ua.getOS(),\ndevice: ua.getDevice(),\nengine: ua.getEngine()\n})"
         }
       ],
       "exports": [
@@ -1215,9 +797,8 @@
     "path": "mobile/ua/parsers/index.js",
     "info": {
       "name": "index.js",
-      "description": "",
+      "description": "User Agent Parsers Collection",
       "features": [
-        "UA Parsers",
         "Modular parser architecture",
         "Extensible parsing rules",
         "High accuracy detection",
@@ -1226,7 +807,7 @@
       "examples": [
         {
           "caption": "",
-          "code": "import { BrowserParser, OSParser } from 'xajs/mobile/ua/parsers'\nconst browserInfo = new BrowserParser().parse(userAgent)\nconst osInfo = new OSParser().parse(userAgent)\nconsole.log({\nbrowser: browserInfo.name,\nversion: browserInfo.version,\nos: osInfo.name,\nplatform: osInfo.platform\n})\n"
+          "code": "import { BrowserParser, OSParser } from 'xajs/mobile/ua/parsers'\n\nconst browserInfo = new BrowserParser().parse(userAgent)\nconst osInfo = new OSParser().parse(userAgent)\n\nconsole.log({\nbrowser: browserInfo.name,\nversion: browserInfo.version,\nos: osInfo.name,\nplatform: osInfo.platform\n})"
         }
       ],
       "exports": [],

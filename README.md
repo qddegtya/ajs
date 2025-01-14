@@ -44,11 +44,14 @@ A thoughtfully crafted JavaScript utility library that combines classical utilit
 
 ```javascript
 import { core, dom } from 'xajs';
+
 const Component = core.base.Class({
   $extends: BaseComponent,
+
   $static: {
     defaultConfig: { theme: 'light' }
   },
+
   $ctor(config) {
     this.$super();
     this.config = { ...this.constructor.defaultConfig, ...config };
@@ -66,11 +69,13 @@ const Component = core.base.Class({
 
 ```javascript
 import { future, functional } from 'xajs';
+
 // Create atomic state
 const todoAtom = future.TR.atom({
   key: 'todoAtom',
   default: { items: [], filter: 'all' }
 });
+
 // Create derived state
 const filteredTodos = future.TR.selector({
   key: 'filteredTodos',
@@ -85,10 +90,12 @@ const filteredTodos = future.TR.selector({
     );
   }
 });
+
 // Create pub/sub communication
 const { Puber, Suber } = functional.PS;
 const todoService = new Puber('todos');
 const todoView = new Suber('view');
+
 todoView.rss(todoService, [
   {
     msg: 'todos:updated',
@@ -101,6 +108,7 @@ todoView.rss(todoService, [
 
 ```javascript
 import { mobile, dom } from 'xajs';
+
 // Device detection
 const ua = new mobile.UserAgent(navigator.userAgent);
 if (ua.isMobile()) {
@@ -108,11 +116,13 @@ if (ua.isMobile()) {
     enableIOSFeatures();
   }
 }
+
 // DOM manipulation
 const { div, nav, a } = dom.tags;
 const menu = div({ className: 'menu' }, [
   nav(null, [a({ href: '#home' }, 'Home'), a({ href: '#about' }, 'About')])
 ]);
+
 // URL parsing
 const url = new dom.UrlParser(location.href);
 console.log(url.query.page);
@@ -138,24 +148,16 @@ console.log(url.query.page);
 
   Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.
 
-### Features
-
-- ClassSystem.Class: Base class factory with $extends, $ctor, and $static support
-- Decorators.mixin: Class decorator for mixin application
-- Decorators.deprecate: Method/property deprecation decorator with custom messages
-- Deferred.Deferred: Promise wrapper with resolve/reject control
-- Deferred.done: Final promise chain handler with error propagation
-- Deferred.isDone: Promise state check for completion status
-- Available exports: base, decorators
-
 ### Examples
 
 **Class Definition with Static Members**
 
 ```javascript
 import { base } from 'xajs/core';
+
 const MyComponent = base.Class({
   $extends: BaseComponent,
+
   // Static properties and methods
   $static: {
     defaultConfig: {
@@ -165,12 +167,14 @@ const MyComponent = base.Class({
       return new this({ ...this.defaultConfig, ...config });
     }
   },
+
   // Constructor
   $ctor(config) {
     this.$super(); // Call parent constructor
     this.config = config;
     this.state = { count: 0 };
   },
+
   // Instance methods
   increment() {
     this.state.count++;
@@ -183,17 +187,22 @@ const MyComponent = base.Class({
 
 ```javascript
 import { decorators } from 'xajs/core';
+
 // Define a mixin
 const LoggerMixin = {
   log(msg) {
     console.log(`[${this.constructor.name}] ${msg}`);
   }
 };
+
 // Apply mixin and deprecate old methods
+@decorators.mixin(LoggerMixin)
 class MyService {
+  @decorators.deprecate('Use newMethod() instead', { since: '2.0.0' })
   oldMethod() {
     return this.newMethod();
   }
+
   newMethod() {
     this.log('Operation started');
     return this.processData();
@@ -205,9 +214,11 @@ class MyService {
 
 ```javascript
 import { base } from 'xajs/core';
+
 class DataLoader {
   async loadData(retryCount = 3) {
     const deferred = new base.Deferred();
+
     try {
       // Attempt to load data with retry
       for (let i = 0; i < retryCount; i++) {
@@ -224,8 +235,10 @@ class DataLoader {
     } catch (err) {
       deferred.reject(err);
     }
+
     return deferred.done(); // Ensures unhandled rejections are thrown
   }
+
   isDataLoaded() {
     return this.loadData.isDone();
   }
@@ -236,31 +249,21 @@ class DataLoader {
 
   High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.
 
-### Features
-
-- VirtualDOM.h: Hyperscript function for creating virtual DOM elements
-- VirtualDOM.tags: Helper functions for common HTML elements
-- VirtualDOM.diff: Optimized diff algorithm with key tracking
-- VirtualDOM.lifecycle: Component lifecycle with hooks
-- EventHandling.E: .delegate - Event delegation with filters
-- EventHandling.touch: Mobile touch event normalization
-- URLParsing.UrlParser: Advanced URL parsing and manipulation
-- URLParsing.query: Query string handling with arrays
-- URLParsing.path: Path normalization and resolution
-- Available exports: E, UrlParser, h, tags
-
 ### Examples
 
 **Virtual DOM with Tags Helpers**
 
 ```javascript
 import { h, tags } from 'xajs/dom';
+
 // Using h function directly
 const vnode = h('div', { className: 'container' }, [
   h('header', { key: 'header' }, [h('h1', null, 'Welcome')])
 ]);
+
 // Using tags helpers (more concise)
 const { div, header, h1, nav, a } = tags;
+
 const menu = div({ className: 'container' }, [
   header({ key: 'header' }, [
     h1(null, 'Welcome'),
@@ -276,10 +279,12 @@ const menu = div({ className: 'container' }, [
 
 ```javascript
 import { E } from 'xajs/dom';
+
 // One-time event handling
 E.once('window.load', () => {
   console.log('App loaded');
 });
+
 // Event sequence handling
 E.once(
   'window.mouseover',
@@ -289,6 +294,7 @@ E.once(
   },
   { capture: true }
 );
+
 // Efficient event delegation
 const handler = E.delegate('.menu a', {
   click: (e, target) => {
@@ -296,13 +302,16 @@ const handler = E.delegate('.menu a', {
     const href = target.getAttribute('href');
     router.navigate(href);
   },
+
   touchstart: (e, target) => {
     target.classList.add('active');
   },
+
   touchend: (e, target) => {
     target.classList.remove('active');
   }
 });
+
 // Automatic cleanup
 E.cleanup(() => {
   handler.destroy();
@@ -313,18 +322,22 @@ E.cleanup(() => {
 
 ```javascript
 import { UrlParser } from 'xajs/dom';
+
 // Create parser instance
 const parser = new UrlParser(
   'https://example.com/path?q=search&tags[]=js&tags[]=dom'
 );
+
 // Basic URL parts
 console.log(parser.protocol); // 'https:'
 console.log(parser.hostname); // 'example.com'
 console.log(parser.pathname); // '/path'
+
 // Advanced query handling
 const query = parser.query;
 console.log(query.q); // 'search'
 console.log(query.tags); // ['js', 'dom']
+
 // URL manipulation
 parser.pathname = '/new-path';
 parser.addQuery('page', '2');
@@ -336,24 +349,19 @@ console.log(parser.toString());
 
   Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety.
 
-### Features
-
-- FunctionalCore.composition: Function composition with type checking
-- FunctionalCore.pointfree: Point-free programming utilities
-- FunctionalCore.currying: Advanced function currying
-- FunctionalCore.immutable: Immutable data structures
-- Available exports: compose, composeAsync
-
 ### Examples
 
 **Function Composition**
 
 ```javascript
 import { compose, composeAsync } from 'xajs/fp';
+
 // Synchronous composition
 const enhance = compose(addTimestamp, validate, normalize);
+
 // With type checking
 const result = enhance({ name: 'example' });
+
 // Async composition with error handling
 const pipeline = composeAsync(
   async data => {
@@ -377,6 +385,7 @@ const pipeline = composeAsync(
 
 ```javascript
 import { pipe, curry } from 'xajs/fp';
+
 // Create a point-free data transformation
 const processUser = pipe(
   prop('user'),
@@ -384,6 +393,7 @@ const processUser = pipe(
   over(lensProp('permissions'), map(normalize)),
   assoc('lastAccess', Date.now())
 );
+
 // Apply the transformation
 const result = processUser(response);
 ```
@@ -392,25 +402,13 @@ const result = processUser(response);
 
   High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling.
 
-### Features
-
-- FunctionComposition.intercepter: Function interception with before/after hooks
-- FunctionComposition.tryNext: Chain-based error handling with fallbacks
-- FunctionComposition.promisify: Convert callback-style functions to promises
-- FunctionComposition.sleep: Promise-based delay utilities
-- AsyncUtilities.PLazy: Lazy promise evaluation with caching
-- AsyncUtilities.PS: Simple pub/sub event system with namespacing
-- AsyncUtilities.retry: Automatic retry with exponential backoff
-- DependencyInjection.provide: Class-based dependency provider
-- DependencyInjection.inject: Dependency injection decorator
-- Available exports: helper
-
 ### Examples
 
 **Function Interception (Sync & Async)**
 
 ```javascript
 import { helper } from 'xajs/functional';
+
 // Synchronous interception
 const loggedFetch = helper
   .intercepter(fetch)
@@ -420,6 +418,7 @@ const loggedFetch = helper
   .after((url, response) => {
     console.log(`Completed: ${url} (${response.status})`);
   }).$runner;
+
 // Async interception
 const cachedFetch = helper
   .intercepter(fetch)
@@ -436,7 +435,9 @@ const cachedFetch = helper
 
 ```javascript
 import { helper } from 'xajs/functional';
+
 const { tryNext, sleep } = helper;
+
 // Chain of fallback strategies
 const getData = tryNext([
   // Primary strategy: API call
@@ -460,19 +461,23 @@ const getData = tryNext([
 
 ```javascript
 import { helper } from 'xajs/functional';
+
 const {
   PS: { Puber, Suber }
 } = helper;
+
 // Create publisher and subscriber
 class DataService extends Puber {
   constructor() {
     super('data-service', {});
   }
+
   async fetchData() {
     const data = await fetch('/api/data');
     this.pub('data:updated', await data.json());
   }
 }
+
 class DataView extends Suber {
   constructor(service) {
     super('data-view', {});
@@ -483,6 +488,7 @@ class DataView extends Suber {
       }
     ]);
   }
+
   onDataUpdate(data) {
     this.render(data);
   }
@@ -493,17 +499,24 @@ class DataView extends Suber {
 
 ```javascript
 import { helper } from 'xajs/functional';
+
 const { di } = helper;
+
 // Define services with dependencies
+@di.provide('logger')
 class Logger {
   log(msg) {
     console.log(msg);
   }
 }
+
+@di.provide('api')
+@di.inject(['logger'])
 class ApiService {
   constructor(logger) {
     this.logger = logger;
   }
+
   async fetch(url) {
     this.logger.log(`Fetching: ${url}`);
     return fetch(url).then(r => r.json());
@@ -515,17 +528,6 @@ class ApiService {
 
   Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management.
 
-### Features
-
-- ReactiveSystem.TR: Reactive value creation with dependency tracking
-- ReactiveSystem.atom: Atomic state container with key identification
-- ReactiveSystem.selector: Derived state computation with caching
-- ReactiveSystem.compute: Multi-source computation with auto-cleanup
-- TemplateEngine.trp: Reactive template engine with fine-grained updates
-- TemplateEngine.tft: Template function transformer
-- TemplateEngine.eff: Effect system with automatic cleanup
-- Available exports: TR, eff, tpl
-
 ### Examples
 
 **Reactive State Management**
@@ -533,19 +535,25 @@ class ApiService {
 ```javascript
 import { TR } from 'xajs/future';
 const { atom, selector, compute } = TR;
+
 // Create atomic states
 const count1 = TR(1);
 const count2 = TR(2);
+
 // Create computed value
 const sum = compute((a, b) => a + b)(count1, count2);
+
 // Create derived computation
 const doubled = compute(s => s * 2)(sum);
+
 // Observe changes
 sum.observe(val => console.log('Sum:', val)); // 3
 doubled.observe(val => console.log('Double:', val)); // 6
+
 // Update source values
 count1(v => v + 1); // Sum: 4, Double: 8
 count2(6); // Sum: 8, Double: 16
+
 // Cleanup
 sum.dispose();
 doubled.dispose();
@@ -556,6 +564,7 @@ doubled.dispose();
 ```javascript
 import { TR } from 'xajs/future';
 const { atom, selector } = TR;
+
 // Create base atom
 const todoAtom = atom({
   key: 'todoAtom',
@@ -564,6 +573,7 @@ const todoAtom = atom({
     filter: 'all'
   }
 });
+
 // Create derived selectors
 const filteredTodos = selector({
   key: 'filteredTodos',
@@ -579,6 +589,7 @@ const filteredTodos = selector({
     }
   }
 });
+
 const todoStats = selector({
   key: 'todoStats',
   get: ({ get }) => {
@@ -590,10 +601,12 @@ const todoStats = selector({
     };
   }
 });
+
 // Use selectors
 filteredTodos.observe(todos => {
   renderTodoList(todos);
 });
+
 todoStats.observe(stats => {
   updateStatusBar(stats);
 });
@@ -603,16 +616,19 @@ todoStats.observe(stats => {
 
 ```javascript
 import { eff } from 'xajs/future';
+
 // Create reactive effect
 const cleanup = eff.effect(() => {
   const subscription = api.subscribe(data => {
     processData(data);
   });
+
   // Effect cleanup
   return () => {
     subscription.unsubscribe();
   };
 });
+
 // Reactive template with automatic updates
 const template = eff.template`
 <div class="user-card">
@@ -633,6 +649,7 @@ ${() =>
 </div>
 </div>
 `;
+
 // Cleanup when done
 cleanup();
 ```
@@ -641,29 +658,26 @@ cleanup();
 
   Core internal utilities providing type checking, object manipulation, and shared helper functions. Features comprehensive type detection and safe object operations with performance optimization.
 
-### Features
-
-- TypeChecking.is: .isBoolean - Boolean type check
-- ObjectUtilities.assign: Safe object assignment with deep copy
-- ObjectUtilities.hasOwnProp: Safe property existence check
-- Available exports: assign, hasOwnProp, is
-
 ### Examples
 
 **Type Checking**
 
 ```javascript
 import { is } from 'xajs/internal';
+
 // Array checks
 console.log(is.isArray([1, 2, 3])); // true
 console.log(is.isArray({})); // false
+
 // Object checks
 console.log(is.isObject({})); // true
 console.log(is.isObject([])); // false
+
 // Function checks
 console.log(is.isFunction(() => {})); // true
 console.log(is.isFunction(async () => {})); // true
 console.log(is.isFunction(function* () {})); // true
+
 // Boolean checks
 console.log(is.isBoolean(true)); // true
 console.log(is.isBoolean(1)); // false
@@ -673,9 +687,11 @@ console.log(is.isBoolean(1)); // false
 
 ```javascript
 import { assign, hasOwnProp } from 'xajs/internal';
+
 // Safe object assignment
 const base = { a: 1, b: { c: 2 } };
 const extension = { b: { d: 3 }, e: 4 };
+
 const result = assign({}, base, extension);
 console.log(result);
 // {
@@ -683,6 +699,7 @@ console.log(result);
 //   b: { c: 2, d: 3 },
 //   e: 4
 // }
+
 // Safe property checks
 if (hasOwnProp(result, 'b')) {
   console.log('Property exists:', result.b);
@@ -693,16 +710,20 @@ if (hasOwnProp(result, 'b')) {
 
 ```javascript
 import { is, assign } from 'xajs/internal';
+
 function safeUpdate(target, source) {
   // Type validation
   if (!is.isObject(target) || !is.isObject(source)) {
     throw new TypeError('Both arguments must be objects');
   }
+
   // Safe assignment with type checking
   const result = assign({}, target);
+
   for (const key in source) {
     if (hasOwnProp(source, key)) {
       const value = source[key];
+
       // Type-specific handling
       if (is.isArray(value)) {
         result[key] = [...value];
@@ -713,6 +734,7 @@ function safeUpdate(target, source) {
       }
     }
   }
+
   return result;
 }
 ```
@@ -721,23 +743,18 @@ function safeUpdate(target, source) {
 
   Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.
 
-### Features
-
-- StringUtilities.MagicString: Immutable string wrapper with chainable operations
-- StringUtilities.capitalize: First character capitalization
-- StringUtilities.trim: Whitespace removal with custom characters
-- StringUtilities.replace: Pattern replacement with function support
-- Available exports: MagicString
-
 ### Examples
 
 **Basic String Operations**
 
 ```javascript
 import { MagicString } from 'xajs/lang';
+
 const str = MagicString('  hello world  ');
+
 // Chain multiple operations
 const result = str.trim().capitalize().replace(/world/, 'AJS');
+
 console.log(result); // 'Hello AJS'
 console.log(str); // Original string unchanged
 ```
@@ -746,12 +763,15 @@ console.log(str); // Original string unchanged
 
 ```javascript
 import { MagicString } from 'xajs/lang';
+
 const text = MagicString('user.name.first');
+
 // Replace with callback
 const result = text.replace(/\w+/g, (match, index) => {
   if (index === 0) return match;
   return match.toUpperCase();
 });
+
 console.log(result); // 'user.NAME.FIRST'
 ```
 
@@ -759,7 +779,9 @@ console.log(result); // 'user.NAME.FIRST'
 
 ```javascript
 import { MagicString } from 'xajs/lang';
+
 const template = MagicString('Hello, ${name}!');
+
 // Interpolate values
 const greeting = template.replace(
   /\${(\w+)}/g,
@@ -768,6 +790,7 @@ const greeting = template.replace(
       name: 'AJS User'
     })[key] || ''
 );
+
 console.log(greeting); // 'Hello, AJS User!'
 ```
 
@@ -775,21 +798,16 @@ console.log(greeting); // 'Hello, AJS User!'
 
   Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices.
 
-### Features
-
-- MobileUtilities.ua: User agent parsing system with priority-based parsers
-- MobileUtilities.device: Device type and vendor detection with fallbacks
-- MobileUtilities.browser: Browser and version identification with feature detection
-- MobileUtilities.engine: Rendering engine detection and capability analysis
-
 ### Examples
 
 **Device Detection and Feature Support**
 
 ```javascript
 import { UserAgent } from 'xajs/mobile';
+
 // Initialize with current user agent
 const ua = new UserAgent(navigator.userAgent);
+
 // Comprehensive device check
 if (ua.isMobile()) {
   // Mobile-specific optimizations
@@ -824,8 +842,10 @@ if (ua.isMobile()) {
 
 ```javascript
 import { UserAgent } from 'xajs/mobile';
+
 const ua = new UserAgent(navigator.userAgent);
 const { browser, engine } = ua.getResult();
+
 // Comprehensive browser checks
 if (ua.isBrowser('Chrome')) {
   const version = parseFloat(browser.version);
@@ -856,9 +876,11 @@ if (ua.isBrowser('Chrome')) {
 
 ```javascript
 import { UserAgent } from 'xajs/mobile';
+
 function detectDevice(userAgent = '') {
   const ua = new UserAgent(userAgent);
   const result = ua.getResult();
+
   // Handle empty or invalid UA strings
   if (!userAgent) {
     return {
@@ -866,6 +888,7 @@ function detectDevice(userAgent = '') {
       capabilities: getDefaultCapabilities()
     };
   }
+
   // Handle unknown browsers
   if (!result.browser.name) {
     // Fallback to engine detection
@@ -877,6 +900,7 @@ function detectDevice(userAgent = '') {
       };
     }
   }
+
   // Handle unknown devices
   if (!result.device.type) {
     // Fallback to screen size detection
@@ -885,6 +909,7 @@ function detectDevice(userAgent = '') {
       capabilities: detectCapabilitiesFromScreen()
     };
   }
+
   return result;
 }
 ```

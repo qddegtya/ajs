@@ -1,74 +1,19 @@
 {
   "name": "index.js",
-  "description": "High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.",
-  "features": [
-    {
-      "namespace": "VirtualDOM",
-      "property": "h",
-      "type": "Function",
-      "description": "Hyperscript function for creating virtual DOM elements"
-    },
-    {
-      "namespace": "VirtualDOM",
-      "property": "tags",
-      "type": "Object",
-      "description": "Helper functions for common HTML elements"
-    },
-    {
-      "namespace": "VirtualDOM",
-      "property": "diff",
-      "type": "Object",
-      "description": "Optimized diff algorithm with key tracking"
-    },
-    {
-      "namespace": "VirtualDOM",
-      "property": "lifecycle",
-      "type": "Object",
-      "description": "Component lifecycle with hooks"
-    },
-    {
-      "namespace": "EventHandling",
-      "property": "E",
-      "type": "Function",
-      "description": ".delegate - Event delegation with filters"
-    },
-    {
-      "namespace": "EventHandling",
-      "property": "touch",
-      "type": "Object",
-      "description": "Mobile touch event normalization"
-    },
-    {
-      "namespace": "URLParsing",
-      "property": "UrlParser",
-      "type": "Class",
-      "description": "Advanced URL parsing and manipulation"
-    },
-    {
-      "namespace": "URLParsing",
-      "property": "query",
-      "type": "Object",
-      "description": "Query string handling with arrays"
-    },
-    {
-      "namespace": "URLParsing",
-      "property": "path",
-      "type": "Object",
-      "description": "Path normalization and resolution"
-    }
-  ],
+  "description": "High-performance DOM manipulation with virtual DOM support,\noptimized event delegation, and unified touch event handling. Features include\nefficient diffing, batched updates, mobile-first event optimization, and\nmemory leak prevention.",
+  "features": [],
   "examples": [
     {
       "caption": "Virtual DOM with Tags Helpers",
-      "code": "import { h, tags } from 'xajs/dom'\n// Using h function directly\nconst vnode = h('div', { className: 'container' }, [\nh('header', { key: 'header' }, [\nh('h1', null, 'Welcome')\n])\n])\n// Using tags helpers (more concise)\nconst { div, header, h1, nav, a } = tags\nconst menu = div({ className: 'container' }, [\nheader({ key: 'header' }, [\nh1(null, 'Welcome'),\nnav({ className: 'menu' }, [\na({ href: '#home' }, 'Home'),\na({ href: '#about' }, 'About')\n])\n])\n])\n"
+      "code": "import { h, tags } from 'xajs/dom'\n\n// Using h function directly\nconst vnode = h('div', { className: 'container' }, [\nh('header', { key: 'header' }, [\nh('h1', null, 'Welcome')\n])\n])\n\n// Using tags helpers (more concise)\nconst { div, header, h1, nav, a } = tags\n\nconst menu = div({ className: 'container' }, [\nheader({ key: 'header' }, [\nh1(null, 'Welcome'),\nnav({ className: 'menu' }, [\na({ href: '#home' }, 'Home'),\na({ href: '#about' }, 'About')\n])\n])\n])"
     },
     {
       "caption": "Advanced Event Handling",
-      "code": "import { E } from 'xajs/dom'\n// One-time event handling\nE.once('window.load', () => {\nconsole.log('App loaded')\n})\n// Event sequence handling\nE.once(\n'window.mouseover',\n'window.click',\n(e) => {\nconsole.log('Mouse over then clicked')\n},\n{ capture: true }\n)\n// Efficient event delegation\nconst handler = E.delegate('.menu a', {\nclick: (e, target) => {\ne.preventDefault()\nconst href = target.getAttribute('href')\nrouter.navigate(href)\n},\ntouchstart: (e, target) => {\ntarget.classList.add('active')\n},\ntouchend: (e, target) => {\ntarget.classList.remove('active')\n}\n})\n// Automatic cleanup\nE.cleanup(() => {\nhandler.destroy()\n})\n"
+      "code": "import { E } from 'xajs/dom'\n\n// One-time event handling\nE.once('window.load', () => {\nconsole.log('App loaded')\n})\n\n// Event sequence handling\nE.once(\n'window.mouseover',\n'window.click',\n(e) => {\nconsole.log('Mouse over then clicked')\n},\n{ capture: true }\n)\n\n// Efficient event delegation\nconst handler = E.delegate('.menu a', {\nclick: (e, target) => {\ne.preventDefault()\nconst href = target.getAttribute('href')\nrouter.navigate(href)\n},\n\ntouchstart: (e, target) => {\ntarget.classList.add('active')\n},\n\ntouchend: (e, target) => {\ntarget.classList.remove('active')\n}\n})\n\n// Automatic cleanup\nE.cleanup(() => {\nhandler.destroy()\n})"
     },
     {
       "caption": "URL Parsing and Manipulation",
-      "code": "import { UrlParser } from 'xajs/dom'\n// Create parser instance\nconst parser = new UrlParser('https://example.com/path?q=search&tags[]=js&tags[]=dom')\n// Basic URL parts\nconsole.log(parser.protocol)  // 'https:'\nconsole.log(parser.hostname)  // 'example.com'\nconsole.log(parser.pathname)  // '/path'\n// Advanced query handling\nconst query = parser.query\nconsole.log(query.q)         // 'search'\nconsole.log(query.tags)      // ['js', 'dom']\n// URL manipulation\nparser.pathname = '/new-path'\nparser.addQuery('page', '2')\nconsole.log(parser.toString())\n// 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'\n"
+      "code": "import { UrlParser } from 'xajs/dom'\n\n// Create parser instance\nconst parser = new UrlParser('https://example.com/path?q=search&tags[]=js&tags[]=dom')\n\n// Basic URL parts\nconsole.log(parser.protocol)  // 'https:'\nconsole.log(parser.hostname)  // 'example.com'\nconsole.log(parser.pathname)  // '/path'\n\n// Advanced query handling\nconst query = parser.query\nconsole.log(query.q)         // 'search'\nconsole.log(query.tags)      // ['js', 'dom']\n\n// URL manipulation\nparser.pathname = '/new-path'\nparser.addQuery('page', '2')\nconsole.log(parser.toString())\n// 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'"
     }
   ],
   "exports": [

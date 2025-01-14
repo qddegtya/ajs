@@ -1,8 +1,7 @@
 {
   "name": "index.js",
-  "description": "",
+  "description": "User Agent Parsers Collection",
   "features": [
-    "UA Parsers",
     "Modular parser architecture",
     "Extensible parsing rules",
     "High accuracy detection",
@@ -11,7 +10,7 @@
   "examples": [
     {
       "caption": "",
-      "code": "import { BrowserParser, OSParser } from 'xajs/mobile/ua/parsers'\nconst browserInfo = new BrowserParser().parse(userAgent)\nconst osInfo = new OSParser().parse(userAgent)\nconsole.log({\nbrowser: browserInfo.name,\nversion: browserInfo.version,\nos: osInfo.name,\nplatform: osInfo.platform\n})\n"
+      "code": "import { BrowserParser, OSParser } from 'xajs/mobile/ua/parsers'\n\nconst browserInfo = new BrowserParser().parse(userAgent)\nconst osInfo = new OSParser().parse(userAgent)\n\nconsole.log({\nbrowser: browserInfo.name,\nversion: browserInfo.version,\nos: osInfo.name,\nplatform: osInfo.platform\n})"
     }
   ],
   "exports": [],

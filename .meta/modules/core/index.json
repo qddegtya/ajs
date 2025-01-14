@@ -1,56 +1,19 @@
 {
   "name": "index.js",
-  "description": "Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.",
-  "features": [
-    {
-      "namespace": "ClassSystem",
-      "property": "Class",
-      "type": "Function",
-      "description": "Base class factory with $extends, $ctor, and $static support"
-    },
-    {
-      "namespace": "Decorators",
-      "property": "mixin",
-      "type": "Function",
-      "description": "Class decorator for mixin application"
-    },
-    {
-      "namespace": "Decorators",
-      "property": "deprecate",
-      "type": "Function",
-      "description": "Method/property deprecation decorator with custom messages"
-    },
-    {
-      "namespace": "Deferred",
-      "property": "Deferred",
-      "type": "Function",
-      "description": "Promise wrapper with resolve/reject control"
-    },
-    {
-      "namespace": "Deferred",
-      "property": "done",
-      "type": "Function",
-      "description": "Final promise chain handler with error propagation"
-    },
-    {
-      "namespace": "Deferred",
-      "property": "isDone",
-      "type": "Function",
-      "description": "Promise state check for completion status"
-    }
-  ],
+  "description": "Provides the foundational architecture of AJS, featuring a\nlightweight class system with inheritance and mixins, basic decorators,\nand a promise-based deferred implementation.",
+  "features": [],
   "examples": [
     {
       "caption": "Class Definition with Static Members",
-      "code": "import { base } from 'xajs/core'\nconst MyComponent = base.Class({\n$extends: BaseComponent,\n// Static properties and methods\n$static: {\ndefaultConfig: {\ntheme: 'light'\n},\ncreate(config) {\nreturn new this({ ...this.defaultConfig, ...config })\n}\n},\n// Constructor\n$ctor(config) {\nthis.$super() // Call parent constructor\nthis.config = config\nthis.state = { count: 0 }\n},\n// Instance methods\nincrement() {\nthis.state.count++\nthis.emit('change', this.state.count)\n}\n})\n"
+      "code": "import { base } from 'xajs/core'\n\nconst MyComponent = base.Class({\n$extends: BaseComponent,\n\n// Static properties and methods\n$static: {\ndefaultConfig: {\ntheme: 'light'\n},\ncreate(config) {\nreturn new this({ ...this.defaultConfig, ...config })\n}\n},\n\n// Constructor\n$ctor(config) {\nthis.$super() // Call parent constructor\nthis.config = config\nthis.state = { count: 0 }\n},\n\n// Instance methods\nincrement() {\nthis.state.count++\nthis.emit('change', this.state.count)\n}\n})"
     },
     {
       "caption": "Mixin and Deprecation",
-      "code": "import { decorators } from 'xajs/core'\n// Define a mixin\nconst LoggerMixin = {\nlog(msg) {\nconsole.log(`[${this.constructor.name}] ${msg}`)\n}\n}\n// Apply mixin and deprecate old methods\nclass MyService {\noldMethod() {\nreturn this.newMethod()\n}\nnewMethod() {\nthis.log('Operation started')\nreturn this.processData()\n}\n}\n"
+      "code": "import { decorators } from 'xajs/core'\n\n// Define a mixin\nconst LoggerMixin = {\nlog(msg) {\nconsole.log(`[${this.constructor.name}] ${msg}`)\n}\n}\n\n// Apply mixin and deprecate old methods\n@decorators.mixin(LoggerMixin)\nclass MyService {\n@decorators.deprecate('Use newMethod() instead', { since: '2.0.0' })\noldMethod() {\nreturn this.newMethod()\n}\n\nnewMethod() {\nthis.log('Operation started')\nreturn this.processData()\n}\n}"
     },
     {
       "caption": "Async Operations with Deferred",
-      "code": "import { base } from 'xajs/core'\nclass DataLoader {\nasync loadData(retryCount = 3) {\nconst deferred = new base.Deferred()\ntry {\n// Attempt to load data with retry\nfor (let i = 0; i < retryCount; i++) {\ntry {\nconst response = await fetch('/api/data')\nif (!response.ok) throw new Error('API Error')\nconst data = await response.json()\nreturn deferred.resolve(data)\n} catch (err) {\nif (i === retryCount - 1) throw err\nawait new Promise(r => setTimeout(r, 1000 * (i + 1)))\n}\n}\n} catch (err) {\ndeferred.reject(err)\n}\nreturn deferred\n.done() // Ensures unhandled rejections are thrown\n}\nisDataLoaded() {\nreturn this.loadData.isDone()\n}\n}\n"
+      "code": "import { base } from 'xajs/core'\n\nclass DataLoader {\nasync loadData(retryCount = 3) {\nconst deferred = new base.Deferred()\n\ntry {\n// Attempt to load data with retry\nfor (let i = 0; i < retryCount; i++) {\ntry {\nconst response = await fetch('/api/data')\nif (!response.ok) throw new Error('API Error')\nconst data = await response.json()\nreturn deferred.resolve(data)\n} catch (err) {\nif (i === retryCount - 1) throw err\nawait new Promise(r => setTimeout(r, 1000 * (i + 1)))\n}\n}\n} catch (err) {\ndeferred.reject(err)\n}\n\nreturn deferred\n.done() // Ensures unhandled rejections are thrown\n}\n\nisDataLoaded() {\nreturn this.loadData.isDone()\n}\n}"
     }
   ],
   "exports": [

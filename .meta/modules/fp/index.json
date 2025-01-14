@@ -1,40 +1,15 @@
 {
   "name": "index.js",
-  "description": "Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety.",
-  "features": [
-    {
-      "namespace": "FunctionalCore",
-      "property": "composition",
-      "type": "Object",
-      "description": "Function composition with type checking"
-    },
-    {
-      "namespace": "FunctionalCore",
-      "property": "pointfree",
-      "type": "Object",
-      "description": "Point-free programming utilities"
-    },
-    {
-      "namespace": "FunctionalCore",
-      "property": "currying",
-      "type": "Object",
-      "description": "Advanced function currying"
-    },
-    {
-      "namespace": "FunctionalCore",
-      "property": "immutable",
-      "type": "Object",
-      "description": "Immutable data structures"
-    }
-  ],
+  "description": "Core functional programming utilities focusing on pure function\ncomposition, point-free programming, and immutable data handling. Features\noptimized composition chains with async support and type safety.",
+  "features": [],
   "examples": [
     {
       "caption": "Function Composition",
-      "code": "import { compose, composeAsync } from 'xajs/fp'\n// Synchronous composition\nconst enhance = compose(\naddTimestamp,\nvalidate,\nnormalize\n)\n// With type checking\nconst result = enhance({ name: 'example' })\n// Async composition with error handling\nconst pipeline = composeAsync(\nasync data => {\nconst validated = await validate(data)\nif (!validated.success) {\nthrow new ValidationError(validated.errors)\n}\nreturn validated.data\n},\nasync record => {\nconst normalized = await normalize(record)\nreturn {\n...normalized,\ntimestamp: Date.now()\n}\n}\n)\n"
+      "code": "import { compose, composeAsync } from 'xajs/fp'\n\n// Synchronous composition\nconst enhance = compose(\naddTimestamp,\nvalidate,\nnormalize\n)\n\n// With type checking\nconst result = enhance({ name: 'example' })\n\n// Async composition with error handling\nconst pipeline = composeAsync(\nasync data => {\nconst validated = await validate(data)\nif (!validated.success) {\nthrow new ValidationError(validated.errors)\n}\nreturn validated.data\n},\nasync record => {\nconst normalized = await normalize(record)\nreturn {\n...normalized,\ntimestamp: Date.now()\n}\n}\n)"
     },
     {
       "caption": "Point-free Programming",
-      "code": "import { pipe, curry } from 'xajs/fp'\n// Create a point-free data transformation\nconst processUser = pipe(\nprop('user'),\nwhen(hasRole('admin'), addAdminFlag),\nover(lensProp('permissions'), map(normalize)),\nassoc('lastAccess', Date.now())\n)\n// Apply the transformation\nconst result = processUser(response)\n"
+      "code": "import { pipe, curry } from 'xajs/fp'\n\n// Create a point-free data transformation\nconst processUser = pipe(\nprop('user'),\nwhen(hasRole('admin'), addAdminFlag),\nover(lensProp('permissions'), map(normalize)),\nassoc('lastAccess', Date.now())\n)\n\n// Apply the transformation\nconst result = processUser(response)"
     }
   ],
   "exports": [
