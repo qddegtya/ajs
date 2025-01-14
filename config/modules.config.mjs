@@ -24,7 +24,5 @@ const createModuleExports = (moduleName) => ({
   default: `./dist/${moduleName}/${moduleName}.cjs.js`
 });
 
-export default {
-  modules: scanModules(),
-  createModuleExports
-};
+export const modules = scanModules();
+export { createModuleExports };

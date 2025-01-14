@@ -2,9 +2,7 @@ import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import fs from 'fs';
-import moduleConfig from './config/modules.config.mjs';
-
-const { modules } = moduleConfig;
+import { modules } from './config/modules.config.mjs';
 
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 const { version: LIB_VERSION, description: LIB_DESCRIPTION } = pkg;

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import moduleConfig from '../config/modules.config.mjs';
+import { modules, createModuleExports } from '../config/modules.config.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,8 +21,8 @@ const exports = {
 };
 
 // 为每个模块添加导出配置
-moduleConfig.modules.forEach(moduleName => {
-  exports[`./${moduleName}`] = moduleConfig.createModuleExports(moduleName);
+modules.forEach(moduleName => {
+  exports[`./${moduleName}`] = createModuleExports(moduleName);
 });
 
 // 更新 package.json
