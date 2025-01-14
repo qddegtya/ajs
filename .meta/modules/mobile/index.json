@@ -1,0 +1,42 @@
+{
+  "description": "Mobile Development Module Comprehensive utilities for mobile web development and device detection.",
+  "namespaces": [
+    {
+      "title": "MobileUtilities",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "userAgent",
+          "description": "User agent parsing and detection"
+        },
+        {
+          "type": "Object",
+          "name": "events",
+          "description": "Mobile-specific event handling"
+        },
+        {
+          "type": "Object",
+          "name": "touch",
+          "description": "Touch and gesture support"
+        },
+        {
+          "type": "Object",
+          "name": "device",
+          "description": "Device capability detection"
+        },
+        {
+          "type": "Object",
+          "name": "responsive",
+          "description": "Responsive design helpers"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "",
+      "code": "import { ua } from 'xajs/mobile'\n// Detect device and platform\nconst userAgent = ua.parse(navigator.userAgent)\nif (userAgent.isIOS) {\n// iOS specific handling\n} else if (userAgent.isAndroid) {\n// Android specific handling\n}\n"
+    }
+  ],
+  "see": []
+}

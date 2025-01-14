@@ -1,0 +1,42 @@
+{
+  "description": "Experimental Features Module Experimental and cutting-edge features for next-generation JavaScript development.",
+  "namespaces": [
+    {
+      "title": "ExperimentalFeatures",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "templates",
+          "description": "Template rendering engine with reactive updates"
+        },
+        {
+          "type": "Object",
+          "name": "effects",
+          "description": "Advanced effect system for side-effect management"
+        },
+        {
+          "type": "Object",
+          "name": "reactive",
+          "description": "Reactive programming utilities and patterns"
+        },
+        {
+          "type": "Object",
+          "name": "async",
+          "description": "Next-generation async patterns and control"
+        },
+        {
+          "type": "Object",
+          "name": "experimental",
+          "description": "Cutting-edge JavaScript features exploration"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "",
+      "code": "import { trp, ae } from 'xajs/future'\n// Create a template with reactive properties\nconst template = trp`\n<div>\n<h1>${state.title}</h1>\n<p>${state.content}</p>\n</div>\n`\n// Use advanced effects\nae.effect(() => {\n// Side effects automatically tracked and cleaned up\nconst subscription = api.subscribe(data => {\nstate.update(data)\n})\nreturn () => subscription.unsubscribe()\n})\n"
+    }
+  ],
+  "see": []
+}

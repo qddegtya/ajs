@@ -1,0 +1,11 @@
+{
+  "description": "User Agent Parser Module - Comprehensive user agent parsing - Browser and version detection - Operating system identification - Device type recognition - Engine and rendering capabilities detection",
+  "namespaces": [],
+  "examples": [
+    {
+      "caption": "",
+      "code": "import { UserAgent } from 'xajs/mobile/ua'\nconst ua = new UserAgent(navigator.userAgent)\nconsole.log({\nbrowser: ua.getBrowser(),\nos: ua.getOS(),\ndevice: ua.getDevice(),\nengine: ua.getEngine()\n})\n"
+    }
+  ],
+  "see": []
+}

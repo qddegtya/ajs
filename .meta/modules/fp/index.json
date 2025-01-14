@@ -1,0 +1,37 @@
+{
+  "description": "Functional Programming Core Module Core functional programming utilities focusing on pure function composition and immutable data handling.",
+  "namespaces": [
+    {
+      "title": "FunctionalCore",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "composition",
+          "description": "Pure function composition utilities"
+        },
+        {
+          "type": "Object",
+          "name": "pointfree",
+          "description": "Point-free programming support"
+        },
+        {
+          "type": "Object",
+          "name": "currying",
+          "description": "Function currying and partial application"
+        },
+        {
+          "type": "Object",
+          "name": "immutable",
+          "description": "Immutable data handling patterns"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "",
+      "code": "import { compose } from 'xajs/fp'\n// Create a pipeline of pure functions\nconst pipeline = compose(\nuppercase,\ntrim,\nnormalize\n)\n// Apply the transformation\nconst result = pipeline('  hello world  ')\n"
+    }
+  ],
+  "see": []
+}

@@ -1,0 +1,37 @@
+{
+  "description": "Internal Utilities Module Core internal utilities and helper functions used across the library.",
+  "namespaces": [
+    {
+      "title": "InternalUtilities",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "typeChecking",
+          "description": "Type checking and validation utilities"
+        },
+        {
+          "type": "Object",
+          "name": "objectUtils",
+          "description": "Object property manipulation helpers"
+        },
+        {
+          "type": "Object",
+          "name": "helpers",
+          "description": "Common internal helper functions"
+        },
+        {
+          "type": "Object",
+          "name": "shared",
+          "description": "Shared utilities used across other modules"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "",
+      "code": "import { is, assign } from 'xajs/internal'\n// Type checking\nif (is.string(value)) {\n// Handle string type\n}\n// Safe object assignment\nconst merged = assign({}, source, {\nnewProp: 'value'\n})\n"
+    }
+  ],
+  "see": []
+}

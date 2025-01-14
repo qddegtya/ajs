@@ -30,3 +30,5 @@ yarn-error.log*
 # Cache
 .cache
 .temp
+
+!.meta

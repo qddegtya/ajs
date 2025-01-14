@@ -1,0 +1,120 @@
+{
+  "description": "AJS - A thoughtfully crafted JavaScript utility library A thoughtfully crafted JavaScript utility library that combines classical utilities with modern programming paradigms. It provides a rich set of tools while maintaining a minimal footprint and high flexibility.",
+  "namespaces": [
+    {
+      "title": "CoreUtilities",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "classSystem",
+          "description": "Powerful class system with inheritance and mixins"
+        },
+        {
+          "type": "Object",
+          "name": "decorators",
+          "description": "Flexible decorators for enhancing classes and methods"
+        },
+        {
+          "type": "Object",
+          "name": "promises",
+          "description": "Promise utilities and deferred execution"
+        },
+        {
+          "type": "Object",
+          "name": "types",
+          "description": "Type checking and object manipulation"
+        }
+      ]
+    },
+    {
+      "title": "DOMManipulation",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "vdom",
+          "description": "Lightweight virtual DOM implementation"
+        },
+        {
+          "type": "Object",
+          "name": "events",
+          "description": "Event handling and delegation"
+        },
+        {
+          "type": "Object",
+          "name": "touch",
+          "description": "Mobile-optimized touch events"
+        },
+        {
+          "type": "Object",
+          "name": "url",
+          "description": "URL parsing and manipulation"
+        }
+      ]
+    },
+    {
+      "title": "FunctionalProgramming",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "composition",
+          "description": "Function composition and currying"
+        },
+        {
+          "type": "Object",
+          "name": "di",
+          "description": "Dependency injection system"
+        },
+        {
+          "type": "Object",
+          "name": "pubsub",
+          "description": "Pub/Sub event system"
+        },
+        {
+          "type": "Object",
+          "name": "promiseUtils",
+          "description": "Promise-based utilities"
+        }
+      ]
+    },
+    {
+      "title": "LanguageExtensions",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "string",
+          "description": "Enhanced string manipulation"
+        },
+        {
+          "type": "Object",
+          "name": "array",
+          "description": "Advanced array operations"
+        },
+        {
+          "type": "Object",
+          "name": "object",
+          "description": "Object transformation utilities"
+        },
+        {
+          "type": "Object",
+          "name": "typeConversion",
+          "description": "Type conversion helpers"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "Class System",
+      "code": "import { Class } from 'xajs/core';\nconst MyClass = Class({\n$extends: ParentClass,\n$mixins: [SomeMixin],\n$ctor() {\nthis.name = 'example';\n}\n});\n"
+    },
+    {
+      "caption": "DOM Manipulation",
+      "code": "import { h } from 'xajs/dom';\nconst vnode = h('div', { className: 'container' }, [\nh('h1', null, 'Hello AJS!'),\nh('button', { onClick: () => alert('Clicked!') }, 'Click Me')\n]);\n"
+    },
+    {
+      "caption": "Functional Programming",
+      "code": "import { helper } from 'xajs/functional';\nconst { tryNext } = helper;\nconst result = await tryNext([\nasync () => await primaryAPI(),\nasync () => await fallbackAPI()\n]);\n"
+    }
+  ],
+  "see": []
+}

@@ -1,0 +1,100 @@
+{
+  "description": "DOM manipulation and event handling utilities Provides a lightweight virtual DOM implementation and utilities for DOM manipulation and event handling, with special optimizations for mobile devices.",
+  "namespaces": [
+    {
+      "title": "VirtualDOM",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "implementation",
+          "description": "Lightweight virtual DOM implementation"
+        },
+        {
+          "type": "Object",
+          "name": "diff",
+          "description": "Efficient diff and patch algorithm"
+        },
+        {
+          "type": "Object",
+          "name": "lifecycle",
+          "description": "Component lifecycle management"
+        },
+        {
+          "type": "Object",
+          "name": "events",
+          "description": "Event delegation support"
+        }
+      ]
+    },
+    {
+      "title": "EventHandling",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "management",
+          "description": "Advanced event management"
+        },
+        {
+          "type": "Object",
+          "name": "delegation",
+          "description": "Event delegation and bubbling"
+        },
+        {
+          "type": "Object",
+          "name": "touch",
+          "description": "Mobile touch event optimization"
+        },
+        {
+          "type": "Object",
+          "name": "lifecycle",
+          "description": "Event once and off support"
+        }
+      ]
+    },
+    {
+      "title": "URLParsing",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "parser",
+          "description": "Robust URL parsing and manipulation"
+        },
+        {
+          "type": "Object",
+          "name": "query",
+          "description": "Query string handling"
+        },
+        {
+          "type": "Object",
+          "name": "path",
+          "description": "Path normalization"
+        },
+        {
+          "type": "Object",
+          "name": "params",
+          "description": "URL parameter extraction"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "Virtual DOM Creation",
+      "code": "import { h } from 'xajs/dom'\nconst vnode = h('div', { className: 'container' }, [\nh('h1', null, 'Hello AJS!'),\nh('p', null, 'Welcome to the future of JavaScript.')\n])\n"
+    },
+    {
+      "caption": "Event Handling",
+      "code": "import { E } from 'xajs/dom'\nE.on(element, 'click', event => {\nconsole.log('Clicked:', event.target)\n})\nE.once(element, 'load', event => {\nconsole.log('Loaded once')\n})\n"
+    },
+    {
+      "caption": "URL Parsing",
+      "code": "import { UrlParser } from 'xajs/dom'\nconst parser = new UrlParser('https://example.com/path?query=value')\nconsole.log(parser.pathname) // '/path'\nconsole.log(parser.query)    // { query: 'value' }\n"
+    }
+  ],
+  "see": [
+    {
+      "url": "https://ajs.dev/docs/dom",
+      "text": "DOM Module Documentation"
+    }
+  ]
+}

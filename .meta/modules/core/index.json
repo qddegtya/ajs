@@ -1,0 +1,96 @@
+{
+  "description": "Core module providing fundamental building blocks for AJS Provides the foundational building blocks of AJS, including a powerful class system, deferred promises, and decorators for enhancing classes and methods.",
+  "namespaces": [
+    {
+      "title": "ClassSystem",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "inheritance",
+          "description": "Advanced class inheritance with $extends and $mixins support"
+        },
+        {
+          "type": "Object",
+          "name": "constructor",
+          "description": "Constructor lifecycle management with $ctor"
+        },
+        {
+          "type": "Object",
+          "name": "methods",
+          "description": "Method overriding and super calls"
+        },
+        {
+          "type": "Object",
+          "name": "static",
+          "description": "Static and instance method support"
+        }
+      ]
+    },
+    {
+      "title": "Decorators",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "functions",
+          "description": "Function and class decorators"
+        },
+        {
+          "type": "Object",
+          "name": "builtin",
+          "description": "Built-in decorators like @mixin and @deprecate"
+        },
+        {
+          "type": "Object",
+          "name": "factory",
+          "description": "Custom decorator factory support"
+        },
+        {
+          "type": "Object",
+          "name": "properties",
+          "description": "Method and property decorators"
+        }
+      ]
+    },
+    {
+      "title": "Deferred",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "promise",
+          "description": "Promise-like interface with resolve/reject"
+        },
+        {
+          "type": "Object",
+          "name": "progress",
+          "description": "Progress tracking with notify"
+        },
+        {
+          "type": "Object",
+          "name": "chain",
+          "description": "Chainable then/catch/finally"
+        },
+        {
+          "type": "Object",
+          "name": "cancel",
+          "description": "Cancellation support"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "Class System with Inheritance",
+      "code": "import { base } from 'xajs/core'\nconst MyClass = base.Class({\n$extends: ParentClass,\n$mixins: [SomeMixin],\n$ctor() {\nthis.name = 'example'\n},\nmethod() {\n// Method implementation\n}\n})\n"
+    },
+    {
+      "caption": "Using Decorators",
+      "code": "import { decorators } from 'xajs/core'\nclass Enhanced {\nenhancedMethod() {\n// Enhanced functionality\n}\n}\n"
+    }
+  ],
+  "see": [
+    {
+      "url": "https://ajs.dev/docs/core",
+      "text": "Core Module Documentation"
+    }
+  ]
+}

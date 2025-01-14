@@ -1,0 +1,37 @@
+{
+  "description": "Language Enhancement Module Advanced language utilities for string manipulation and code generation.",
+  "namespaces": [
+    {
+      "title": "LanguageUtilities",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "string",
+          "description": "String manipulation and transformation"
+        },
+        {
+          "type": "Object",
+          "name": "language",
+          "description": "Enhanced JavaScript language features"
+        },
+        {
+          "type": "Object",
+          "name": "generation",
+          "description": "Code generation utilities"
+        },
+        {
+          "type": "Object",
+          "name": "dsl",
+          "description": "DSL support tools"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "",
+      "code": "import { MagicString } from 'xajs/lang'\n// Create a magic string for code manipulation\nconst code = new MagicString('function hello() { return \"world\" }')\n// Manipulate the code\ncode\n.update(8, 13, 'greet')\n.append('hello()')\nconsole.log(code.toString())\n// Output: function greet() { return \"world\" }hello()\n"
+    }
+  ],
+  "see": []
+}

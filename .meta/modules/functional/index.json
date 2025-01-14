@@ -1,0 +1,125 @@
+{
+  "description": "Functional programming utilities and patterns Provides a comprehensive set of functional programming utilities including function composition, currying, dependency injection, pub/sub system, and promise utilities.",
+  "namespaces": [
+    {
+      "title": "FunctionComposition",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "interceptors",
+          "description": "Advanced interceptors for function composition"
+        },
+        {
+          "type": "Object",
+          "name": "async",
+          "description": "Support for async function composition"
+        },
+        {
+          "type": "Object",
+          "name": "errorHandling",
+          "description": "Error handling in composition chains"
+        },
+        {
+          "type": "Object",
+          "name": "middleware",
+          "description": "Middleware pattern support"
+        }
+      ]
+    },
+    {
+      "title": "DependencyInjection",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "decorators",
+          "description": "Decorator-based DI system"
+        },
+        {
+          "type": "Object",
+          "name": "resolution",
+          "description": "Automatic dependency resolution"
+        },
+        {
+          "type": "Object",
+          "name": "circular",
+          "description": "Circular dependency detection"
+        },
+        {
+          "type": "Object",
+          "name": "scoping",
+          "description": "Scoped container support"
+        }
+      ]
+    },
+    {
+      "title": "EventSystem",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "pubsub",
+          "description": "Pub/Sub pattern implementation"
+        },
+        {
+          "type": "Object",
+          "name": "priority",
+          "description": "Event prioritization"
+        },
+        {
+          "type": "Object",
+          "name": "async",
+          "description": "Async event handling"
+        },
+        {
+          "type": "Object",
+          "name": "cancellation",
+          "description": "Event cancellation"
+        }
+      ]
+    },
+    {
+      "title": "PromiseUtilities",
+      "properties": [
+        {
+          "type": "Object",
+          "name": "lazy",
+          "description": "Promise-based lazy evaluation"
+        },
+        {
+          "type": "Object",
+          "name": "interception",
+          "description": "Promise chain interception"
+        },
+        {
+          "type": "Object",
+          "name": "fallback",
+          "description": "Fallback chain with tryNext"
+        },
+        {
+          "type": "Object",
+          "name": "timeout",
+          "description": "Timeout and retry support"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "caption": "Function Composition",
+      "code": "import { helper } from 'xajs/functional'\nconst { intercepter } = helper\nconst enhance = intercepter.compose([\naddLogging,\naddValidation,\naddCaching\n])\n"
+    },
+    {
+      "caption": "Dependency Injection",
+      "code": "import { helper } from 'xajs/functional'\nconst { di } = helper\nclass Config {\ngetApiUrl() { return 'https://api.example.com' }\n}\n"
+    },
+    {
+      "caption": "Pub/Sub Pattern",
+      "code": "import { helper } from 'xajs/functional'\nconst { PS } = helper\nconst events = new PS()\nevents.on('userUpdate', user => {\nconsole.log('User updated:', user)\n})\nevents.emit('userUpdate', { id: 1, name: 'John' })\n"
+    }
+  ],
+  "see": [
+    {
+      "url": "https://ajs.dev/docs/functional",
+      "text": "Functional Module Documentation"
+    }
+  ]
+}
