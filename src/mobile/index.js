@@ -2,10 +2,7 @@
  * Mobile Development Module
  * 
  * @module mobile
- * @description Advanced mobile device detection and user agent parsing system.
- * Features comprehensive device fingerprinting, vendor detection, and detailed
- * browser capabilities analysis through modular parsers. Includes robust
- * handling of edge cases and unknown devices.
+ * @description 移动端相关的包
  * 
  * @namespace MobileUtilities
  * @property {Object} ua - User agent parsing system with priority-based parsers

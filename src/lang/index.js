@@ -2,15 +2,11 @@
  * Language Enhancement Module
  * 
  * @module lang
- * @description Advanced string manipulation utilities with immutable operations
- * and chainable transformations. Features include case conversion, trimming,
- * pattern matching, and string interpolation.
+ * @description Javascript 特性扩展包
  * 
  * @namespace StringUtilities
  * @property {Class} MagicString - Immutable string wrapper with chainable operations
  * @property {Function} capitalize - First character capitalization
- * @property {Function} trim - Whitespace removal with custom characters
- * @property {Function} replace - Pattern replacement with function support
  * 
  * @example <caption>Basic String Operations</caption>
  * import { MagicString } from 'xajs/lang'

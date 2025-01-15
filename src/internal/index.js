@@ -2,9 +2,7 @@
  * Internal Utilities Module
  * 
  * @module internal
- * @description Core internal utilities providing type checking, object manipulation,
- * and shared helper functions. Features comprehensive type detection and safe
- * object operations with performance optimization.
+ * @description 内部包
  * 
  * @namespace TypeChecking
  * @property {Object} is - Type checking utilities

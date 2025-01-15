@@ -2,15 +2,10 @@
  * Functional Programming Core Module
  * 
  * @module fp
- * @description Core functional programming utilities focusing on pure function
- * composition, point-free programming, and immutable data handling. Features
- * optimized composition chains with async support and type safety.
+ * @description 函数式编程类库包
  * 
  * @namespace FunctionalCore
  * @property {Object} composition - Function composition with type checking
- * @property {Object} pointfree - Point-free programming utilities
- * @property {Object} currying - Advanced function currying
- * @property {Object} immutable - Immutable data structures
  * 
  * @example <caption>Function Composition</caption>
  * import { compose, composeAsync } from 'xajs/fp'
@@ -42,20 +37,7 @@
  *     }
  *   }
  * )
- * 
- * @example <caption>Point-free Programming</caption>
- * import { pipe, curry } from 'xajs/fp'
- * 
- * // Create a point-free data transformation
- * const processUser = pipe(
- *   prop('user'),
- *   when(hasRole('admin'), addAdminFlag),
- *   over(lensProp('permissions'), map(normalize)),
- *   assoc('lastAccess', Date.now())
- * )
- * 
- * // Apply the transformation
- * const result = processUser(response)
+ *
  */
 
 import { compose, composeAsync } from './compose'

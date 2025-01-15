@@ -2,29 +2,22 @@
  * DOM manipulation and event handling utilities
  * 
  * @module dom
- * @description High-performance DOM manipulation with virtual DOM support,
- * optimized event delegation, and unified touch event handling. Features include
- * efficient diffing, batched updates, mobile-first event optimization, and
- * memory leak prevention.
+ * @description 浏览器运行时相关类库包
  * 
- * @namespace VirtualDOM
- * @property {Function} h - Hyperscript function for creating virtual DOM elements
+ * @namespace DOM
+ * @property {Function} h - Hyperscript function for creating DOM elements
  * @property {Object} tags - Helper functions for common HTML elements
- * @property {Object} diff - Optimized diff algorithm with key tracking
- * @property {Object} lifecycle - Component lifecycle with hooks
  * 
  * @namespace EventHandling
  * @property {Object} E - Unified event management system
  * @property {Function} E.once - One-time event binding with cleanup
- * @property {Function} E.delegate - Event delegation with filters
- * @property {Object} touch - Mobile touch event normalization
  * 
  * @namespace URLParsing
  * @property {Class} UrlParser - Advanced URL parsing and manipulation
  * @property {Object} query - Query string handling with arrays
  * @property {Object} path - Path normalization and resolution
  * 
- * @example <caption>Virtual DOM with Tags Helpers</caption>
+ * @example <caption>DOM with Tags Helpers</caption>
  * import { h, tags } from 'xajs/dom'
  * 
  * // Using h function directly
@@ -65,28 +58,6 @@
  *   { capture: true }
  * )
  * 
- * // Efficient event delegation
- * const handler = E.delegate('.menu a', {
- *   click: (e, target) => {
- *     e.preventDefault()
- *     const href = target.getAttribute('href')
- *     router.navigate(href)
- *   },
- *   
- *   touchstart: (e, target) => {
- *     target.classList.add('active')
- *   },
- *   
- *   touchend: (e, target) => {
- *     target.classList.remove('active')
- *   }
- * })
- * 
- * // Automatic cleanup
- * E.cleanup(() => {
- *   handler.destroy()
- * })
- * 
  * @example <caption>URL Parsing and Manipulation</caption>
  * import { UrlParser } from 'xajs/dom'
  * 
@@ -104,9 +75,7 @@
  * console.log(query.tags)      // ['js', 'dom']
  * 
  * // URL manipulation
- * parser.pathname = '/new-path'
- * parser.addQuery('page', '2')
- * console.log(parser.toString())
+ * parser.setQueryParam('page', '2')
  * // 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'
  */
 

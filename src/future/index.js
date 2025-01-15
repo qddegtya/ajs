@@ -2,10 +2,7 @@
  * Experimental Features Module
  * 
  * @module future
- * @description Cutting-edge experimental features exploring next-generation JavaScript
- * patterns. Includes reactive templates, advanced effect management, and innovative
- * async patterns. Features fine-grained reactivity, automatic dependency tracking,
- * and intelligent resource management.
+ * @description 现代化特性包
  * 
  * @namespace ReactiveSystem
  * @property {Function} TR - Reactive value creation with dependency tracking
@@ -14,23 +11,20 @@
  * @property {Function} compute - Multi-source computation with auto-cleanup
  * 
  * @namespace TemplateEngine
- * @property {Function} trp - Reactive template engine with fine-grained updates
  * @property {Function} tft - Template function transformer
- * @property {Function} eff - Effect system with automatic cleanup
  * 
  * @example <caption>Reactive State Management</caption>
  * import { TR } from 'xajs/future'
- * const { atom, selector, compute } = TR
  * 
  * // Create atomic states
  * const count1 = TR(1)
  * const count2 = TR(2)
  * 
  * // Create computed value
- * const sum = compute((a, b) => a + b)(count1, count2)
+ * const sum = TR.compute((a, b) => a + b)(count1, count2)
  * 
  * // Create derived computation
- * const doubled = compute(s => s * 2)(sum)
+ * const doubled = TR.compute(s => s * 2)(sum)
  * 
  * // Observe changes
  * sum.observe(val => console.log('Sum:', val))     // 3
@@ -94,39 +88,20 @@
  *   updateStatusBar(stats)
  * })
  * 
- * @example <caption>Effect System with Cleanup</caption>
- * import { eff } from 'xajs/future'
+ * @example <caption>Template Engine</caption>
+ * import { tpl } from 'xajs/future'
  * 
- * // Create reactive effect
- * const cleanup = eff.effect(() => {
- *   const subscription = api.subscribe(data => {
- *     processData(data)
- *   })
- *   
- *   // Effect cleanup
- *   return () => {
- *     subscription.unsubscribe()
- *   }
- * })
- * 
- * // Reactive template with automatic updates
- * const template = eff.template`
+ * // template
+ * const template = tpl`
  *   <div class="user-card">
- *     <h2>${() => user.name}</h2>
- *     <p>${() => user.bio}</p>
+ *     <h2>${a}</h2>
+ *     <p>${b}</p>
  *     <div class="stats">
- *       ${() => user.stats.map(stat => `
- *         <div class="stat">
- *           <strong>${stat.label}</strong>
- *           <span>${stat.value}</span>
- *         </div>
- *       `).join('')}
+ *       ${c}
  *     </div>
  *   </div>
  * `
  * 
- * // Cleanup when done
- * cleanup()
  */
 
 import TR from './trp'

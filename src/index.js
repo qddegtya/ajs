@@ -2,45 +2,45 @@
  * AJS
  * 
  * @module ajs
- * @description 🪄 A modern JavaScript utility library with minimal footprint and high flexibility.
+ * @description 🪄 Just another javascript utility library.
  * 
  * @namespace Core
- * @property {Object} base - Lightweight class system with inheritance and mixins
- * @property {Object} decorators - Method decorators including deprecation and mixin support
- * @property {Object} Deferred - Enhanced Promise with resolve/reject control
+ * @property {Object} base - 基础核心模块，自定义类，类似有属性、继承等支持
+ * @property {Object} decorators - 常用装饰器，deprecate、mixin 等
+ * @property {Object} Deferred - Deferred，维护异步模型状态
  * 
  * @namespace DOM
- * @property {Function} h - Hyperscript function for virtual DOM creation
- * @property {Object} tags - Helper functions for common HTML elements
- * @property {Object} E - Event management with delegation and one-time binding
- * @property {Class} UrlParser - Advanced URL parsing and manipulation
+ * @property {Function} h - DOM 创建操作的优雅封装
+ * @property {Object} tags - 基于 h 封装常用 html tag 的快速创建方法
+ * @property {Object} E - 增强版事件管理
+ * @property {Class} UrlParser - 兼容性良好的 URL 解析器
  * 
  * @namespace Functional
- * @property {Object} intercepter - Function interception with before/after hooks
- * @property {Object} tryNext - Chain-based error handling with fallbacks
- * @property {Object} PS - Pub/sub system with namespacing
- * @property {Object} di - Dependency injection with decorators
+ * @property {Object} intercepter - 支持同步、异步两种模式的通用函数拦截器
+ * @property {Object} tryNext - 链式调用风格的 fallback 任务管理器
+ * @property {Object} PS - 优雅的发布订阅实现
+ * @property {Object} di - 简单实用的 DI 实现
  * 
  * @namespace Future
- * @property {Object} TR - Reactive state management with dependency tracking
- * @property {Function} atom - Atomic state container with key identification
- * @property {Function} selector - Derived state computation with caching
- * @property {Object} eff - Effect system with automatic cleanup
+ * @property {Object} TR - 支持依赖追踪，计算定义、组合的创新响应式类库
+ * @property {Function} atom - 基于 TR 封装的、类似 Recoil Atom 的原子状态
+ * @property {Function} selector - 基于 TR 封装的、类似 Recoil selector 的派生状态
+ * @property {Object} eff - 基于迭代器特性实现的实用代数效应
  * 
  * @namespace Mobile
- * @property {Class} UserAgent - Advanced device and browser detection
- * @property {Object} device - Device type and vendor detection
- * @property {Object} browser - Browser and version identification
+ * @property {Class} UserAgent - User Agent 解析
+ * @property {Object} device - 便捷的 UA 对象设备属性访问器
+ * @property {Object} browser - 便捷的 UA 对象浏览器属性访问器
  * 
  * @namespace Lang
- * @property {Class} MagicString - Immutable string operations with chaining
+ * @property {Class} MagicString - 支持链式调用的字符串不可变操作类
  * 
  * @namespace Internal
- * @property {Object} is - Type checking utilities (isArray, isObject, etc.)
- * @property {Function} assign - Safe object assignment with deep copy
- * @property {Function} hasOwnProp - Safe property existence check
+ * @property {Object} is - 对象的类型运行时检查 (isArray, isObject, etc.)
+ * @property {Function} assign - 安全对象深拷贝 assign
+ * @property {Function} hasOwnProp - 安全对象属性嗅探
  * 
- * @example <caption>Class System and Events</caption>
+ * @example <caption>高频常用模块</caption>
  * import { core, dom } from 'xajs'
  * 
  * const Component = core.base.Class({
@@ -62,7 +62,7 @@
  *   }
  * })
  * 
- * @example <caption>Reactive State Management</caption>
+ * @example <caption>各种实用内置类库</caption>
  * import { future, functional } from 'xajs'
  * 
  * // Create atomic state
@@ -94,7 +94,7 @@
  *   handler: todos => filteredTodos.observe(renderTodos)
  * }])
  * 
- * @example <caption>Mobile and DOM Utilities</caption>
+ * @example <caption>浏览器运行时相关类库</caption>
  * import { mobile, dom } from 'xajs'
  * 
  * // Device detection

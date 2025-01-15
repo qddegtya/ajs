@@ -2,10 +2,7 @@
  * Functional programming utilities and patterns
  * 
  * @module functional
- * @description High-performance functional programming utilities focusing on 
- * function interception, promise-based operations, and dependency injection.
- * Features include function composition, lazy evaluation, pub/sub patterns,
- * and robust error handling.
+ * @description 各类内置实用包
  * 
  * @namespace FunctionComposition
  * @property {Object} intercepter - Function interception with before/after hooks

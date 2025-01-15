@@ -2,16 +2,13 @@
  * Core module providing fundamental building blocks for AJS
  * 
  * @module core
- * @description Provides the foundational architecture of AJS, featuring a 
- * lightweight class system with inheritance and mixins, basic decorators, 
- * and a promise-based deferred implementation.
+ * @description 核心基础包
  * 
  * @namespace ClassSystem
  * @property {Function} Class - Base class factory with $extends, $ctor, and $static support
  * @property {Function} $ctor - Constructor lifecycle hook for initialization
  * @property {Function} $extends - Inheritance support with super calls and static inheritance
  * @property {Function} $static - Static member definition with inheritance
- * @property {Function} $mixins - Mixin composition support for code reuse
  * 
  * @namespace Decorators
  * @property {Function} mixin - Class decorator for mixin application

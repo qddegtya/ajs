@@ -74,19 +74,6 @@ export function generateFeatures(meta) {
       }
     })
   }
-  
-  // 处理导出项
-  if (meta.info.exports?.length) {
-    const exports = meta.info.exports
-      .filter(exp => !exp.startsWith('_')) // 过滤内部导出
-      .sort()
-    if (exports.length) {
-      groups.standalone.push({
-        text: `Available exports: ${exports.join(', ')}`,
-        level: 0
-      })
-    }
-  }
 
   // 转换为扁平的特性列表，保持正确的层级结构
   const allFeatures = []

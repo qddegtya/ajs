@@ -1,53 +1,52 @@
 # AJS
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
-# About
+# 关于
 
 <!--ABOUT_START-->
 🪄 A modern JavaScript utility library with minimal footprint and high flexibility.
 <!--ABOUT_END-->
 
-# ✨ Features
+# ✨ 模块概览
 
 <!--FEATURES_START-->
 - Core
-  - base: Lightweight class system with inheritance and mixins
-  - decorators: Method decorators including deprecation and mixin support
-  - Deferred: Enhanced Promise with resolve/reject control
+  - base: 基础核心模块，自定义类，类似有属性、继承等支持
+  - decorators: 常用装饰器，deprecate、mixin 等
+  - Deferred: Deferred，维护异步模型状态
 - DOM
-  - h: Hyperscript function for virtual DOM creation
-  - tags: Helper functions for common HTML elements
-  - E: Event management with delegation and one-time binding
-  - UrlParser: Advanced URL parsing and manipulation
+  - h: DOM 创建操作的优雅封装
+  - tags: 基于 h 封装常用 html tag 的快速创建方法
+  - E: 增强版事件管理
+  - UrlParser: 兼容性良好的 URL 解析器
 - Functional
-  - intercepter: Function interception with before/after hooks
-  - tryNext: Chain-based error handling with fallbacks
-  - PS: Pub/sub system with namespacing
-  - di: Dependency injection with decorators
+  - intercepter: 支持同步、异步两种模式的通用函数拦截器
+  - tryNext: 链式调用风格的 fallback 任务管理器
+  - PS: 优雅的发布订阅实现
+  - di: 简单实用的 DI 实现
 - Future
-  - TR: Reactive state management with dependency tracking
-  - atom: Atomic state container with key identification
-  - selector: Derived state computation with caching
-  - eff: Effect system with automatic cleanup
+  - TR: 支持依赖追踪，计算定义、组合的创新响应式类库
+  - atom: 基于 TR 封装的、类似 Recoil Atom 的原子状态
+  - selector: 基于 TR 封装的、类似 Recoil selector 的派生状态
+  - eff: 基于迭代器特性实现的实用代数效应
 - Mobile
-  - UserAgent: Advanced device and browser detection
-  - device: Device type and vendor detection
-  - browser: Browser and version identification
+  - UserAgent: User Agent 解析
+  - device: 便捷的 UA 对象设备属性访问器
+  - browser: 便捷的 UA 对象浏览器属性访问器
 - Lang
-  - MagicString: Immutable string operations with chaining
+  - MagicString: 支持链式调用的字符串不可变操作类
 - Internal
-  - is: Type checking utilities (isArray, isObject, etc.)
-  - assign: Safe object assignment with deep copy
-  - hasOwnProp: Safe property existence check
-  - Available exports: core, dom, fp, functional, future, internal, lang, mobile
+  - is: 对象的类型运行时检查 (isArray, isObject, etc.)
+  - assign: 安全对象深拷贝 assign
+  - hasOwnProp: 安全对象属性嗅探
 <!--FEATURES_END-->
 
-# 🌰 Quick Start
+# 🌰 快速开始
 
 <!--QUICK_START_START-->
 ## Examples
 
-### Class System and Events
+### 高频常用模块
 
 ```javascript
 import { core, dom } from 'xajs';
@@ -72,7 +71,7 @@ const Component = core.base.Class({
 });
 ```
 
-### Reactive State Management
+### 各种实用内置类库
 
 ```javascript
 import { future, functional } from 'xajs';
@@ -111,7 +110,7 @@ todoView.rss(todoService, [
 ]);
 ```
 
-### Mobile and DOM Utilities
+### 浏览器运行时相关类库
 
 ```javascript
 import { mobile, dom } from 'xajs';
@@ -136,24 +135,24 @@ console.log(url.query.page);
 ```
 <!--QUICK_START_END-->
 
-# 📦 Modules
+# 📦 模块列表
 
 <!--MODULES_START-->
 ## Available Modules
 
 | Module | Description | Import Path |
 |---------|-------------|-------------|
-| core | Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation. | `xajs/core` |
-| dom | High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention. | `xajs/dom` |
-| fp | Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety. | `xajs/fp` |
-| functional | High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling. | `xajs/functional` |
-| future | Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management. | `xajs/future` |
-| lang | Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation. | `xajs/lang` |
-| mobile | Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices. | `xajs/mobile` |
+| core | 核心基础包 | `xajs/core` |
+| dom | 浏览器运行时相关类库包 | `xajs/dom` |
+| fp | 函数式编程类库包 | `xajs/fp` |
+| functional | 各类内置实用包 | `xajs/functional` |
+| future | 现代化特性包 | `xajs/future` |
+| lang | Javascript 特性扩展包 | `xajs/lang` |
+| mobile | 移动端相关的包 | `xajs/mobile` |
 
 ## core
 
-Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.
+核心基础包
 
 ### Examples
 
@@ -254,11 +253,11 @@ class DataLoader {
 
 ## dom
 
-High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.
+浏览器运行时相关类库包
 
 ### Examples
 
-**Virtual DOM with Tags Helpers**
+**DOM with Tags Helpers**
 
 ```javascript
 import { h, tags } from 'xajs/dom';
@@ -301,28 +300,6 @@ E.once(
   },
   { capture: true }
 );
-
-// Efficient event delegation
-const handler = E.delegate('.menu a', {
-  click: (e, target) => {
-    e.preventDefault();
-    const href = target.getAttribute('href');
-    router.navigate(href);
-  },
-
-  touchstart: (e, target) => {
-    target.classList.add('active');
-  },
-
-  touchend: (e, target) => {
-    target.classList.remove('active');
-  }
-});
-
-// Automatic cleanup
-E.cleanup(() => {
-  handler.destroy();
-});
 ```
 
 **URL Parsing and Manipulation**
@@ -346,15 +323,13 @@ console.log(query.q); // 'search'
 console.log(query.tags); // ['js', 'dom']
 
 // URL manipulation
-parser.pathname = '/new-path';
-parser.addQuery('page', '2');
-console.log(parser.toString());
+parser.setQueryParam('page', '2');
 // 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'
 ```
 
 ## fp
 
-Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety.
+函数式编程类库包
 
 ### Examples
 
@@ -388,26 +363,9 @@ const pipeline = composeAsync(
 );
 ```
 
-**Point-free Programming**
-
-```javascript
-import { pipe, curry } from 'xajs/fp';
-
-// Create a point-free data transformation
-const processUser = pipe(
-  prop('user'),
-  when(hasRole('admin'), addAdminFlag),
-  over(lensProp('permissions'), map(normalize)),
-  assoc('lastAccess', Date.now())
-);
-
-// Apply the transformation
-const result = processUser(response);
-```
-
 ## functional
 
-High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling.
+各类内置实用包
 
 ### Examples
 
@@ -533,7 +491,7 @@ class ApiService {
 
 ## future
 
-Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management.
+现代化特性包
 
 ### Examples
 
@@ -541,17 +499,16 @@ Cutting-edge experimental features exploring next-generation JavaScript patterns
 
 ```javascript
 import { TR } from 'xajs/future';
-const { atom, selector, compute } = TR;
 
 // Create atomic states
 const count1 = TR(1);
 const count2 = TR(2);
 
 // Create computed value
-const sum = compute((a, b) => a + b)(count1, count2);
+const sum = TR.compute((a, b) => a + b)(count1, count2);
 
 // Create derived computation
-const doubled = compute(s => s * 2)(sum);
+const doubled = TR.compute(s => s * 2)(sum);
 
 // Observe changes
 sum.observe(val => console.log('Sum:', val)); // 3
@@ -619,51 +576,26 @@ todoStats.observe(stats => {
 });
 ```
 
-**Effect System with Cleanup**
+**Template Engine**
 
 ```javascript
-import { eff } from 'xajs/future';
+import { tpl } from 'xajs/future';
 
-// Create reactive effect
-const cleanup = eff.effect(() => {
-  const subscription = api.subscribe(data => {
-    processData(data);
-  });
-
-  // Effect cleanup
-  return () => {
-    subscription.unsubscribe();
-  };
-});
-
-// Reactive template with automatic updates
-const template = eff.template`
+// template
+const template = tpl`
 <div class="user-card">
-<h2>${() => user.name}</h2>
-<p>${() => user.bio}</p>
+<h2>${a}</h2>
+<p>${b}</p>
 <div class="stats">
-${() =>
-  user.stats
-    .map(
-      stat => `
-<div class="stat">
-<strong>${stat.label}</strong>
-<span>${stat.value}</span>
-</div>
-`
-    )
-    .join('')}
+${c}
 </div>
 </div>
 `;
-
-// Cleanup when done
-cleanup();
 ```
 
 ## internal
 
-Core internal utilities providing type checking, object manipulation, and shared helper functions. Features comprehensive type detection and safe object operations with performance optimization.
+内部包
 
 ### Examples
 
@@ -748,7 +680,7 @@ function safeUpdate(target, source) {
 
 ## lang
 
-Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.
+Javascript 特性扩展包
 
 ### Examples
 
@@ -803,7 +735,7 @@ console.log(greeting); // 'Hello, AJS User!'
 
 ## mobile
 
-Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices.
+移动端相关的包
 
 ### Examples
 
