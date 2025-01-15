@@ -2,7 +2,7 @@
  * Functional programming utilities and patterns
  * 
  * @module functional
- * @description 各类内置实用包
+ * @description 实用主义相关包
  * 
  * @namespace FunctionComposition
  * @property {Object} intercepter - Function interception with before/after hooks

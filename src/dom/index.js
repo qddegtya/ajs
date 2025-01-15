@@ -2,7 +2,7 @@
  * DOM manipulation and event handling utilities
  * 
  * @module dom
- * @description 浏览器运行时相关类库包
+ * @description 浏览器运行时相关包
  * 
  * @namespace DOM
  * @property {Function} h - Hyperscript function for creating DOM elements

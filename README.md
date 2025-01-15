@@ -7,11 +7,11 @@
 🪄 Just another javascript utility library.
 <!--ABOUT_END-->
 
-# ✨ 模块概览
+# ✨ 模块列表
 
 <!--FEATURES_START-->
 - Core
-  - base: 基础核心模块，自定义类，类似有属性、继承等支持
+  - base: 基础核心模块，自定义类，支持类的私有属性、继承等特性
   - decorators: 常用装饰器，deprecate、mixin 等
   - Deferred: Deferred，维护异步模型状态
 - DOM
@@ -21,23 +21,23 @@
   - UrlParser: 兼容性良好的 URL 解析器
 - Functional
   - intercepter: 支持同步、异步两种模式的通用函数拦截器
-  - tryNext: 链式调用风格的 fallback 任务管理器
+  - tryNext: 链式调用风格的 try
   - PS: 优雅的发布订阅实现
   - di: 简单实用的 DI 实现
 - Future
-  - TR: 支持依赖追踪，计算定义、组合的创新响应式类库
+  - TR: 支持依赖追踪，计算定义、组合的创新响应式
   - atom: 基于 TR 封装的、类似 Recoil Atom 的原子状态
   - selector: 基于 TR 封装的、类似 Recoil selector 的派生状态
-  - eff: 基于迭代器特性实现的实用代数效应
+  - eff: 基于迭代器特性实现的代数效应
 - Mobile
   - UserAgent: User Agent 解析
-  - device: 便捷的 UA 对象设备属性访问器
-  - browser: 便捷的 UA 对象浏览器属性访问器
+  - device: 便捷的 UA 对象「设备属性」访问器
+  - browser: 便捷的 UA 对象「浏览器属性」访问器
 - Lang
   - MagicString: 支持链式调用的字符串不可变操作类
 - Internal
   - is: 对象的类型运行时检查 (isArray, isObject, etc.)
-  - assign: 安全对象深拷贝 assign
+  - assign: 安全对象深拷贝及属性分配
   - hasOwnProp: 安全对象属性嗅探
 <!--FEATURES_END-->
 
@@ -46,7 +46,7 @@
 <!--QUICK_START_START-->
 ## Examples
 
-### 高频常用模块
+### 基础模块
 
 ```javascript
 import { core, dom } from 'xajs';
@@ -71,7 +71,7 @@ const Component = core.base.Class({
 });
 ```
 
-### 各种实用内置类库
+### 高级模块
 
 ```javascript
 import { future, functional } from 'xajs';
@@ -110,7 +110,7 @@ todoView.rss(todoService, [
 ]);
 ```
 
-### 浏览器运行时相关类库
+### 浏览器运行时相关
 
 ```javascript
 import { mobile, dom } from 'xajs';
@@ -135,7 +135,7 @@ console.log(url.query.page);
 ```
 <!--QUICK_START_END-->
 
-# 📦 模块列表
+# 📦 按需引入
 
 <!--MODULES_START-->
 ## Available Modules
@@ -143,12 +143,12 @@ console.log(url.query.page);
 | Module | Description | Import Path |
 |---------|-------------|-------------|
 | core | 核心基础包 | `xajs/core` |
-| dom | 浏览器运行时相关类库包 | `xajs/dom` |
-| fp | 函数式编程类库包 | `xajs/fp` |
-| functional | 各类内置实用包 | `xajs/functional` |
-| future | 现代化特性包 | `xajs/future` |
-| lang | Javascript 特性扩展包 | `xajs/lang` |
-| mobile | 移动端相关的包 | `xajs/mobile` |
+| dom | 浏览器运行时相关包 | `xajs/dom` |
+| fp | 函数式编程相关包 | `xajs/fp` |
+| functional | 实用主义相关包 | `xajs/functional` |
+| future | 高级及实验特性包 | `xajs/future` |
+| lang | Javascript 语言特性扩展包 | `xajs/lang` |
+| mobile | 移动端相关包 | `xajs/mobile` |
 
 ## core
 
@@ -253,7 +253,7 @@ class DataLoader {
 
 ## dom
 
-浏览器运行时相关类库包
+浏览器运行时相关包
 
 ### Examples
 
@@ -329,7 +329,7 @@ parser.setQueryParam('page', '2');
 
 ## fp
 
-函数式编程类库包
+函数式编程相关包
 
 ### Examples
 
@@ -365,7 +365,7 @@ const pipeline = composeAsync(
 
 ## functional
 
-各类内置实用包
+实用主义相关包
 
 ### Examples
 
@@ -491,7 +491,7 @@ class ApiService {
 
 ## future
 
-现代化特性包
+高级及实验特性包
 
 ### Examples
 
@@ -680,7 +680,7 @@ function safeUpdate(target, source) {
 
 ## lang
 
-Javascript 特性扩展包
+Javascript 语言特性扩展包
 
 ### Examples
 
@@ -735,7 +735,7 @@ console.log(greeting); // 'Hello, AJS User!'
 
 ## mobile
 
-移动端相关的包
+移动端相关包
 
 ### Examples
 

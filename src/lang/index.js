@@ -2,7 +2,7 @@
  * Language Enhancement Module
  * 
  * @module lang
- * @description Javascript 特性扩展包
+ * @description Javascript 语言特性扩展包
  * 
  * @namespace StringUtilities
  * @property {Class} MagicString - Immutable string wrapper with chainable operations

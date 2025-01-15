@@ -2,7 +2,7 @@
  * Mobile Development Module
  * 
  * @module mobile
- * @description 移动端相关的包
+ * @description 移动端相关包
  * 
  * @namespace MobileUtilities
  * @property {Object} ua - User agent parsing system with priority-based parsers

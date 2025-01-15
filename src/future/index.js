@@ -2,7 +2,7 @@
  * Experimental Features Module
  * 
  * @module future
- * @description 现代化特性包
+ * @description 高级及实验特性包
  * 
  * @namespace ReactiveSystem
  * @property {Function} TR - Reactive value creation with dependency tracking

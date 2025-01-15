@@ -2,7 +2,7 @@
  * Functional Programming Core Module
  * 
  * @module fp
- * @description 函数式编程类库包
+ * @description 函数式编程相关包
  * 
  * @namespace FunctionalCore
  * @property {Object} composition - Function composition with type checking
