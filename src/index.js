@@ -26,6 +26,7 @@
  * @property {Function} atom - 基于 TR 封装的、类似 Recoil Atom 的原子状态
  * @property {Function} selector - 基于 TR 封装的、类似 Recoil selector 的派生状态
  * @property {Object} eff - 基于迭代器特性实现的代数效应
+ * @property {Object} tpl - 基于自定义字符串函数实现的简单模板引擎
  * 
  * @namespace Mobile
  * @property {Class} UserAgent - User Agent 解析
