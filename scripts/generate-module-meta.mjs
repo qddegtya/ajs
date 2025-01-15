@@ -1,4 +1,4 @@
-import { ROOT_DIR, META_DIR, MODULES_META_DIR, SRC_DIR } from './helpers/config.mjs'
+import { META_DIR, MODULES_META_DIR, SRC_DIR } from './helpers/config.mjs'
 import { extractModuleInfo } from './helpers/meta.mjs'
 import { readFile, writeFile, mkdir, rm } from './helpers/fs.mjs'
 import * as logger from './helpers/logger.mjs'
@@ -21,7 +21,6 @@ async function generateModuleMeta(modulePath) {
 
 async function generateAllMeta() {
   await cleanMetaDirectories()
-  await ensureMetaDirTracked()
 
   const processDirectory = async (dir) => {
     const entries = await fs.readdir(dir, { withFileTypes: true })
@@ -70,23 +69,6 @@ async function cleanMetaDirectories() {
   // Create .gitkeep to ensure the directory is tracked
   const gitkeepPath = path.join(META_DIR, '.gitkeep')
   await writeFile(gitkeepPath, '')
-}
-
-async function ensureMetaDirTracked() {
-  const gitignorePath = path.join(ROOT_DIR, '.gitignore')
-  let content = ''
-  
-  try {
-    content = await readFile(gitignorePath, 'utf-8')
-  } catch (error) {
-    if (error.code !== 'ENOENT') {
-      throw error
-    }
-  }
-
-  if (!content.includes('!.meta')) {
-    await writeFile(gitignorePath, content + '\n!.meta\n')
-  }
 }
 
 async function main() {
