@@ -196,7 +196,7 @@ export async function generateModuleDetails(moduleMetas) {
 
     // 模块描述
     if (meta.info?.description) {
-      sections.push(`### ${name}\n\n${meta.info.description.trim()}\n`);
+      sections.push(`## ${name}\n\n${meta.info.description.trim()}\n`);
     }
 
     // 特性列表

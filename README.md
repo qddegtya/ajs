@@ -144,7 +144,7 @@ console.log(url.query.page);
   | lang | Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation. | `xajs/lang` |
   | mobile | Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices. | `xajs/mobile` |
 
-### core
+## core
 
   Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.
 
@@ -245,7 +245,7 @@ class DataLoader {
 }
 ```
 
-### dom
+## dom
 
   High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.
 
@@ -345,7 +345,7 @@ console.log(parser.toString());
 // 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'
 ```
 
-### fp
+## fp
 
   Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety.
 
@@ -398,7 +398,7 @@ const processUser = pipe(
 const result = processUser(response);
 ```
 
-### functional
+## functional
 
   High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling.
 
@@ -524,7 +524,7 @@ class ApiService {
 }
 ```
 
-### future
+## future
 
   Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management.
 
@@ -654,7 +654,7 @@ ${() =>
 cleanup();
 ```
 
-### internal
+## internal
 
   Core internal utilities providing type checking, object manipulation, and shared helper functions. Features comprehensive type detection and safe object operations with performance optimization.
 
@@ -739,7 +739,7 @@ function safeUpdate(target, source) {
 }
 ```
 
-### lang
+## lang
 
   Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.
 
@@ -794,7 +794,7 @@ const greeting = template.replace(
 console.log(greeting); // 'Hello, AJS User!'
 ```
 
-### mobile
+## mobile
 
   Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices.
 
