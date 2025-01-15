@@ -122,7 +122,7 @@ function createNestedList(features) {
 }
 
 export function generateModulesTable(moduleMetas) {
-  const headers = '## Available Modules\n\n| Module | Description | Import Path |\n|---------|-------------|-------------|\n'
+  const headers = '## 可用模块\n\n| 名称 | 描述 | 可按需引入的模块名 |\n|---------|-------------|-------------|\n'
   
   // 改进的模块过滤和处理逻辑
   const uniqueModules = new Map()

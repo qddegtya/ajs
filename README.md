@@ -142,16 +142,16 @@ console.log(url.query.page);
 # 📦 模块列表
 
 <!--MODULES_START-->
-## Available Modules
+## 可用模块
 
-| Module | Description | Import Path |
+| 名称 | 描述 | 可按需引入的模块名 |
 |---------|-------------|-------------|
 | core | 核心基础包 | `xajs/core` |
 | dom | 浏览器运行时相关包 | `xajs/dom` |
 | fp | 函数式编程相关包 | `xajs/fp` |
 | functional | 实用主义相关包 | `xajs/functional` |
 | future | 高级及实验特性包 | `xajs/future` |
-| internal | 内部包 | `xajs/internal` |
+| internal | AJS 内部都在使用的实用工具包 | `xajs/internal` |
 | lang | Javascript 语言特性扩展包 | `xajs/lang` |
 | mobile | 移动端相关包 | `xajs/mobile` |
 
@@ -537,7 +537,7 @@ const template = tpl.exec(`<div>${name}<div>`, { name: 'AJS' });
 
 ## internal
 
-内部包
+AJS 内部都在使用的实用工具包
 
 ### Examples
 

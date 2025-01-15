@@ -2,7 +2,7 @@
  * Internal Utilities Module
  * 
  * @module internal
- * @description 内部包
+ * @description AJS 内部都在使用的实用工具包
  * 
  * @namespace TypeChecking
  * @property {Object} is - Type checking utilities
