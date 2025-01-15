@@ -1,10 +1,8 @@
 /**
- * AJS - 🚀 A modern JavaScript utility library with minimal footprint and high flexibility ⚡
+ * AJS
  * 
  * @module ajs
- * @description A modern, high-performance JavaScript utility library that combines 
- * functional programming with reactive patterns. Features include a lightweight class 
- * system, virtual DOM, pub/sub patterns, and comprehensive mobile device detection.
+ * @description 🪄 A modern JavaScript utility library with minimal footprint and high flexibility.
  * 
  * @namespace Core
  * @property {Object} base - Lightweight class system with inheritance and mixins
