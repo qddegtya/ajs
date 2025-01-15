@@ -15,6 +15,10 @@
  * @property {Object} E - 增强版事件管理
  * @property {Class} UrlParser - 兼容性良好的 URL 解析器
  * 
+ * @namespace FP
+ * @property {Function} compose - 同步组合
+ * @property {Function} composeAsync - 异步组合
+ * 
  * @namespace Functional
  * @property {Object} intercepter - 支持同步、异步两种模式的通用函数拦截器
  * @property {Object} tryNext - 链式调用风格的 try

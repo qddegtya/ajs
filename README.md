@@ -7,7 +7,7 @@
 🪄 Just another javascript utility library.
 <!--ABOUT_END-->
 
-# ✨ 模块列表
+# ✨ 特性一览
 
 <!--FEATURES_START-->
 - Core
@@ -19,6 +19,9 @@
   - tags: 基于 h 封装常用 html tag 的快速创建方法
   - E: 增强版事件管理
   - UrlParser: 兼容性良好的 URL 解析器
+- FP
+  - compose: 同步组合
+  - composeAsync: 异步组合
 - Functional
   - intercepter: 支持同步、异步两种模式的通用函数拦截器
   - tryNext: 链式调用风格的 try
@@ -136,7 +139,7 @@ console.log(url.query.page);
 ```
 <!--QUICK_START_END-->
 
-# 📦 按需引入
+# 📦 模块列表
 
 <!--MODULES_START-->
 ## Available Modules
