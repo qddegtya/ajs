@@ -4,7 +4,7 @@
 # 关于
 
 <!--ABOUT_START-->
-🪄 A modern JavaScript utility library with minimal footprint and high flexibility.
+🪄 Just another javascript utility library.
 <!--ABOUT_END-->
 
 # ✨ 模块概览
