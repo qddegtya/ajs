@@ -26,7 +26,7 @@
  * @property {Function} atom - 基于 TR 封装的、类似 Recoil Atom 的原子状态
  * @property {Function} selector - 基于 TR 封装的、类似 Recoil selector 的派生状态
  * @property {Object} eff - 基于迭代器特性实现的代数效应
- * @property {Object} tpl - 基于自定义字符串函数实现的简单模板引擎
+ * @property {Object} tpl - 基于标签函数实现的简单实用模板引擎
  * 
  * @namespace Mobile
  * @property {Class} UserAgent - User Agent 解析
@@ -38,8 +38,8 @@
  * 
  * @namespace Internal
  * @property {Object} is - 对象的类型运行时检查 (isArray, isObject, etc.)
- * @property {Function} assign - 安全对象深拷贝及属性分配
- * @property {Function} hasOwnProp - 安全对象属性嗅探
+ * @property {Function} assign - 安全的对象属性分配，可实现对象深拷贝等特性
+ * @property {Function} hasOwnProp - 安全的对象自持属性嗅探
  * 
  * @example <caption>基础模块</caption>
  * import { core, dom } from 'xajs'

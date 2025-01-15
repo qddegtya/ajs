@@ -76,44 +76,6 @@
  *   }
  * }
  * 
- * @example <caption>Edge Cases and Unknown Devices</caption>
- * import { UserAgent } from 'xajs/mobile'
- * 
- * function detectDevice(userAgent = '') {
- *   const ua = new UserAgent(userAgent)
- *   const result = ua.getResult()
- *   
- *   // Handle empty or invalid UA strings
- *   if (!userAgent) {
- *     return {
- *       type: 'unknown',
- *       capabilities: getDefaultCapabilities()
- *     }
- *   }
- *   
- *   // Handle unknown browsers
- *   if (!result.browser.name) {
- *     // Fallback to engine detection
- *     if (result.engine.name) {
- *       return {
- *         type: 'generic',
- *         engine: result.engine.name,
- *         capabilities: detectEngineCapabilities(result.engine)
- *       }
- *     }
- *   }
- *   
- *   // Handle unknown devices
- *   if (!result.device.type) {
- *     // Fallback to screen size detection
- *     return {
- *       type: detectDeviceTypeFromScreen(),
- *       capabilities: detectCapabilitiesFromScreen()
- *     }
- *   }
- *   
- *   return result
- * }
  */
 
 export * from './ua'

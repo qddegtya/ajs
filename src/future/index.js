@@ -92,15 +92,7 @@
  * import { tpl } from 'xajs/future'
  * 
  * // template
- * const template = tpl`
- *   <div class="user-card">
- *     <h2>${a}</h2>
- *     <p>${b}</p>
- *     <div class="stats">
- *       ${c}
- *     </div>
- *   </div>
- * `
+ * const template = tpl.exec(`<div>${name}<div>`, { name: 'AJS' })
  * 
  */
 

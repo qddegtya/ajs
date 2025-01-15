@@ -43,29 +43,6 @@
  *   })
  *   .$asyncRunner
  * 
- * @example <caption>Error Handling with tryNext</caption>
- * import { helper } from 'xajs/functional'
- * 
- * const { tryNext, sleep } = helper
- * 
- * // Chain of fallback strategies
- * const getData = tryNext([
- *   // Primary strategy: API call
- *   async () => {
- *     const response = await fetch('/api/data')
- *     if (!response.ok) throw new Error('API failed')
- *     return response.json()
- *   },
- *   // Fallback: Local cache
- *   async () => {
- *     const cached = await localStorage.getItem('api_data')
- *     if (!cached) throw new Error('Cache miss')
- *     return JSON.parse(cached)
- *   },
- *   // Last resort: Default data
- *   () => ({ status: 'offline', data: [] })
- * ])
- * 
  * @example <caption>Pub/Sub System</caption>
  * import { helper } from 'xajs/functional'
  * 
@@ -99,29 +76,6 @@
  *   }
  * }
  * 
- * @example <caption>Dependency Injection</caption>
- * import { helper } from 'xajs/functional'
- * 
- * const { di } = helper
- * 
- * // Define services with dependencies
- * @di.provide('logger')
- * class Logger {
- *   log(msg) { console.log(msg) }
- * }
- * 
- * @di.provide('api')
- * @di.inject(['logger'])
- * class ApiService {
- *   constructor(logger) {
- *     this.logger = logger
- *   }
- *   
- *   async fetch(url) {
- *     this.logger.log(`Fetching: ${url}`)
- *     return fetch(url).then(r => r.json())
- *   }
- * }
  */
 
 import intercepter from './intercepter'

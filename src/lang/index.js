@@ -11,7 +11,7 @@
  * @example <caption>Basic String Operations</caption>
  * import { MagicString } from 'xajs/lang'
  * 
- * const str = MagicString('  hello world  ')
+ * const str = MagicString('hello world')
  * 
  * // Chain multiple operations
  * const result = str
