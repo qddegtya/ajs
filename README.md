@@ -29,7 +29,7 @@
   - atom: 基于 TR 封装的、类似 Recoil Atom 的原子状态
   - selector: 基于 TR 封装的、类似 Recoil selector 的派生状态
   - eff: 基于迭代器特性实现的代数效应
-  - tpl: 基于自定义字符串函数实现的简单模板引擎
+  - tpl: 基于标签函数实现的简单实用模板引擎
 - Mobile
   - UserAgent: User Agent 解析
   - device: 便捷的 UA 对象「设备属性」访问器
@@ -38,8 +38,8 @@
   - MagicString: 支持链式调用的字符串不可变操作类
 - Internal
   - is: 对象的类型运行时检查 (isArray, isObject, etc.)
-  - assign: 安全对象深拷贝及属性分配
-  - hasOwnProp: 安全对象属性嗅探
+  - assign: 安全的对象属性分配，可实现对象深拷贝等特性
+  - hasOwnProp: 安全的对象自持属性嗅探
 <!--FEATURES_END-->
 
 # 🌰 快速开始
@@ -397,32 +397,6 @@ const cachedFetch = helper
   }).$asyncRunner;
 ```
 
-**Error Handling with tryNext**
-
-```javascript
-import { helper } from 'xajs/functional';
-
-const { tryNext, sleep } = helper;
-
-// Chain of fallback strategies
-const getData = tryNext([
-  // Primary strategy: API call
-  async () => {
-    const response = await fetch('/api/data');
-    if (!response.ok) throw new Error('API failed');
-    return response.json();
-  },
-  // Fallback: Local cache
-  async () => {
-    const cached = await localStorage.getItem('api_data');
-    if (!cached) throw new Error('Cache miss');
-    return JSON.parse(cached);
-  },
-  // Last resort: Default data
-  () => ({ status: 'offline', data: [] })
-]);
-```
-
 **Pub/Sub System**
 
 ```javascript
@@ -457,35 +431,6 @@ class DataView extends Suber {
 
   onDataUpdate(data) {
     this.render(data);
-  }
-}
-```
-
-**Dependency Injection**
-
-```javascript
-import { helper } from 'xajs/functional';
-
-const { di } = helper;
-
-// Define services with dependencies
-@di.provide('logger')
-class Logger {
-  log(msg) {
-    console.log(msg);
-  }
-}
-
-@di.provide('api')
-@di.inject(['logger'])
-class ApiService {
-  constructor(logger) {
-    this.logger = logger;
-  }
-
-  async fetch(url) {
-    this.logger.log(`Fetching: ${url}`);
-    return fetch(url).then(r => r.json());
   }
 }
 ```
@@ -583,15 +528,7 @@ todoStats.observe(stats => {
 import { tpl } from 'xajs/future';
 
 // template
-const template = tpl`
-<div class="user-card">
-<h2>${a}</h2>
-<p>${b}</p>
-<div class="stats">
-${c}
-</div>
-</div>
-`;
+const template = tpl.exec(`<div>${name}<div>`, { name: 'AJS' });
 ```
 
 ## internal
@@ -690,7 +627,7 @@ Javascript 语言特性扩展包
 ```javascript
 import { MagicString } from 'xajs/lang';
 
-const str = MagicString('  hello world  ');
+const str = MagicString('hello world');
 
 // Chain multiple operations
 const result = str.trim().capitalize().replace(/world/, 'AJS');
@@ -809,48 +746,6 @@ if (ua.isBrowser('Chrome')) {
     // Legacy Safari support
     enableLegacySafariSupport();
   }
-}
-```
-
-**Edge Cases and Unknown Devices**
-
-```javascript
-import { UserAgent } from 'xajs/mobile';
-
-function detectDevice(userAgent = '') {
-  const ua = new UserAgent(userAgent);
-  const result = ua.getResult();
-
-  // Handle empty or invalid UA strings
-  if (!userAgent) {
-    return {
-      type: 'unknown',
-      capabilities: getDefaultCapabilities()
-    };
-  }
-
-  // Handle unknown browsers
-  if (!result.browser.name) {
-    // Fallback to engine detection
-    if (result.engine.name) {
-      return {
-        type: 'generic',
-        engine: result.engine.name,
-        capabilities: detectEngineCapabilities(result.engine)
-      };
-    }
-  }
-
-  // Handle unknown devices
-  if (!result.device.type) {
-    // Fallback to screen size detection
-    return {
-      type: detectDeviceTypeFromScreen(),
-      capabilities: detectCapabilitiesFromScreen()
-    };
-  }
-
-  return result;
 }
 ```
 <!--MODULES_END-->
