@@ -4,7 +4,7 @@
 # About
 
 <!--ABOUT_START-->
-🚀 A modern JavaScript utility library with minimal footprint and high flexibility ⚡
+🪄 A modern JavaScript utility library with minimal footprint and high flexibility.
 <!--ABOUT_END-->
 
 # ✨ Features

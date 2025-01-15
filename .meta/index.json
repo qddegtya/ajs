@@ -417,7 +417,7 @@
     "path": "index.js",
     "info": {
       "name": "index.js",
-      "description": "A modern, high-performance JavaScript utility library that combines\nfunctional programming with reactive patterns. Features include a lightweight class\nsystem, virtual DOM, pub/sub patterns, and comprehensive mobile device detection.",
+      "description": "🪄 A modern JavaScript utility library with minimal footprint and high flexibility.",
       "features": [],
       "examples": [
         {
