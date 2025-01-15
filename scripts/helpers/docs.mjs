@@ -137,9 +137,8 @@ export function generateModulesTable(moduleMetas) {
       const pathParts = meta.path.split('/')
       const moduleName = pathParts[0]
       
-      // 跳过内部模块和根目录的 index.js
+      // 跳过带 _ 的私有模块和根目录的 index.js
       if (moduleName.startsWith('_') || 
-          moduleName === 'internal' || 
           meta.path === 'index.js') {
         return
       }

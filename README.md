@@ -151,6 +151,7 @@ console.log(url.query.page);
 | fp | 函数式编程相关包 | `xajs/fp` |
 | functional | 实用主义相关包 | `xajs/functional` |
 | future | 高级及实验特性包 | `xajs/future` |
+| internal | 内部包 | `xajs/internal` |
 | lang | Javascript 语言特性扩展包 | `xajs/lang` |
 | mobile | 移动端相关包 | `xajs/mobile` |
 
