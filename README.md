@@ -29,6 +29,7 @@
   - atom: 基于 TR 封装的、类似 Recoil Atom 的原子状态
   - selector: 基于 TR 封装的、类似 Recoil selector 的派生状态
   - eff: 基于迭代器特性实现的代数效应
+  - tpl: 基于自定义字符串函数实现的简单模板引擎
 - Mobile
   - UserAgent: User Agent 解析
   - device: 便捷的 UA 对象「设备属性」访问器
