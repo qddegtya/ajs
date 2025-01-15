@@ -14,7 +14,7 @@ export default [
   },
   // 基础配置
   {
-    files: ['src/**/*.js'],
+    files: ['src/**/*.js', 'scripts/**/*.{js,mjs}'],
     ignores: ['src/**/__tests__/**', 'src/**/*.test.js'],
     languageOptions: {
       ecmaVersion: 2022,
@@ -41,6 +41,31 @@ export default [
       'quotes': ['error', 'single'],
       'linebreak-style': ['error', 'unix'],
       'semi': ['error', 'never'],
+    },
+  },
+
+  // 脚本目录配置
+  {
+    files: ['scripts/**/*.{js,mjs}'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      parser: babelParser,
+      parserOptions: {
+        requireConfigFile: false,
+        babelOptions: {
+          plugins: [
+            ['@babel/plugin-proposal-decorators', { legacy: true }],
+          ],
+        },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+    rules: {
+      ...js.configs.recommended.rules,
     },
   },
 
