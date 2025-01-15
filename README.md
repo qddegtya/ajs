@@ -1,13 +1,13 @@
 # AJS
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
-## About
+# About
 
 <!--ABOUT_START-->
 🚀 A modern JavaScript utility library with minimal footprint and high flexibility ⚡
 <!--ABOUT_END-->
 
-## ✨ Features
+# ✨ Features
 
 <!--FEATURES_START-->
 - Core.base: Lightweight class system with inheritance and mixins
@@ -35,10 +35,10 @@
 - Available exports: core, dom, fp, functional, future, internal, lang, mobile
 <!--FEATURES_END-->
 
-## 🚀 Quick Start
+# 🌰 Quick Start
 
 <!--QUICK_START_START-->
-## Quick Start
+## Examples
 
 ### Class System and Events
 
@@ -129,7 +129,7 @@ console.log(url.query.page);
 ```
 <!--QUICK_START_END-->
 
-## 📦 Modules
+# 📦 Modules
 
 <!--MODULES_START-->
 ## Available Modules
@@ -915,15 +915,15 @@ function detectDevice(userAgent = '') {
 ```
 <!--MODULES_END-->
 
-## 🤝 Contributing
+# 🤝 Contributing
 
 Please read our [Contributing Guide](CONTRIBUTING.md) before submitting a Pull Request to the project.
 
-## 📄 License
+# 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ✨ Contributors
+# ✨ Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 

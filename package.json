@@ -2,7 +2,7 @@
   "name": "xajs",
   "version": "1.0.37",
   "packageManager": "pnpm@8.14.1",
-  "description": "🚀 A modern JavaScript utility library with minimal footprint and high flexibility ⚡",
+  "description": "🪄 A modern JavaScript utility library with minimal footprint and high flexibility",
   "main": "./dist/ajs.cjs.js",
   "module": "./dist/ajs.es.js",
   "browser": "./dist/ajs.umd.js",
