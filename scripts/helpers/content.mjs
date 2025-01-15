@@ -15,6 +15,7 @@ export function replaceContent(content, placeholder, newContent) {
   const indentation = getIndentation(content, startIndex);
 
   // 处理新内容
+  let currentIndentLevel = 0;
   const lines = newContent.trim().split('\n');
   const processedLines = lines.map((line, index) => {
     // 空行处理
@@ -32,12 +33,28 @@ export function replaceContent(content, placeholder, newContent) {
       return indentation + line;
     }
 
-    // 特殊行处理（标题、列表项等）
-    if (line.trim().startsWith('#') || 
-        line.trim().startsWith('-') || 
+    // 特殊行处理（标题）
+    if (line.trim().startsWith('#')) {
+      currentIndentLevel = 0;  // 标题重置缩进级别
+      return indentation + line.trim();
+    }
+
+    // 列表项处理（支持嵌套）
+    if (line.trim().startsWith('-') || 
         line.trim().startsWith('*') ||
         line.trim().startsWith('1.')) {
-      return indentation + line.trim();
+      // 检查是否是新的分组开始
+      const isGroupHeader = !line.includes(':');
+      if (isGroupHeader) {
+        currentIndentLevel = 0;  // 重置缩进级别
+      } else {
+        // 如果前一行是分组头部，这一行应该是子项
+        const prevLine = index > 0 ? lines[index - 1].trim() : '';
+        if (prevLine.startsWith('-') && !prevLine.includes(':')) {
+          currentIndentLevel = 1;
+        }
+      }
+      return indentation + '  '.repeat(currentIndentLevel) + line.trim();
     }
 
     // 代码块标记处理
@@ -46,7 +63,7 @@ export function replaceContent(content, placeholder, newContent) {
     }
 
     // 普通内容处理
-    return indentation + '  ' + line.trim();
+    return indentation + '  '.repeat(currentIndentLevel) + line.trim();
   });
 
   // 确保内容前后有空行，并且移除多余的空行

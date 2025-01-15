@@ -10,29 +10,36 @@
 # ✨ Features
 
 <!--FEATURES_START-->
-- Core.base: Lightweight class system with inheritance and mixins
-- Core.decorators: Method decorators including deprecation and mixin support
-- Core.Deferred: Enhanced Promise with resolve/reject control
-- DOM.h: Hyperscript function for virtual DOM creation
-- DOM.tags: Helper functions for common HTML elements
-- DOM.E: Event management with delegation and one-time binding
-- DOM.UrlParser: Advanced URL parsing and manipulation
-- Functional.intercepter: Function interception with before/after hooks
-- Functional.tryNext: Chain-based error handling with fallbacks
-- Functional.PS: Pub/sub system with namespacing
-- Functional.di: Dependency injection with decorators
-- Future.TR: Reactive state management with dependency tracking
-- Future.atom: Atomic state container with key identification
-- Future.selector: Derived state computation with caching
-- Future.eff: Effect system with automatic cleanup
-- Mobile.UserAgent: Advanced device and browser detection
-- Mobile.device: Device type and vendor detection
-- Mobile.browser: Browser and version identification
-- Lang.MagicString: Immutable string operations with chaining
-- Internal.is: Type checking utilities (isArray, isObject, etc.)
-- Internal.assign: Safe object assignment with deep copy
-- Internal.hasOwnProp: Safe property existence check
-- Available exports: core, dom, fp, functional, future, internal, lang, mobile
+- Core
+  - base: Lightweight class system with inheritance and mixins
+  - decorators: Method decorators including deprecation and mixin support
+  - Deferred: Enhanced Promise with resolve/reject control
+- DOM
+  - h: Hyperscript function for virtual DOM creation
+  - tags: Helper functions for common HTML elements
+  - E: Event management with delegation and one-time binding
+  - UrlParser: Advanced URL parsing and manipulation
+- Functional
+  - intercepter: Function interception with before/after hooks
+  - tryNext: Chain-based error handling with fallbacks
+  - PS: Pub/sub system with namespacing
+  - di: Dependency injection with decorators
+- Future
+  - TR: Reactive state management with dependency tracking
+  - atom: Atomic state container with key identification
+  - selector: Derived state computation with caching
+  - eff: Effect system with automatic cleanup
+- Mobile
+  - UserAgent: Advanced device and browser detection
+  - device: Device type and vendor detection
+  - browser: Browser and version identification
+- Lang
+  - MagicString: Immutable string operations with chaining
+- Internal
+  - is: Type checking utilities (isArray, isObject, etc.)
+  - assign: Safe object assignment with deep copy
+  - hasOwnProp: Safe property existence check
+  - Available exports: core, dom, fp, functional, future, internal, lang, mobile
 <!--FEATURES_END-->
 
 # 🌰 Quick Start
@@ -134,19 +141,19 @@ console.log(url.query.page);
 <!--MODULES_START-->
 ## Available Modules
 
-  | Module | Description | Import Path |
-  |---------|-------------|-------------|
-  | core | Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation. | `xajs/core` |
-  | dom | High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention. | `xajs/dom` |
-  | fp | Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety. | `xajs/fp` |
-  | functional | High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling. | `xajs/functional` |
-  | future | Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management. | `xajs/future` |
-  | lang | Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation. | `xajs/lang` |
-  | mobile | Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices. | `xajs/mobile` |
+| Module | Description | Import Path |
+|---------|-------------|-------------|
+| core | Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation. | `xajs/core` |
+| dom | High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention. | `xajs/dom` |
+| fp | Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety. | `xajs/fp` |
+| functional | High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling. | `xajs/functional` |
+| future | Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management. | `xajs/future` |
+| lang | Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation. | `xajs/lang` |
+| mobile | Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices. | `xajs/mobile` |
 
 ## core
 
-  Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.
+Provides the foundational architecture of AJS, featuring a lightweight class system with inheritance and mixins, basic decorators, and a promise-based deferred implementation.
 
 ### Examples
 
@@ -247,7 +254,7 @@ class DataLoader {
 
 ## dom
 
-  High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.
+High-performance DOM manipulation with virtual DOM support, optimized event delegation, and unified touch event handling. Features include efficient diffing, batched updates, mobile-first event optimization, and memory leak prevention.
 
 ### Examples
 
@@ -347,7 +354,7 @@ console.log(parser.toString());
 
 ## fp
 
-  Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety.
+Core functional programming utilities focusing on pure function composition, point-free programming, and immutable data handling. Features optimized composition chains with async support and type safety.
 
 ### Examples
 
@@ -400,7 +407,7 @@ const result = processUser(response);
 
 ## functional
 
-  High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling.
+High-performance functional programming utilities focusing on function interception, promise-based operations, and dependency injection. Features include function composition, lazy evaluation, pub/sub patterns, and robust error handling.
 
 ### Examples
 
@@ -526,7 +533,7 @@ class ApiService {
 
 ## future
 
-  Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management.
+Cutting-edge experimental features exploring next-generation JavaScript patterns. Includes reactive templates, advanced effect management, and innovative async patterns. Features fine-grained reactivity, automatic dependency tracking, and intelligent resource management.
 
 ### Examples
 
@@ -656,7 +663,7 @@ cleanup();
 
 ## internal
 
-  Core internal utilities providing type checking, object manipulation, and shared helper functions. Features comprehensive type detection and safe object operations with performance optimization.
+Core internal utilities providing type checking, object manipulation, and shared helper functions. Features comprehensive type detection and safe object operations with performance optimization.
 
 ### Examples
 
@@ -741,7 +748,7 @@ function safeUpdate(target, source) {
 
 ## lang
 
-  Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.
+Advanced string manipulation utilities with immutable operations and chainable transformations. Features include case conversion, trimming, pattern matching, and string interpolation.
 
 ### Examples
 
@@ -796,7 +803,7 @@ console.log(greeting); // 'Hello, AJS User!'
 
 ## mobile
 
-  Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices.
+Advanced mobile device detection and user agent parsing system. Features comprehensive device fingerprinting, vendor detection, and detailed browser capabilities analysis through modular parsers. Includes robust handling of edge cases and unknown devices.
 
 ### Examples
 

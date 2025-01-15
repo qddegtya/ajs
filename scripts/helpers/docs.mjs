@@ -78,51 +78,108 @@ export function generateFeatures(meta) {
     return '';
   }
 
-  // 收集所有特性
-  const features = new Set();
+  // 创建分组数据结构
+  const groups = {
+    namespaces: new Map(), // 命名空间分组
+    standalone: []         // 独立特性
+  };
   
-  // 不再从描述中提取特性，因为描述通常是模块的总体介绍
-  // 只从命名空间和属性中提取特性
+  // 处理命名空间和属性
   if (meta.info.namespaces) {
     Object.entries(meta.info.namespaces).forEach(([namespace, data]) => {
+      const features = [];
       Object.entries(data.properties).forEach(([propName, prop]) => {
-        features.add(`${namespace}.${propName}: ${prop.description}`);
+        features.push({
+          text: `${propName}: ${prop.description}`,
+          level: 1  // 在命名空间下缩进一级
+        });
       });
-    });
-  }
-  
-  // 添加明确定义的特性
-  if (meta.info.features?.length) {
-    meta.info.features.forEach(feature => {
-      if (typeof feature === 'string' && !feature.includes(meta.info.name)) {
-        // 确保特性不是模块名称的重复
-        features.add(feature);
-      } else if (feature.namespace && feature.property && feature.description) {
-        features.add(`${feature.namespace}.${feature.property}: ${feature.description}`);
+      if (features.length > 0) {
+        groups.namespaces.set(namespace, features);
       }
     });
   }
   
-  // 添加导出项
+  // 处理明确定义的特性
+  if (meta.info.features?.length) {
+    meta.info.features.forEach(feature => {
+      if (typeof feature === 'string' && !feature.includes(meta.info.name)) {
+        // 独立特性
+        groups.standalone.push({
+          text: feature,
+          level: 0
+        });
+      } else if (feature.namespace && feature.property && feature.description) {
+        // 命名空间特性
+        if (!groups.namespaces.has(feature.namespace)) {
+          groups.namespaces.set(feature.namespace, []);
+        }
+        groups.namespaces.get(feature.namespace).push({
+          text: `${feature.property}: ${feature.description}`,
+          level: 1
+        });
+      }
+    });
+  }
+  
+  // 处理导出项
   if (meta.info.exports?.length) {
     const exports = meta.info.exports
       .filter(exp => !exp.startsWith('_')) // 过滤内部导出
       .sort();
     if (exports.length) {
-      features.add(`Available exports: ${exports.join(', ')}`);
+      groups.standalone.push({
+        text: `Available exports: ${exports.join(', ')}`,
+        level: 0
+      });
     }
   }
 
-  // 转换为数组并格式化
-  return Array.from(features)
-    .filter(Boolean)
-    .filter(feature => {
-      // 过滤掉包含模块描述的特性
-      const description = meta.info.description || '';
-      return !description.includes(feature) && !feature.includes(description);
-    })
-    .map(feature => `- ${feature}`)
-    .join('\n');
+  // 转换为扁平的特性列表，保持正确的层级结构
+  const allFeatures = [];
+  
+  // 添加命名空间分组的特性
+  groups.namespaces.forEach((features, namespace) => {
+    // 添加命名空间作为标题
+    allFeatures.push({
+      text: namespace,
+      level: 0
+    });
+    // 添加该命名空间下的所有特性
+    features.forEach(feature => {
+      allFeatures.push(feature);
+    });
+  });
+  
+  // 添加独立特性
+  groups.standalone.forEach(feature => {
+    allFeatures.push(feature);
+  });
+
+  // 过滤掉与模块描述重复的特性
+  const description = meta.info.description || '';
+  const filteredFeatures = allFeatures.filter(feature => 
+    !description.includes(feature.text) && !feature.text.includes(description)
+  );
+
+  // 使用 markdown 处理器生成嵌套列表
+  return createNestedList(filteredFeatures);
+}
+
+function createNestedList(features) {
+  const list = [];
+  let currentLevel = 0;
+  features.forEach(feature => {
+    if (feature.level > currentLevel) {
+      list.push('  '.repeat(feature.level - currentLevel) + '- ' + feature.text);
+    } else if (feature.level < currentLevel) {
+      list.push('  '.repeat(feature.level) + '- ' + feature.text);
+    } else {
+      list.push('- ' + feature.text);
+    }
+    currentLevel = feature.level;
+  });
+  return list.join('\n');
 }
 
 export function generateModulesTable(moduleMetas) {
