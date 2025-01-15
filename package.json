@@ -87,6 +87,11 @@
     "meta:exports": "node scripts/update-package-exports.mjs",
     "meta:readme": "node scripts/update-readme-exports.mjs",
     "meta:all": "npm run meta:gen && npm run meta:exports && npm run meta:readme",
+    "docs:gen": "node scripts/generate-docs.mjs",
+    "docs:config": "node scripts/generate-vitepress-config.mjs",
+    "docs:dev": "npm run docs:gen && npm run docs:config && vitepress dev docs",
+    "docs:build": "npm run docs:gen && npm run docs:config && vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "release:prepare": "npm run verify && npm run meta:all",
     "release:patch": "npm version patch -m 'chore: release patch version'",
     "release:minor": "npm version minor -m 'chore: release minor version'",
@@ -132,6 +137,7 @@
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
     "rimraf": "^5.0.5",
-    "rollup": "^4.9.5"
+    "rollup": "^4.9.5",
+    "vitepress": "^1.0.0-rc.40"
   }
 }

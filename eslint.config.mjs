@@ -9,7 +9,8 @@ export default [
       'node_modules/**',
       'dist/**',
       'coverage/**',
-      'rollup.config.mjs'
+      'rollup.config.mjs',
+      'docs/**'
     ]
   },
   // 基础配置
