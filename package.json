@@ -1,6 +1,6 @@
 {
   "name": "xajs",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "packageManager": "pnpm@8.14.1",
   "description": "🪄 A modern JavaScript utility library with minimal footprint and high flexibility.",
   "main": "./dist/ajs.cjs.js",
