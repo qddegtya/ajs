@@ -223,7 +223,7 @@ export async function generateModuleDetails(moduleMetas) {
 export async function generateModulesContent(moduleMetas) {
   const table = generateModulesTable(moduleMetas)
   const details = await generateModuleDetails(moduleMetas)
-  return `${table}\n${details}`.trim()
+  return `${table}\n\n## 模块示例\n\n${details}`.trim()
 }
 
 export { PLACEHOLDERS, replaceContent }

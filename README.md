@@ -184,6 +184,8 @@ console.log(url.query.page);
 | lang | Javascript 语言特性扩展包 | `xajs/lang` |
 | mobile | 移动端相关包 | `xajs/mobile` |
 
+## 模块示例
+
 <details>
 <summary>core</summary>
 
