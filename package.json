@@ -1,6 +1,6 @@
 {
   "name": "xajs",
-  "version": "1.0.50",
+  "version": "1.0.51",
   "packageManager": "pnpm@8.14.1",
   "description": "🪄 Just another javascript utility library.",
   "main": "./dist/ajs.cjs.js",
