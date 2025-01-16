@@ -39,7 +39,7 @@
 # 🌰 快速开始
 
 <!--QUICK_START_START-->
-## Examples
+## 示例
 
 ### 基础模块
 
@@ -184,7 +184,7 @@ console.log(url.query.page);
 | lang | Javascript 语言特性扩展包 | `xajs/lang` |
 | mobile | 移动端相关包 | `xajs/mobile` |
 
-## 模块示例
+## 模块详情
 
 <details>
 <summary>core</summary>
@@ -193,7 +193,7 @@ console.log(url.query.page);
 
 核心基础包
 
-### Examples
+### 示例
 
 **Class Definition with Static Members**
 
@@ -299,7 +299,7 @@ class DataLoader {
 
 浏览器运行时相关包
 
-### Examples
+### 示例
 
 **DOM with Tags Helpers**
 
@@ -380,7 +380,7 @@ parser.setQueryParam('page', '2');
 
 函数式编程相关包
 
-### Examples
+### 示例
 
 **Function Composition**
 
@@ -421,7 +421,7 @@ const pipeline = composeAsync(
 
 实用主义相关包
 
-### Examples
+### 示例
 
 **Function Interception (Sync & Async)**
 
@@ -497,7 +497,7 @@ class DataView extends Suber {
 
 高级及实验特性包
 
-### Examples
+### 示例
 
 **Reactive State Management**
 
@@ -598,7 +598,7 @@ const template = tpl.exec(`<div>${name}<div>`, { name: 'AJS' });
 
 AJS 内部都在使用的实用工具包
 
-### Examples
+### 示例
 
 **Type Checking**
 
@@ -688,7 +688,7 @@ function safeUpdate(target, source) {
 
 Javascript 语言特性扩展包
 
-### Examples
+### 示例
 
 **Basic String Operations**
 
@@ -748,7 +748,7 @@ console.log(greeting); // 'Hello, AJS User!'
 
 移动端相关包
 
-### Examples
+### 示例
 
 **Device Detection and Feature Support**
 

@@ -201,7 +201,7 @@ export async function generateModuleDetails(moduleMetas) {
 
     // 示例代码
     if (meta.info?.examples?.length) {
-      sections.push('### Examples\n')
+      sections.push('### 示例\n')
       for (const example of meta.info.examples) {
         const code = await formatCode(example.code)
         if (example.caption) {
@@ -223,7 +223,7 @@ export async function generateModuleDetails(moduleMetas) {
 export async function generateModulesContent(moduleMetas) {
   const table = generateModulesTable(moduleMetas)
   const details = await generateModuleDetails(moduleMetas)
-  return `${table}\n\n## 模块示例\n\n${details}`.trim()
+  return `${table}\n\n## 模块详情\n\n${details}`.trim()
 }
 
 export { PLACEHOLDERS, replaceContent }

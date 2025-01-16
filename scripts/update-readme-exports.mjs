@@ -66,7 +66,7 @@ async function generateQuickStart(manifest) {
     return ''
   }
 
-  let content = '## Examples\n\n'
+  let content = '## 示例\n\n'
   for (const example of manifest.examples) {
     if (example.caption) {
       content += `### ${example.caption}\n\n`
