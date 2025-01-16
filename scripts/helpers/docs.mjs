@@ -191,7 +191,7 @@ export async function generateModuleDetails(moduleMetas) {
 
     // 模块描述
     if (meta.info?.description) {
-      sections.push(`## ${name}\n\n${meta.info.description.trim()}\n`)
+      sections.push(`<details>\n<summary>${name}</summary>\n\n## ${name}\n\n${meta.info.description.trim()}\n`)
     }
 
     // 特性列表
@@ -210,6 +210,9 @@ export async function generateModuleDetails(moduleMetas) {
         sections.push(`\`\`\`javascript\n${code.trim()}\n\`\`\`\n`)
       }
     }
+
+    // 添加 details 标签的结束标记
+    sections.push('</details>\n')
 
     return sections.join('\n')
   })

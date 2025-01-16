@@ -1,4 +1,5 @@
 # AJS
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 # 关于
@@ -9,24 +10,22 @@
 
 # ✨ 概述
 
-- 🌐 **Javascript 运行时支持**
+- 🌐 **主流 Javascript 运行时支持**
   - 完整支持 Node.js、Browser、Deno 等主流 JavaScript 运行时
   - 提供 UMD/CommonJS/ES Module 多模块规范支持
   - 零依赖实现，确保最大兼容性
 
 - 📦 **模块化设计**
-  - 支持按需引入，优化应用体积
+  - 支持按需引入
   - 完整的 Tree-shaking 支持
   - 独立的子模块发布支持
 
 - 🛡️ **可靠性保证**
   - 完整的单元测试覆盖
-  - 持续集成保障（GitHub Actions）
 
 - 🔄 **工程自动化**
   - 自动化的文档生成和同步
   - 自动化的版本管理和发布流程
-  - 自动化的依赖更新
 
 - 💡 **开发者友好**
   - 详尽的 API 文档和使用示例
@@ -35,9 +34,7 @@
 
 - 📈 **持续维护**
   - 语义化版本控制
-  - 定期依赖更新
   - 及时的安全补丁
-
 
 # 🌰 快速开始
 
@@ -187,6 +184,9 @@ console.log(url.query.page);
 | lang | Javascript 语言特性扩展包 | `xajs/lang` |
 | mobile | 移动端相关包 | `xajs/mobile` |
 
+<details>
+<summary>core</summary>
+
 ## core
 
 核心基础包
@@ -288,6 +288,11 @@ class DataLoader {
 }
 ```
 
+</details>
+
+<details>
+<summary>dom</summary>
+
 ## dom
 
 浏览器运行时相关包
@@ -364,6 +369,11 @@ parser.setQueryParam('page', '2');
 // 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'
 ```
 
+</details>
+
+<details>
+<summary>fp</summary>
+
 ## fp
 
 函数式编程相关包
@@ -399,6 +409,11 @@ const pipeline = composeAsync(
   }
 );
 ```
+
+</details>
+
+<details>
+<summary>functional</summary>
 
 ## functional
 
@@ -470,6 +485,11 @@ class DataView extends Suber {
   }
 }
 ```
+
+</details>
+
+<details>
+<summary>future</summary>
 
 ## future
 
@@ -567,6 +587,11 @@ import { tpl } from 'xajs/future';
 const template = tpl.exec(`<div>${name}<div>`, { name: 'AJS' });
 ```
 
+</details>
+
+<details>
+<summary>internal</summary>
+
 ## internal
 
 AJS 内部都在使用的实用工具包
@@ -652,6 +677,11 @@ function safeUpdate(target, source) {
 }
 ```
 
+</details>
+
+<details>
+<summary>lang</summary>
+
 ## lang
 
 Javascript 语言特性扩展包
@@ -706,6 +736,11 @@ const greeting = template.replace(
 
 console.log(greeting); // 'Hello, AJS User!'
 ```
+
+</details>
+
+<details>
+<summary>mobile</summary>
 
 ## mobile
 
@@ -784,6 +819,8 @@ if (ua.isBrowser('Chrome')) {
   }
 }
 ```
+
+</details>
 <!--MODULES_END-->
 
 # 🤝 Contributing
