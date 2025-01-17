@@ -1,6 +1,8 @@
 # AJS
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+![NPM Downloads](https://img.shields.io/npm/dw/xajs?style=flat)
+![GitHub contributors from allcontributors.org](https://img.shields.io/github/all-contributors/qddegtya/ajs)
+![GitHub License](https://img.shields.io/github/license/qddegtya/ajs)
 
 # 关于
 
