@@ -1,5 +1,8 @@
 # AJS
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+
+![NPM Downloads](https://img.shields.io/npm/dw/xajs?style=flat)
+![GitHub contributors from allcontributors.org](https://img.shields.io/github/all-contributors/qddegtya/ajs)
+![GitHub License](https://img.shields.io/github/license/qddegtya/ajs)
 
 <h1 align="center">
   <br>
@@ -14,48 +17,38 @@
 🪄 Just another javascript utility library.
 <!--ABOUT_END-->
 
-# ✨ 特性一览
+# ✨ 概述
 
-<!--FEATURES_START-->
-- Core
-  - base: 基础核心模块，自定义类，支持类的私有属性、继承等特性
-  - decorators: 常用装饰器，deprecate、mixin 等
-  - Deferred: Deferred，维护异步模型状态
-- DOM
-  - h: DOM 创建操作的优雅封装
-  - tags: 基于 h 封装常用 html tag 的快速创建方法
-  - E: 增强版事件管理
-  - UrlParser: 兼容性良好的 URL 解析器
-- FP
-  - compose: 同步组合
-  - composeAsync: 异步组合
-- Functional
-  - intercepter: 支持同步、异步两种模式的通用函数拦截器
-  - tryNext: 链式调用风格的 try
-  - PS: 优雅的发布订阅实现
-  - di: 简单实用的 DI 实现
-- Future
-  - TR: 支持依赖追踪，计算定义、组合的创新响应式
-  - atom: 基于 TR 封装的、类似 Recoil Atom 的原子状态
-  - selector: 基于 TR 封装的、类似 Recoil selector 的派生状态
-  - eff: 基于迭代器特性实现的代数效应
-  - tpl: 基于标签函数实现的简单实用模板引擎
-- Mobile
-  - UserAgent: User Agent 解析
-  - device: 便捷的 UA 对象「设备属性」访问器
-  - browser: 便捷的 UA 对象「浏览器属性」访问器
-- Lang
-  - MagicString: 支持链式调用的字符串不可变操作类
-- Internal
-  - is: 对象的类型运行时检查 (isArray, isObject, etc.)
-  - assign: 安全的对象属性分配，可实现对象深拷贝等特性
-  - hasOwnProp: 安全的对象自持属性嗅探
-<!--FEATURES_END-->
+- 🌐 **主流 Javascript 运行时支持**
+  - 完整支持 Node.js、Browser、Deno 等主流 JavaScript 运行时
+  - 提供 UMD/CommonJS/ES Module 多模块规范支持
+  - 零依赖实现，确保最大兼容性
+
+- 📦 **模块化设计**
+  - 支持按需引入
+  - 完整的 Tree-shaking 支持
+  - 独立的子模块发布支持
+
+- 🛡️ **可靠性保证**
+  - 完整的单元测试覆盖
+
+- 🔄 **工程自动化**
+  - 自动化的文档生成和同步
+  - 自动化的版本管理和发布流程
+
+- 💡 **开发者友好**
+  - 详尽的 API 文档和使用示例
+  - 完善的 Contributing 指南
+  - 活跃的社区维护
+
+- 📈 **持续维护**
+  - 语义化版本控制
+  - 及时的安全补丁
 
 # 🌰 快速开始
 
 <!--QUICK_START_START-->
-## Examples
+## 示例
 
 ### 基础模块
 
@@ -146,6 +139,44 @@ console.log(url.query.page);
 ```
 <!--QUICK_START_END-->
 
+# 🎉 特性一览
+
+<!--FEATURES_START-->
+- Core
+  - base: 基础核心模块，自定义类，支持类的私有属性、继承等特性
+  - decorators: 常用装饰器，deprecate、mixin 等
+  - Deferred: Deferred，维护异步模型状态
+- DOM
+  - h: DOM 创建操作的优雅封装
+  - tags: 基于 h 封装常用 html tag 的快速创建方法
+  - E: 增强版事件管理
+  - UrlParser: 兼容性良好的 URL 解析器
+- FP
+  - compose: 同步组合
+  - composeAsync: 异步组合
+- Functional
+  - intercepter: 支持同步、异步两种模式的通用函数拦截器
+  - tryNext: 链式调用风格的 try
+  - PS: 优雅的发布订阅实现
+  - di: 简单实用的 DI 实现
+- Future
+  - TR: 支持依赖追踪，计算定义、组合的创新响应式
+  - atom: 基于 TR 封装的、类似 Recoil Atom 的原子状态
+  - selector: 基于 TR 封装的、类似 Recoil selector 的派生状态
+  - eff: 基于迭代器特性实现的代数效应
+  - tpl: 基于标签函数实现的简单实用模板引擎
+- Mobile
+  - UserAgent: User Agent 解析
+  - device: 便捷的 UA 对象「设备属性」访问器
+  - browser: 便捷的 UA 对象「浏览器属性」访问器
+- Lang
+  - MagicString: 支持链式调用的字符串不可变操作类
+- Internal
+  - is: 对象的类型运行时检查 (isArray, isObject, etc.)
+  - assign: 安全的对象属性分配，可实现对象深拷贝等特性
+  - hasOwnProp: 安全的对象自持属性嗅探
+<!--FEATURES_END-->
+
 # 📦 模块列表
 
 <!--MODULES_START-->
@@ -162,11 +193,16 @@ console.log(url.query.page);
 | lang | Javascript 语言特性扩展包 | `xajs/lang` |
 | mobile | 移动端相关包 | `xajs/mobile` |
 
+## 模块详情
+
+<details>
+<summary>core</summary>
+
 ## core
 
 核心基础包
 
-### Examples
+### 示例
 
 **Class Definition with Static Members**
 
@@ -263,11 +299,16 @@ class DataLoader {
 }
 ```
 
+</details>
+
+<details>
+<summary>dom</summary>
+
 ## dom
 
 浏览器运行时相关包
 
-### Examples
+### 示例
 
 **DOM with Tags Helpers**
 
@@ -339,11 +380,16 @@ parser.setQueryParam('page', '2');
 // 'https://example.com/new-path?q=search&tags[]=js&tags[]=dom&page=2'
 ```
 
+</details>
+
+<details>
+<summary>fp</summary>
+
 ## fp
 
 函数式编程相关包
 
-### Examples
+### 示例
 
 **Function Composition**
 
@@ -375,11 +421,16 @@ const pipeline = composeAsync(
 );
 ```
 
+</details>
+
+<details>
+<summary>functional</summary>
+
 ## functional
 
 实用主义相关包
 
-### Examples
+### 示例
 
 **Function Interception (Sync & Async)**
 
@@ -446,11 +497,16 @@ class DataView extends Suber {
 }
 ```
 
+</details>
+
+<details>
+<summary>future</summary>
+
 ## future
 
 高级及实验特性包
 
-### Examples
+### 示例
 
 **Reactive State Management**
 
@@ -542,11 +598,16 @@ import { tpl } from 'xajs/future';
 const template = tpl.exec(`<div>${name}<div>`, { name: 'AJS' });
 ```
 
+</details>
+
+<details>
+<summary>internal</summary>
+
 ## internal
 
 AJS 内部都在使用的实用工具包
 
-### Examples
+### 示例
 
 **Type Checking**
 
@@ -627,11 +688,16 @@ function safeUpdate(target, source) {
 }
 ```
 
+</details>
+
+<details>
+<summary>lang</summary>
+
 ## lang
 
 Javascript 语言特性扩展包
 
-### Examples
+### 示例
 
 **Basic String Operations**
 
@@ -682,11 +748,16 @@ const greeting = template.replace(
 console.log(greeting); // 'Hello, AJS User!'
 ```
 
+</details>
+
+<details>
+<summary>mobile</summary>
+
 ## mobile
 
 移动端相关包
 
-### Examples
+### 示例
 
 **Device Detection and Feature Support**
 
@@ -759,6 +830,8 @@ if (ua.isBrowser('Chrome')) {
   }
 }
 ```
+
+</details>
 <!--MODULES_END-->
 
 # 🤝 Contributing

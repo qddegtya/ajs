@@ -191,7 +191,7 @@ export async function generateModuleDetails(moduleMetas) {
 
     // 模块描述
     if (meta.info?.description) {
-      sections.push(`## ${name}\n\n${meta.info.description.trim()}\n`)
+      sections.push(`<details>\n<summary>${name}</summary>\n\n## ${name}\n\n${meta.info.description.trim()}\n`)
     }
 
     // 特性列表
@@ -201,7 +201,7 @@ export async function generateModuleDetails(moduleMetas) {
 
     // 示例代码
     if (meta.info?.examples?.length) {
-      sections.push('### Examples\n')
+      sections.push('### 示例\n')
       for (const example of meta.info.examples) {
         const code = await formatCode(example.code)
         if (example.caption) {
@@ -210,6 +210,9 @@ export async function generateModuleDetails(moduleMetas) {
         sections.push(`\`\`\`javascript\n${code.trim()}\n\`\`\`\n`)
       }
     }
+
+    // 添加 details 标签的结束标记
+    sections.push('</details>\n')
 
     return sections.join('\n')
   })
@@ -220,7 +223,7 @@ export async function generateModuleDetails(moduleMetas) {
 export async function generateModulesContent(moduleMetas) {
   const table = generateModulesTable(moduleMetas)
   const details = await generateModuleDetails(moduleMetas)
-  return `${table}\n${details}`.trim()
+  return `${table}\n\n## 模块详情\n\n${details}`.trim()
 }
 
 export { PLACEHOLDERS, replaceContent }
