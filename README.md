@@ -1,14 +1,13 @@
-# AJS
-
-![NPM Downloads](https://img.shields.io/npm/dw/xajs?style=flat)
-![GitHub contributors from allcontributors.org](https://img.shields.io/github/all-contributors/qddegtya/ajs)
-![GitHub License](https://img.shields.io/github/license/qddegtya/ajs)
-
 <h1 align="center">
   <br>
 	<img width="400" src="media/ajs.svg" alt="ajs">
   <br>
+  <br>
 </h1>
+
+![NPM Downloads](https://img.shields.io/npm/dw/xajs?style=flat)
+![GitHub contributors from allcontributors.org](https://img.shields.io/github/all-contributors/qddegtya/ajs)
+![GitHub License](https://img.shields.io/github/license/qddegtya/ajs)
 
 # 关于
 
