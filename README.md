@@ -1,6 +1,13 @@
 # AJS
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
+<h1 align="center">
+  <br>
+	<img width="400" src="media/ajs.svg" alt="cf">
+  <br>
+  <br>
+</h1>
+
 # 关于
 
 <!--ABOUT_START-->
