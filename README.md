@@ -6,8 +6,7 @@
 
 <h1 align="center">
   <br>
-	<img width="400" src="media/ajs.svg" alt="cf">
-  <br>
+	<img width="400" src="media/ajs.svg" alt="ajs">
   <br>
 </h1>
 
