@@ -42,6 +42,8 @@ export default [
       'quotes': ['error', 'single'],
       'linebreak-style': ['error', 'unix'],
       'semi': ['error', 'never'],
+      'eol-last': ['error', 'always'],
+      'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 1, 'maxBOF': 0 }],
     },
   },
 
@@ -67,6 +69,8 @@ export default [
     },
     rules: {
       ...js.configs.recommended.rules,
+      'eol-last': ['error', 'always'],
+      'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 1, 'maxBOF': 0 }],
     },
   },
 
@@ -98,6 +102,8 @@ export default [
       'no-console': 'off',      // 测试文件中允许使用 console
       'no-unused-vars': 'off',  // 测试文件中完全禁用未使用变量的警告
       'max-nested-callbacks': ['error', 5],  // 限制嵌套的测试用例数量
+      'eol-last': ['error', 'always'],
+      'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 1, 'maxBOF': 0 }],
     },
   },
 ]
