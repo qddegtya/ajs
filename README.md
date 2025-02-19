@@ -5,6 +5,7 @@
   <br>
 </h1>
 
+![NPM Version](https://img.shields.io/npm/v/xajs)
 ![NPM Downloads](https://img.shields.io/npm/dw/xajs?style=flat)
 ![GitHub contributors from allcontributors.org](https://img.shields.io/github/all-contributors/qddegtya/ajs)
 ![GitHub License](https://img.shields.io/github/license/qddegtya/ajs)
