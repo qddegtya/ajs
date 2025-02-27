@@ -5,12 +5,13 @@
       "modules": false,
       "targets": {
         "browsers": [
-          "last 2 versions",
-          "> 1%",
-          "not dead",
-          "not ie 11"
+          "ie >= 8",
+          "chrome >= 25",
+          "firefox >= 20",
+          "safari >= 6",
+          "opera >= 15"
         ],
-        "node": "14"
+        "node": "8"
       }
     }]
   ],
